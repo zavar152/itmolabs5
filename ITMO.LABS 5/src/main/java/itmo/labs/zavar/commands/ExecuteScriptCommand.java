@@ -18,8 +18,10 @@ import org.apache.commons.collections.ListUtils;
 import org.apache.commons.io.input.ReaderInputStream;
 
 import itmo.labs.zavar.commands.base.Command;
+import itmo.labs.zavar.commands.base.History;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
+import itmo.labs.zavar.exception.RecursionException;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
 public class ExecuteScriptCommand extends Command
@@ -32,7 +34,7 @@ public class ExecuteScriptCommand extends Command
 	}
 
 	@Override
-	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) throws CommandArgumentException 
+	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException
 	{
 		if(args.length > 1 || args.length < 1)
 		{
@@ -40,6 +42,12 @@ public class ExecuteScriptCommand extends Command
 		}
 		else
 		{
+			History.addToTemp((getName() + " " + Arrays.toString(args).replace("[", "").replace("]", "")));
+			if((History.getTempHistory().size() > 1) && (History.getTempHistory().firstElement().equals(getName() + " " + Arrays.toString(args).replace("[", "").replace("]", ""))))
+			{
+				throw new RecursionException();
+			}
+			
 			List<String> lines = null;
 			List<String> executed = new ArrayList<String>();
 			try 
@@ -50,12 +58,13 @@ public class ExecuteScriptCommand extends Command
 			{
 				((PrintStream) outStream).println(e.getMessage());
 			}
+			
 			for(int i = 0; i < lines.size(); i++)
 			{
 				String line = lines.get(i);
 				String command[] = line.split(" ");
-					
 				executed.add(line);
+				
 				if(map.containsKey(command[0]))
 				{
 					try 
@@ -68,24 +77,24 @@ public class ExecuteScriptCommand extends Command
 					        {
 					        	to = to + l + "\n" ;
 					        }
-					        StringReader reader = new StringReader(to);
-					        ReaderInputStream ris = new ReaderInputStream(reader, StandardCharsets.UTF_8);
-							int r = map.get(command[0]).execute(map, stack, Arrays.copyOfRange(command, 1, command.length), ris, outStream);
+					        History.addToGlobal(line);
+							int r = map.get(command[0]).execute(map, stack, Arrays.copyOfRange(command, 1, command.length), new ReaderInputStream(new StringReader(to), StandardCharsets.UTF_8), outStream);
 							i = i + r + 1;
 						}
 						else
 						{
+							History.addToGlobal(line);
 							map.get(command[0]).execute(map, stack, Arrays.copyOfRange(command, 1, command.length), inStream, outStream);
 						}
 					} 
 					catch(CommandException e) 
 					{
-						((PrintStream) outStream).println(e.getMessage());
+						System.err.println(e.getMessage());
 					}
 				}
 				else
 				{
-					((PrintStream) outStream).println("Unknown command #" + (i + 1) + " ! Use help.");
+					System.err.println("Unknown command #" + (i + 1) + " ! Please, check your script!");
 				}
 			}
 		}

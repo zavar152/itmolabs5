@@ -91,7 +91,7 @@ public class AddCommand extends Command
 				}
 				catch(IllegalParameterException e)
 				{
-					System.out.println(e.getMessage());
+					System.err.println(e.getMessage());
 				}
 			}
 			parCount++;
@@ -107,13 +107,13 @@ public class AddCommand extends Command
 				}
 				catch(NumberFormatException e)
 				{
-					System.out.println("Illegal parameters: Count should be a number and can't be null");
+					System.err.println("Illegal parameters: Count should be a number and can't be null");
 				}
 				
 				if(c != null && c <= 0L)
 				{
 					c = null;
-					System.out.println("Illegal parameters: Count should be greater than 0");
+					System.err.println("Illegal parameters: Count should be greater than 0");
 				}
 				else
 				{
@@ -137,12 +137,12 @@ public class AddCommand extends Command
 				{
 					exc = true;
 					c = 0;
-					System.out.println("Illegal parameters: Count should be a number");
+					System.err.println("Illegal parameters: Count should be a number");
 				}
 				
 				if(c <= 0 && !exc)
 				{
-					System.out.println("Illegal parameters: Count should be greater than 0");
+					System.err.println("Illegal parameters: Count should be greater than 0");
 				}
 				else
 				{
@@ -166,12 +166,12 @@ public class AddCommand extends Command
 				{
 					exc = true;
 					c = 0;
-					System.out.println("Illegal parameters: Count should be a number");
+					System.err.println("Illegal parameters: Count should be a number");
 				}
 				
 				if(c <= 0 && !exc)
 				{
-					System.out.println("Illegal parameters: Count should be greater than 0");
+					System.err.println("Illegal parameters: Count should be greater than 0");
 				}
 				else
 				{
@@ -190,7 +190,7 @@ public class AddCommand extends Command
 				}
 				catch(IllegalArgumentException e)
 				{
-					System.out.println("Illegal parameters: You can use only these values: " + Arrays.toString(FormOfEducation.values()));
+					System.err.println("Illegal parameters: You can use only these values: " + Arrays.toString(FormOfEducation.values()));
 				}
 			}
 			parCount++;
@@ -207,7 +207,7 @@ public class AddCommand extends Command
 					admName = in.nextLine();
 					if(admName == null || admName.isEmpty())
 					{
-						System.out.println("Illegal parameters: Name can't be null or empty");
+						System.err.println("Illegal parameters: Name can't be null or empty");
 					}
 				}
 				parCount++;
@@ -229,7 +229,7 @@ public class AddCommand extends Command
 					}
 					catch(IllegalArgumentException e)
 					{
-						System.out.println("Illegal parameters: You can use only these values: " + Arrays.toString(Color.values()));
+						System.err.println("Illegal parameters: You can use only these values: " + Arrays.toString(Color.values()));
 					}
 				}
 				parCount++;
@@ -244,7 +244,7 @@ public class AddCommand extends Command
 					}
 					catch(IllegalArgumentException e)
 					{
-						System.out.println("Illegal parameters: You can use only these values: " + Arrays.toString(Color.values()));
+						System.err.println("Illegal parameters: You can use only these values: " + Arrays.toString(Color.values()));
 					}
 				}
 				parCount++;
@@ -270,7 +270,7 @@ public class AddCommand extends Command
 					catch(IllegalArgumentException e)
 					{
 						en = false;
-						System.out.println("Illegal parameters: You can use only these values: " + Arrays.toString(Country.values()));
+						System.err.println("Illegal parameters: You can use only these values: " + Arrays.toString(Country.values()));
 					}
 				}
 				parCount++;
@@ -283,7 +283,7 @@ public class AddCommand extends Command
 					if(nameStr.length() > 348)
 					{
 						nameStr = null;
-						System.out.println("Name length can't be greater than 348");
+						System.err.println("Name length can't be greater than 348");
 					}
 				}
 				parCount++;
@@ -300,7 +300,7 @@ public class AddCommand extends Command
 					}
 					catch(NumberFormatException e)
 					{
-						System.out.println("Illegal parameters: Y should be a number");
+						System.err.println("Illegal parameters: Y should be a number");
 					}
 				}
 				parCount++;
@@ -314,7 +314,7 @@ public class AddCommand extends Command
 					}
 					catch(NumberFormatException e)
 					{
-						System.out.println("Illegal parameters: Z should be a number");
+						System.err.println("Illegal parameters: Z should be a number");
 					}
 				}
 				parCount++;

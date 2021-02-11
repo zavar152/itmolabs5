@@ -10,23 +10,25 @@ import itmo.labs.zavar.commands.ClearCommand;
 import itmo.labs.zavar.commands.ExecuteScriptCommand;
 import itmo.labs.zavar.commands.ExitCommand;
 import itmo.labs.zavar.commands.HelpCommand;
+import itmo.labs.zavar.commands.HistoryCommand;
 import itmo.labs.zavar.commands.InfoCommand;
 import itmo.labs.zavar.commands.RemoveByIDCommand;
 import itmo.labs.zavar.commands.ShowCommand;
 import itmo.labs.zavar.commands.ShuffleCommand;
 import itmo.labs.zavar.commands.TestCommand;
 import itmo.labs.zavar.commands.base.Command;
+import itmo.labs.zavar.commands.base.History;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
 public class Launcher 
 {
 	private static Stack<StudyGroup> stack = new Stack<StudyGroup>();
+	private static HashMap<String, Command> commandsMap = new HashMap<String, Command>();
 
 	public static void main(String[] args)
 	{	
-		HashMap<String, Command> commandsMap = new HashMap<String, Command>();
-		
+		System.setErr(System.out);
 		TestCommand.register(commandsMap);
 		HelpCommand.register(commandsMap);
 		ExitCommand.register(commandsMap);
@@ -37,6 +39,7 @@ public class Launcher
 		AddCommand.register(commandsMap);
 		RemoveByIDCommand.register(commandsMap);
 		ShuffleCommand.register(commandsMap);
+		HistoryCommand.register(commandsMap);
 		
 		Scanner in = new Scanner(System.in);
 		
@@ -49,16 +52,19 @@ public class Launcher
 			{
 				try 
 				{
+					History.addToGlobal(input);
 					commandsMap.get(command[0]).execute(commandsMap, stack, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
+					History.clearTempHistory();
 				} 
 				catch(CommandException e) 
 				{
-					System.out.println(e.getMessage());
+					System.err.println(e.getMessage());
+					History.clearTempHistory();
 				}
 			}
 			else
 			{
-				System.out.println("Unknown command! Use help.");
+				System.err.println("Unknown command! Use help.");
 			}
 		}
 	}
