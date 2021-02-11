@@ -1,5 +1,8 @@
 package itmo.labs.zavar.commands;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -18,7 +21,7 @@ public class InfoCommand extends Command
 	}
 
 	@Override
-	public void execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args)
+	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream)
 			throws CommandException 
 	{
 		if(args.length > 0)
@@ -27,10 +30,11 @@ public class InfoCommand extends Command
 		}
 		else
 		{
-			System.out.println("Type: " + stack.getClass().getName());
-			System.out.println("Creation date: ");
-			System.out.println("Count of elements: " + stack.size());
+			((PrintStream) outStream).println("Type: " + stack.getClass().getName());
+			((PrintStream) outStream).println("Creation date: ");
+			((PrintStream) outStream).println("Count of elements: " + stack.size());
 		}
+		return 0;
 	}
 
 	public static void register(HashMap<String, Command> commandsMap)

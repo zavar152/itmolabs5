@@ -23,7 +23,7 @@ public class Launcher
 {
 	private static Stack<StudyGroup> stack = new Stack<StudyGroup>();
 
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{	
 		HashMap<String, Command> commandsMap = new HashMap<String, Command>();
 		
@@ -43,32 +43,23 @@ public class Launcher
 		while(true)
 		{
 			String input = in.nextLine();
-			if(input.startsWith("/"))
-			{
-				input = input.substring(1);
-				String command[] = input.split(" ");
+			String command[] = input.split(" ");
 				
-				if(commandsMap.containsKey(command[0]))
+			if(commandsMap.containsKey(command[0]))
+			{
+				try 
 				{
-					try 
-					{
-						commandsMap.get(command[0]).execute(commandsMap, stack, Arrays.copyOfRange(command, 1, command.length));
-					} 
-					catch(CommandException e) 
-					{
-						System.out.println(e.getMessage());
-					}
-				}
-				else
+					commandsMap.get(command[0]).execute(commandsMap, stack, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
+				} 
+				catch(CommandException e) 
 				{
-					System.out.println("Unknown command! Use /help.");
+					System.out.println(e.getMessage());
 				}
 			}
 			else
 			{
-				System.out.println("It isn't a command! Use /help.");
+				System.out.println("Unknown command! Use help.");
 			}
 		}
 	}
-
 }

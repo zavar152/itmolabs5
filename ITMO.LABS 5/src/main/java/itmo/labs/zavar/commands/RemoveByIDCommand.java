@@ -1,5 +1,8 @@
 package itmo.labs.zavar.commands;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -24,7 +27,7 @@ public class RemoveByIDCommand extends Command
 	}
 	
 	@Override
-	public void execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args) throws CommandException 
+	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length != 1)
 		{
@@ -44,13 +47,14 @@ public class RemoveByIDCommand extends Command
 			if(stack.size() > 0)
 			{
 				stack.remove(stack.stream().filter(e -> id == e.getId()).findAny().get());
-				System.out.println("Element deleted!");
+				((PrintStream) outStream).println("Element deleted!");
 			}
 			else
 			{
-				System.out.println("Collection is empty!");
+				((PrintStream) outStream).println("Collection is empty!");
 			}
 		}
+		return 0;
 	}
 
 	@Override

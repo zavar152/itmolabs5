@@ -1,5 +1,7 @@
 package itmo.labs.zavar.commands;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -33,16 +35,23 @@ public class AddCommand extends Command
 	}
 
 	@Override
-	public void execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args)
+	public boolean isNeedInput() 
+	{
+		return true;
+	}
+	
+	@Override
+	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream)
 			throws CommandException 
 	{
+		int parCount = 0;
 		if(args.length >= 2 || args.length < 1)
 		{
 			throw new CommandArgumentException("This command requires name of element only, than you will be able to enter parameters for this elements!\n" + getUsage());
 		}
 		else
 		{
-			Scanner in = new Scanner(System.in);
+			Scanner in = new Scanner(inStream);
 			int id = stack.size() + 1;
 			String name = (String) args[0];
 			Coordinates coordinates = null;
@@ -54,7 +63,7 @@ public class AddCommand extends Command
 			
 			while(coordinates == null)
 			{
-				System.out.print("Enter coordinates:\nX > ");
+				System.out.print("Enter X coordinate:\n> ");
 				String xStr = in.nextLine();
 				Double x;
 				try
@@ -65,7 +74,7 @@ public class AddCommand extends Command
 				{
 					x = null;
 				}
-				System.out.print("Y > ");
+				System.out.print("Enter Y coordinate:\n> ");
 				String yStr = in.nextLine();
 				Float y;
 				try
@@ -85,6 +94,7 @@ public class AddCommand extends Command
 					System.out.println(e.getMessage());
 				}
 			}
+			parCount++;
 			
 			while(studentsCount == null)
 			{
@@ -110,6 +120,7 @@ public class AddCommand extends Command
 					studentsCount = c;
 				}
 			}
+			parCount++;
 			
 			while(expelledStudents == 0)
 			{
@@ -138,6 +149,7 @@ public class AddCommand extends Command
 					expelledStudents = c;
 				}
 			}
+			parCount++;
 			
 			while(transferredStudents == 0)
 			{
@@ -166,6 +178,7 @@ public class AddCommand extends Command
 					transferredStudents = c;
 				}
 			}
+			parCount++;
 			
 			while(formOfEducation == null)
 			{
@@ -180,9 +193,11 @@ public class AddCommand extends Command
 					System.out.println("Illegal parameters: You can use only these values: " + Arrays.toString(FormOfEducation.values()));
 				}
 			}
+			parCount++;
 			
 			System.out.print("Does the group have an admin? [YES, NO]\n> ");
 			String ansStr = in.nextLine();
+			parCount++;
 			if(ansStr.equals("YES"))
 			{
 				String admName = null;
@@ -195,13 +210,14 @@ public class AddCommand extends Command
 						System.out.println("Illegal parameters: Name can't be null or empty");
 					}
 				}
+				parCount++;
 				System.out.print("Enter passport ID:\n> ");
 				String passportID = in.nextLine();
 				if(passportID.isEmpty())
 				{
 					passportID = null;
 				}
-				
+				parCount++;
 				Color eyeColor = null;
 				while(eyeColor == null)
 				{
@@ -216,7 +232,7 @@ public class AddCommand extends Command
 						System.out.println("Illegal parameters: You can use only these values: " + Arrays.toString(Color.values()));
 					}
 				}
-				
+				parCount++;
 				Color hairColor = null;
 				while(hairColor == null)
 				{
@@ -231,7 +247,7 @@ public class AddCommand extends Command
 						System.out.println("Illegal parameters: You can use only these values: " + Arrays.toString(Color.values()));
 					}
 				}
-				
+				parCount++;
 				Country nationality = null;
 				String conStr = "";
 				boolean en = false;
@@ -257,7 +273,7 @@ public class AddCommand extends Command
 						System.out.println("Illegal parameters: You can use only these values: " + Arrays.toString(Country.values()));
 					}
 				}
-				
+				parCount++;
 				Location location;
 				System.out.print("Enter name location:\n> ");
 				String nameStr = null;
@@ -270,8 +286,10 @@ public class AddCommand extends Command
 						System.out.println("Name length can't be greater than 348");
 					}
 				}
+				parCount++;
 				System.out.print("Enter X:\n> ");
 				float x = in.nextFloat();
+				parCount++;
 				System.out.print("Enter Y:\n> ");
 				Float y = null;
 				while(y == null)
@@ -285,6 +303,7 @@ public class AddCommand extends Command
 						System.out.println("Illegal parameters: Y should be a number");
 					}
 				}
+				parCount++;
 				System.out.print("Enter Z:\n> ");
 				Long z = null;
 				while(z == null)
@@ -298,12 +317,14 @@ public class AddCommand extends Command
 						System.out.println("Illegal parameters: Z should be a number");
 					}
 				}
+				parCount++;
 				location = new Location(x, y, z, nameStr);
 				groupAdmin = new Person(admName, passportID, eyeColor, hairColor, nationality, location);
 			}
 			stack.push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin));
 			System.out.println("Element added!");
 		}
+		return parCount;
 	}
 
 	@Override

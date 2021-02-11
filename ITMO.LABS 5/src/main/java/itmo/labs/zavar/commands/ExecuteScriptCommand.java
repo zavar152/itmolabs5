@@ -1,12 +1,21 @@
 package itmo.labs.zavar.commands;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
+
+import org.apache.commons.collections.ListUtils;
+import org.apache.commons.io.input.ReaderInputStream;
 
 import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.exception.CommandArgumentException;
@@ -23,7 +32,7 @@ public class ExecuteScriptCommand extends Command
 	}
 
 	@Override
-	public void execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args) throws CommandArgumentException 
+	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) throws CommandArgumentException 
 	{
 		if(args.length > 1 || args.length < 1)
 		{
@@ -31,52 +40,56 @@ public class ExecuteScriptCommand extends Command
 		}
 		else
 		{
-			String line;
-			BufferedReader reader = null;
+			List<String> lines = null;
+			List<String> executed = new ArrayList<String>();
 			try 
 			{
-				reader = new BufferedReader(new FileReader((String) args[0]));
+				lines = Files.readAllLines(Paths.get((String) args[0]), StandardCharsets.UTF_8);
 			} 
-			catch (FileNotFoundException e) 
+			catch (IOException e) 
 			{
-				e.printStackTrace();
+				((PrintStream) outStream).println(e.getMessage());
 			}
-	        try 
-	        {
-				while ((line = reader.readLine()) != null) 
-				{
-					if(line.startsWith("/"))
-					{
-						line = line.substring(1);
-						String command[] = line.split(" ");
+			for(int i = 0; i < lines.size(); i++)
+			{
+				String line = lines.get(i);
+				String command[] = line.split(" ");
 					
-						if(map.containsKey(command[0]))
+				executed.add(line);
+				if(map.containsKey(command[0]))
+				{
+					try 
+					{
+						if(map.get(command[0]).isNeedInput())
 						{
-							try 
-							{
-								map.get(command[0]).execute(map, stack, Arrays.copyOfRange(command, 1, command.length));
-							} 
-							catch(CommandException e) 
-							{
-								System.out.println(e.getMessage());
-							}
+							List<String> subList = ListUtils.subtract(lines, executed);
+					        String to = "";
+					        for(String l : subList)
+					        {
+					        	to = to + l + "\n" ;
+					        }
+					        StringReader reader = new StringReader(to);
+					        ReaderInputStream ris = new ReaderInputStream(reader, StandardCharsets.UTF_8);
+							int r = map.get(command[0]).execute(map, stack, Arrays.copyOfRange(command, 1, command.length), ris, outStream);
+							i = i + r + 1;
 						}
 						else
 						{
-							System.out.println("Unknown command! Use /help.");
+							map.get(command[0]).execute(map, stack, Arrays.copyOfRange(command, 1, command.length), inStream, outStream);
 						}
-					}
-					else
+					} 
+					catch(CommandException e) 
 					{
-						System.out.println("It isn't a command! Use /help.");
+						((PrintStream) outStream).println(e.getMessage());
 					}
 				}
-			} 
-	        catch (IOException e) 
-	        {
-				e.printStackTrace();
+				else
+				{
+					((PrintStream) outStream).println("Unknown command #" + (i + 1) + " ! Use help.");
+				}
 			}
 		}
+		return 0;
 	}
 
 	public static void register(HashMap<String, Command> commandsMap)

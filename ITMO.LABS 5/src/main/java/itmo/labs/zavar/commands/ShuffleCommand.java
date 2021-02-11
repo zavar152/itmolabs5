@@ -1,5 +1,8 @@
 package itmo.labs.zavar.commands;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
@@ -25,7 +28,7 @@ public class ShuffleCommand extends Command
 	}
 	
 	@Override
-	public void execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args) throws CommandException 
+	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 0)
 		{
@@ -34,8 +37,10 @@ public class ShuffleCommand extends Command
 		else
 		{
 			Collections.shuffle(stack);
-			System.out.println("Collection mixed up!");
+			((PrintStream) outStream).println("Collection mixed up!");
 		}
+		
+		return 0;
 	}
 
 	@Override

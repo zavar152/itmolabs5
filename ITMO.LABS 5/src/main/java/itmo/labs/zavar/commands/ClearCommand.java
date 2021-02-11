@@ -1,5 +1,8 @@
 package itmo.labs.zavar.commands;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -18,7 +21,7 @@ public class ClearCommand extends Command
 	}
 
 	@Override
-	public void execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args)
+	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream)
 			throws CommandException 
 	{
 		if(args.length > 0)
@@ -28,8 +31,9 @@ public class ClearCommand extends Command
 		else
 		{
 			stack.clear();
-			System.out.println("Collection cleared");
+			((PrintStream) outStream).println("Collection cleared");
 		}
+		return 0;
 	}
 
 	public static void register(HashMap<String, Command> commandsMap)
