@@ -45,7 +45,7 @@ public class RemoveByIDCommand extends Command
 			}
 			if(env.getCollection().size() > 0)
 			{
-				env.getCollection().remove(env.getCollection().stream().filter(e -> id == e.getId()).findAny().get());
+				env.getCollection().removeIf(e -> id == e.getId());
 				((PrintStream) outStream).println("Element deleted!");
 			}
 			else
