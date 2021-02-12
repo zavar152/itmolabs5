@@ -17,7 +17,7 @@ import itmo.labs.zavar.commands.ShowCommand;
 import itmo.labs.zavar.commands.ShuffleCommand;
 import itmo.labs.zavar.commands.TestCommand;
 import itmo.labs.zavar.commands.base.Command;
-import itmo.labs.zavar.commands.base.History;
+import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
@@ -42,24 +42,25 @@ public class Launcher
 		HistoryCommand.register(commandsMap);
 		
 		Scanner in = new Scanner(System.in);
+		Environment env = new Environment(commandsMap, stack);
 		
 		while(true)
 		{
 			String input = in.nextLine();
 			String command[] = input.split(" ");
 				
-			if(commandsMap.containsKey(command[0]))
+			if(env.getCommandMap().containsKey(command[0]))
 			{
 				try 
 				{
-					History.addToGlobal(input);
-					commandsMap.get(command[0]).execute(commandsMap, stack, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
-					History.clearTempHistory();
+					env.getHistory().addToGlobal(input);
+					env.getCommandMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
+					env.getHistory().clearTempHistory();
 				} 
 				catch(CommandException e) 
 				{
 					System.err.println(e.getMessage());
-					History.clearTempHistory();
+					env.getHistory().clearTempHistory();
 				}
 			}
 			else

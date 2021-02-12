@@ -4,10 +4,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.Stack;
 
 import itmo.labs.zavar.commands.base.Command;
-import itmo.labs.zavar.studygroup.StudyGroup;
+import itmo.labs.zavar.commands.base.Environment;
 
 public class TestCommand extends Command
 {
@@ -19,7 +18,7 @@ public class TestCommand extends Command
 	}
 	
 	@Override
-	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) 
+	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) 
 	{
 		((PrintStream) outStream).println("test command");	
 		return 0;

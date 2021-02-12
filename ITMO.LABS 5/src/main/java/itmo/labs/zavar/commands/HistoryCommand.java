@@ -5,13 +5,11 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.ListIterator;
-import java.util.Stack;
 
 import itmo.labs.zavar.commands.base.Command;
-import itmo.labs.zavar.commands.base.History;
+import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.studygroup.StudyGroup;
 
 public class HistoryCommand extends Command 
 {
@@ -23,17 +21,16 @@ public class HistoryCommand extends Command
 	}
 	
 	@Override
-	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream,
-			OutputStream outStream) throws CommandException 
+	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		String out = "";
-		if(args.length > 2 )
+		if(args.length > 2 || args.length < 0 )
 		{
 			throw new CommandArgumentException("This command requires one or zero arguments!\n" + getUsage());
 		}
 		else if(args.length == 0)
 		{
-			for(String com : History.getGlobalHistory())
+			for(String com : env.getHistory().getGlobalHistory())
 			{
 				out = out + com + "\n";
 			}
@@ -42,13 +39,13 @@ public class HistoryCommand extends Command
 		}
 		else 
 		{
-			if(History.getGlobalHistory().size() - Integer.parseInt((String) args[0]) < 0)
+			if(env.getHistory().getGlobalHistory().size() - Integer.parseInt((String) args[0]) < 0)
 			{
-				throw new CommandArgumentException("There are only " + History.getGlobalHistory().size() + " commands in history!");
+				throw new CommandArgumentException("There are only " + env.getHistory().getGlobalHistory().size() + " commands in history!");
 			}
 			else
 			{
-				ListIterator<String> iterator = History.getGlobalHistory().listIterator(History.getGlobalHistory().size() - Integer.parseInt((String) args[0]));
+				ListIterator<String> iterator = env.getHistory().getGlobalHistory().listIterator(env.getHistory().getGlobalHistory().size() - Integer.parseInt((String) args[0]));
 				while(iterator.hasNext())
 				{
 					out = out + iterator.next() + "\n";

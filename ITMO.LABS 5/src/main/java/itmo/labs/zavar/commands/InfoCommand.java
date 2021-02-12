@@ -4,12 +4,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.Stack;
 
 import itmo.labs.zavar.commands.base.Command;
+import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.studygroup.StudyGroup;
 
 public class InfoCommand extends Command
 {
@@ -21,8 +20,7 @@ public class InfoCommand extends Command
 	}
 
 	@Override
-	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream)
-			throws CommandException 
+	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 0)
 		{
@@ -30,9 +28,9 @@ public class InfoCommand extends Command
 		}
 		else
 		{
-			((PrintStream) outStream).println("Type: " + stack.getClass().getName());
+			((PrintStream) outStream).println("Type: " + env.getCollection().getClass().getName());
 			((PrintStream) outStream).println("Creation date: ");
-			((PrintStream) outStream).println("Count of elements: " + stack.size());
+			((PrintStream) outStream).println("Count of elements: " + env.getCollection().size());
 		}
 		return 0;
 	}

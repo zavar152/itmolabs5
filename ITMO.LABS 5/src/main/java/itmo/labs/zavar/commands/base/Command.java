@@ -3,11 +3,8 @@ package itmo.labs.zavar.commands.base;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Stack;
 
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.studygroup.StudyGroup;
 
 public abstract class Command
 {
@@ -20,7 +17,7 @@ public abstract class Command
 		this.args = args;
 	}
 	
-	public abstract int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException;
+	public abstract int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException;
 	
 	public abstract String getHelp();
 	

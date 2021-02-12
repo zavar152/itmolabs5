@@ -4,12 +4,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.Stack;
 
 import itmo.labs.zavar.commands.base.Command;
+import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.studygroup.StudyGroup;
 
 public class HelpCommand extends Command
 {
@@ -21,7 +20,7 @@ public class HelpCommand extends Command
 	}
 
 	@Override
-	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 0)
 		{
@@ -29,8 +28,8 @@ public class HelpCommand extends Command
 		}
 		else
 		{
-			map.forEach((k, v) -> {
-				((PrintStream) outStream).println("<"+ map.get(k).getName() +">\n" + map.get(k).getHelp() + "\n" + map.get(k).getUsage() + "\n");
+			env.getCommandMap().forEach((k, v) -> {
+				((PrintStream) outStream).println("<"+ env.getCommandMap().get(k).getName() +">\n" + env.getCommandMap().get(k).getHelp() + "\n" + env.getCommandMap().get(k).getUsage() + "\n");
 			});
 		}
 		return 0;

@@ -5,9 +5,9 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Stack;
 
 import itmo.labs.zavar.commands.base.Command;
+import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.IllegalParameterException;
@@ -41,8 +41,7 @@ public class AddCommand extends Command
 	}
 	
 	@Override
-	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream)
-			throws CommandException 
+	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		int parCount = 0;
 		if(args.length >= 2 || args.length < 1)
@@ -52,7 +51,7 @@ public class AddCommand extends Command
 		else
 		{
 			Scanner in = new Scanner(inStream);
-			int id = stack.size() + 1;
+			int id = env.getCollection().size() + 1;
 			String name = (String) args[0];
 			Coordinates coordinates = null;
 			Long studentsCount = null;
@@ -321,7 +320,7 @@ public class AddCommand extends Command
 				location = new Location(x, y, z, nameStr);
 				groupAdmin = new Person(admName, passportID, eyeColor, hairColor, nationality, location);
 			}
-			stack.push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin));
+			env.getCollection().push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin));
 			System.out.println("Element added!");
 		}
 		return parCount;

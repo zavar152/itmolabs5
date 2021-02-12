@@ -1,9 +1,9 @@
 package itmo.labs.zavar.commands;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -12,17 +12,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Stack;
 
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.io.input.ReaderInputStream;
 
 import itmo.labs.zavar.commands.base.Command;
-import itmo.labs.zavar.commands.base.History;
+import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.RecursionException;
-import itmo.labs.zavar.studygroup.StudyGroup;
 
 public class ExecuteScriptCommand extends Command
 {
@@ -34,7 +32,7 @@ public class ExecuteScriptCommand extends Command
 	}
 
 	@Override
-	public int execute(HashMap<String, Command> map, Stack<StudyGroup> stack, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException
+	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException
 	{
 		if(args.length > 1 || args.length < 1)
 		{
@@ -42,11 +40,16 @@ public class ExecuteScriptCommand extends Command
 		}
 		else
 		{
-			History.addToTemp((getName() + " " + Arrays.toString(args).replace("[", "").replace("]", "")));
-			if((History.getTempHistory().size() > 1) && (History.getTempHistory().firstElement().equals(getName() + " " + Arrays.toString(args).replace("[", "").replace("]", ""))))
+			if(!new File((String) args[0]).exists())
+			{
+				throw new CommandException("File not found!");
+			}
+			
+			if((env.getHistory().getTempHistory().size() > 1) && (env.getHistory().getTempHistory().contains(getName() + " " + Arrays.toString(args).replace("[", "").replace("]", ""))))
 			{
 				throw new RecursionException();
 			}
+			env.getHistory().addToTemp((getName() + " " + Arrays.toString(args).replace("[", "").replace("]", "")));
 			
 			List<String> lines = null;
 			List<String> executed = new ArrayList<String>();
@@ -56,7 +59,7 @@ public class ExecuteScriptCommand extends Command
 			} 
 			catch (IOException e) 
 			{
-				((PrintStream) outStream).println(e.getMessage());
+				throw new CommandException("IOException!");
 			}
 			
 			for(int i = 0; i < lines.size(); i++)
@@ -65,11 +68,11 @@ public class ExecuteScriptCommand extends Command
 				String command[] = line.split(" ");
 				executed.add(line);
 				
-				if(map.containsKey(command[0]))
+				if(env.getCommandMap().containsKey(command[0]))
 				{
 					try 
 					{
-						if(map.get(command[0]).isNeedInput())
+						if(env.getCommandMap().get(command[0]).isNeedInput())
 						{
 							List<String> subList = ListUtils.subtract(lines, executed);
 					        String to = "";
@@ -77,14 +80,14 @@ public class ExecuteScriptCommand extends Command
 					        {
 					        	to = to + l + "\n" ;
 					        }
-					        History.addToGlobal(line);
-							int r = map.get(command[0]).execute(map, stack, Arrays.copyOfRange(command, 1, command.length), new ReaderInputStream(new StringReader(to), StandardCharsets.UTF_8), outStream);
+					        env.getHistory().addToGlobal(line);
+							int r = env.getCommandMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), new ReaderInputStream(new StringReader(to), StandardCharsets.UTF_8), outStream);
 							i = i + r + 1;
 						}
 						else
 						{
-							History.addToGlobal(line);
-							map.get(command[0]).execute(map, stack, Arrays.copyOfRange(command, 1, command.length), inStream, outStream);
+							env.getHistory().addToGlobal(line);
+							env.getCommandMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), inStream, outStream);
 						}
 					} 
 					catch(CommandException e) 
