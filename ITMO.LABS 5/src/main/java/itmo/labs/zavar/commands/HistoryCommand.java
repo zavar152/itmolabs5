@@ -17,7 +17,7 @@ public class HistoryCommand extends Command
 	
 	private HistoryCommand() 
 	{
-		super("history");
+		super("history", "count");
 	}
 	
 	@Override

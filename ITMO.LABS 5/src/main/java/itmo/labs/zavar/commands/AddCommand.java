@@ -2,15 +2,16 @@ package itmo.labs.zavar.commands;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
 import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
+import itmo.labs.zavar.commands.base.InputParser;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.exception.IllegalParameterException;
 import itmo.labs.zavar.studygroup.Color;
 import itmo.labs.zavar.studygroup.Coordinates;
 import itmo.labs.zavar.studygroup.Country;
@@ -38,7 +39,7 @@ public class AddCommand extends Command
 	public boolean isNeedInput() 
 	{
 		return true;
-	}
+	} 
 	
 	@Override
 	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
@@ -60,268 +61,82 @@ public class AddCommand extends Command
 			FormOfEducation formOfEducation = null;
 			Person groupAdmin = null;
 			
-			while(coordinates == null)
-			{
-				System.out.print("Enter X coordinate:\n> ");
-				String xStr = in.nextLine();
-				Double x;
-				try
-				{
-					x = Double.parseDouble(xStr);
-				}
-				catch(NumberFormatException e)
-				{
-					x = null;
-				}
-				System.out.print("Enter Y coordinate:\n> ");
-				String yStr = in.nextLine();
-				Float y;
-				try
-				{
-					y = Float.parseFloat(yStr);
-				}
-				catch(NumberFormatException e)
-				{
-					y = null;
-				}
-				try
-				{
-					coordinates = new Coordinates(x, y);
-				}
-				catch(IllegalParameterException e)
-				{
-					System.err.println(e.getMessage());
-				}
-			}
+			((PrintStream) outStream).println("Enter X coordinate:");
+			Double x = InputParser.parseDouble(outStream, in, "X", -573.0d, Double.MAX_VALUE, false, false);
+			((PrintStream) outStream).println("Enter Y coordinate:");
+			Float y = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
+			coordinates = new Coordinates(x, y);
 			parCount++;
 			
-			while(studentsCount == null)
+			((PrintStream) outStream).println("Enter students count:");
+			studentsCount = InputParser.parseLong(outStream, in, "Students count", 0l, Long.MAX_VALUE, false, false);
+			parCount++;
+			
+			((PrintStream) outStream).println("Enter expelled students count:");
+			expelledStudents = InputParser.parseInteger(outStream, in, "Expelled students", 0, Integer.MAX_VALUE, false, true);
+			parCount++;
+			
+			((PrintStream) outStream).println("Enter transferred students count:");
+			transferredStudents = InputParser.parseLong(outStream, in, "Transferred students", 0l, Long.MAX_VALUE, false, true);
+			parCount++;
+			
+			((PrintStream) outStream).println("Enter form of education, values - " + Arrays.toString(FormOfEducation.values()));
+			formOfEducation = FormOfEducation.valueOf(InputParser.parseEnum(outStream, in, FormOfEducation.class, false));
+			parCount++;
+			
+			((PrintStream) outStream).println("Does the group have an admin? [YES]");
+			String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
+			parCount++;
+			
+			if(answ.equals("YES"))
 			{
-				System.out.print("Enter students count:\n> ");
-				String cStr = in.nextLine();
-				Long c = null;
-				try
-				{
-					c = Long.parseLong(cStr);
-				}
-				catch(NumberFormatException e)
-				{
-					System.err.println("Illegal parameters: Count should be a number and can't be null");
-				}
+				((PrintStream) outStream).println("Enter name:");
+				String admName = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
+				parCount++;
 				
-				if(c != null && c <= 0L)
-				{
-					c = null;
-					System.err.println("Illegal parameters: Count should be greater than 0");
-				}
-				else
-				{
-					studentsCount = c;
-				}
-			}
-			parCount++;
-			
-			while(expelledStudents == 0)
-			{
-				boolean exc = false;
-				System.out.print("Enter expelled students count:\n> ");
-				String cStr = in.nextLine();
-				int c;
-				try
-				{
-					exc = false;
-					c = Integer.parseInt(cStr);
-				}
-				catch(NumberFormatException e)
-				{
-					exc = true;
-					c = 0;
-					System.err.println("Illegal parameters: Count should be a number");
-				}
+				((PrintStream) outStream).println("Enter passport ID:");
+				String passportID = InputParser.parseString(outStream, in, "Passport ID", Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
+				parCount++;
+
+				((PrintStream) outStream).println("Enter eye color, values - " + Arrays.toString(Color.values()));
+				Color eyeColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
+				parCount++;
 				
-				if(c <= 0 && !exc)
-				{
-					System.err.println("Illegal parameters: Count should be greater than 0");
-				}
-				else
-				{
-					expelledStudents = c;
-				}
-			}
-			parCount++;
-			
-			while(transferredStudents == 0)
-			{
-				boolean exc = false;
-				System.out.print("Enter transferred students count:\n> ");
-				String cStr = in.nextLine();
-				long c;
-				try
-				{
-					exc = false;
-					c = Long.parseLong(cStr);
-				}
-				catch(NumberFormatException e)
-				{
-					exc = true;
-					c = 0;
-					System.err.println("Illegal parameters: Count should be a number");
-				}
+				((PrintStream) outStream).println("Enter hair color, values - " + Arrays.toString(Color.values()));
+				Color hairColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
+				parCount++;
 				
-				if(c <= 0 && !exc)
-				{
-					System.err.println("Illegal parameters: Count should be greater than 0");
-				}
-				else
-				{
-					transferredStudents = c;
-				}
-			}
-			parCount++;
-			
-			while(formOfEducation == null)
-			{
-				System.out.print("Enter form of education, values - " + Arrays.toString(FormOfEducation.values()) + ":\n> ");
-				String formStr = in.nextLine();
-				try
-				{
-					formOfEducation = FormOfEducation.valueOf(formStr);
-				}
-				catch(IllegalArgumentException e)
-				{
-					System.err.println("Illegal parameters: You can use only these values: " + Arrays.toString(FormOfEducation.values()));
-				}
-			}
-			parCount++;
-			
-			System.out.print("Does the group have an admin? [YES, NO]\n> ");
-			String ansStr = in.nextLine();
-			parCount++;
-			if(ansStr.equals("YES"))
-			{
-				String admName = null;
-				while(admName == null || admName.isEmpty())
-				{
-					System.out.print("Enter name:\n> ");
-					admName = in.nextLine();
-					if(admName == null || admName.isEmpty())
-					{
-						System.err.println("Illegal parameters: Name can't be null or empty");
-					}
-				}
-				parCount++;
-				System.out.print("Enter passport ID:\n> ");
-				String passportID = in.nextLine();
-				if(passportID.isEmpty())
-				{
-					passportID = null;
-				}
-				parCount++;
-				Color eyeColor = null;
-				while(eyeColor == null)
-				{
-					System.out.print("Enter eye color, values - " + Arrays.toString(Color.values()) + ":\n> ");
-					String colStr = in.nextLine();
-					try
-					{
-						eyeColor = Color.valueOf(colStr);
-					}
-					catch(IllegalArgumentException e)
-					{
-						System.err.println("Illegal parameters: You can use only these values: " + Arrays.toString(Color.values()));
-					}
-				}
-				parCount++;
-				Color hairColor = null;
-				while(hairColor == null)
-				{
-					System.out.print("Enter hair color, values - " + Arrays.toString(Color.values()) + ":\n> ");
-					String colStr = in.nextLine();
-					try
-					{
-						hairColor = Color.valueOf(colStr);
-					}
-					catch(IllegalArgumentException e)
-					{
-						System.err.println("Illegal parameters: You can use only these values: " + Arrays.toString(Color.values()));
-					}
-				}
-				parCount++;
+				((PrintStream) outStream).println("Enter country, values - " + Arrays.toString(Country.values()));
+				String an = InputParser.parseEnum(outStream, in, Country.class, true);
 				Country nationality = null;
-				String conStr = "";
-				boolean en = false;
-				while(!en)
+				if(an != null)
 				{
-					System.out.print("Enter country, values - " + Arrays.toString(Country.values()) + ":\n> ");
-					conStr = in.nextLine();
-					try
-					{
-						if(!conStr.isEmpty())
-						{
-							nationality = Country.valueOf(conStr);
-							en = true;
-						}
-						else
-						{
-							en = true;
-						}
-					}
-					catch(IllegalArgumentException e)
-					{
-						en = false;
-						System.err.println("Illegal parameters: You can use only these values: " + Arrays.toString(Country.values()));
-					}
+					nationality = Country.valueOf(an);
 				}
 				parCount++;
+				
 				Location location;
-				System.out.print("Enter name location:\n> ");
-				String nameStr = null;
-				while(nameStr == null)
-				{
-					nameStr = in.nextLine();
-					if(nameStr.length() > 348)
-					{
-						nameStr = null;
-						System.err.println("Name length can't be greater than 348");
-					}
-				}
+				((PrintStream) outStream).println("Enter name location:");
+				String nameStr = InputParser.parseString(outStream, in, "Location name", Integer.MIN_VALUE, 348, true, false);
 				parCount++;
-				System.out.print("Enter X:\n> ");
-				float x = in.nextFloat();
+				
+				((PrintStream) outStream).println("Enter X:");
+				float x1 = InputParser.parseFloat(outStream, in, "X", Float.MIN_VALUE, Float.MAX_VALUE, false, true);
 				parCount++;
-				System.out.print("Enter Y:\n> ");
-				Float y = null;
-				while(y == null)
-				{
-					try
-					{
-						y = in.nextFloat();
-					}
-					catch(NumberFormatException e)
-					{
-						System.err.println("Illegal parameters: Y should be a number");
-					}
-				}
+				
+				((PrintStream) outStream).println("Enter Y:");
+				Float y1 = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
 				parCount++;
-				System.out.print("Enter Z:\n> ");
-				Long z = null;
-				while(z == null)
-				{
-					try
-					{
-						z = in.nextLong();
-					}
-					catch(NumberFormatException e)
-					{
-						System.err.println("Illegal parameters: Z should be a number");
-					}
-				}
+				
+				((PrintStream) outStream).println("Enter Z:");
+				Long z = InputParser.parseLong(outStream, in, "Z", Long.MIN_VALUE, Long.MAX_VALUE, false, false);
 				parCount++;
-				location = new Location(x, y, z, nameStr);
+				
+				location = new Location(x1, y1, z, nameStr);
 				groupAdmin = new Person(admName, passportID, eyeColor, hairColor, nationality, location);
 			}
 			env.getCollection().push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin));
-			System.out.println("Element added!");
+			((PrintStream) outStream).println("Element added!");
 		}
 		return parCount;
 	}

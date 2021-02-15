@@ -1,7 +1,5 @@
 package itmo.labs.zavar.studygroup;
 
-import itmo.labs.zavar.exception.IllegalParameterException;
-
 public class Person 
 {
 	
@@ -12,11 +10,11 @@ public class Person
     private Country nationality; //Поле может быть null
     private Location location; //Поле не может быть null
     
-	public Person(String name, String passportID, Color eyeColor, Color hairColor, Country nationality, Location location) throws IllegalParameterException 
+	public Person(String name, String passportID, Color eyeColor, Color hairColor, Country nationality, Location location) throws IllegalArgumentException 
 	{
 		if(name == null || name.isEmpty())
 		{
-			throw new IllegalParameterException("Name can't be null or empty");
+			throw new IllegalArgumentException("Name can't be null or empty");
 		}
 		else
 		{
@@ -25,7 +23,7 @@ public class Person
 		
 		if(name != null && name.isEmpty())
 		{
-			throw new IllegalParameterException("Passport ID can't be empty");
+			throw new IllegalArgumentException("Passport ID can't be empty");
 		}
 		else
 		{
@@ -34,7 +32,7 @@ public class Person
 		
 		if(eyeColor == null)
 		{
-			throw new IllegalParameterException("Eye color can't be null");
+			throw new IllegalArgumentException("Eye color can't be null");
 		}
 		else
 		{
@@ -43,7 +41,7 @@ public class Person
 		
 		if(hairColor == null)
 		{
-			throw new IllegalParameterException("Hair color can't be null");
+			throw new IllegalArgumentException("Hair color can't be null");
 		}
 		else
 		{
@@ -54,7 +52,7 @@ public class Person
 		
 		if(location == null)
 		{
-			throw new IllegalParameterException("Location can't be null");
+			throw new IllegalArgumentException("Location can't be null");
 		}
 		else
 		{
@@ -95,8 +93,9 @@ public class Person
     @Override
 	public String toString() 
     {
-		return "Person [name=" + name + ", passportID=" + passportID + ", eyeColor=" + eyeColor + ", hairColor="
-				+ hairColor + ", nationality=" + nationality + ", location=" + location + "]";
+		return "name=" + name + ", passportID=" + passportID + ", eyeColor=" + eyeColor + ", hairColor="
+				+ hairColor + ", nationality=" + nationality + ", locationX=" + location.getX() + ", locationY=" + location.getY() + 
+				", locationZ=" + location.getZ() + ", locationName=" + location.getName();
 	}
     
 }

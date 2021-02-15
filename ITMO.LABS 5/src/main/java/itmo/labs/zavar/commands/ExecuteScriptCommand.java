@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.io.input.ReaderInputStream;
 
 import itmo.labs.zavar.commands.base.Command;
@@ -74,7 +73,8 @@ public class ExecuteScriptCommand extends Command
 					{
 						if(env.getCommandMap().get(command[0]).isNeedInput())
 						{
-							List<String> subList = ListUtils.subtract(lines, executed);
+							List<String> subList = lines;
+							subList.removeAll(executed);
 					        String to = "";
 					        for(String l : subList)
 					        {

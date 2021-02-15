@@ -2,9 +2,10 @@ package itmo.labs.zavar.commands.base;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Parser 
+public class InputParser 
 {
 	public static Integer parseInteger(OutputStream err, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean primitive)
 	{
@@ -77,7 +78,7 @@ public class Parser
 		return i;
 	}
 	
-	public static Long parseLong(OutputStream out, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean primitive)
+	public static Long parseLong(OutputStream err, Scanner in, String name, long greaterThan, long lessThan, boolean canBeNull, boolean primitive)
 	{
 		String longStr = "";
 		Long l = null;
@@ -112,7 +113,7 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be greater than " + greaterThan);
+							((PrintStream) err).println(name + " value must be greater than " + greaterThan);
 						}
 					}
 					else if(greaterThan == Long.MIN_VALUE)
@@ -123,7 +124,7 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be less than " + lessThan);
+							((PrintStream) err).println(name + " value must be less than " + lessThan);
 						}
 					}
 					else
@@ -134,13 +135,13 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
+							((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
 						}
 					}
 				}
 				catch(NumberFormatException e)
 				{
-					((PrintStream) out).println(name + " value must be greater than " + (greaterThan == Long.MIN_VALUE ? "-9223372036854775809" : greaterThan) + ", less than " + (lessThan == Long.MAX_VALUE ? "9223372036854775808" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Long.MIN_VALUE ? "-9223372036854775809" : greaterThan) + ", less than " + (lessThan == Long.MAX_VALUE ? "9223372036854775808" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
 				}
 			}
 		}while(true);
@@ -148,7 +149,7 @@ public class Parser
 		return l;
 	}
 	
-	public static Float parseFloat(OutputStream out, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean primitive)
+	public static Float parseFloat(OutputStream err, Scanner in, String name, float greaterThan, float lessThan, boolean canBeNull, boolean primitive)
 	{
 		String floatStr = "";
 		Float f = null;
@@ -183,7 +184,7 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be greater than " + greaterThan);
+							((PrintStream) err).println(name + " value must be greater than " + greaterThan);
 						}
 					}
 					else if(greaterThan == Float.MIN_VALUE)
@@ -194,7 +195,7 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be less than " + lessThan);
+							((PrintStream) err).println(name + " value must be less than " + lessThan);
 						}
 					}
 					else
@@ -205,13 +206,13 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
+							((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
 						}
 					}
 				}
 				catch(NumberFormatException e)
 				{
-					((PrintStream) out).println(name + " value must be greater than " + (greaterThan == Float.MIN_VALUE ? "(1.4E-45)-1" : greaterThan) + ", less than " + (lessThan == Float.MAX_VALUE ? "(3.4028235E38)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Float.MIN_VALUE ? "(1.4E-45)-1" : greaterThan) + ", less than " + (lessThan == Float.MAX_VALUE ? "(3.4028235E38)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
 				}
 			}
 		}while(true);
@@ -219,7 +220,7 @@ public class Parser
 		return f;
 	}
 	
-	public static Double parseDouble(OutputStream out, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean primitive)
+	public static Double parseDouble(OutputStream err, Scanner in, String name, double greaterThan, double lessThan, boolean canBeNull, boolean primitive)
 	{
 		String floatStr = "";
 		Double d = null;
@@ -254,7 +255,7 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be greater than " + greaterThan);
+							((PrintStream) err).println(name + " value must be greater than " + greaterThan);
 						}
 					}
 					else if(greaterThan == Double.MIN_VALUE)
@@ -265,7 +266,7 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be less than " + lessThan);
+							((PrintStream) err).println(name + " value must be less than " + lessThan);
 						}
 					}
 					else
@@ -276,17 +277,119 @@ public class Parser
 						}
 						else
 						{
-							((PrintStream) out).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
+							((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
 						}
 					}
 				}
 				catch(NumberFormatException e)
 				{
-					((PrintStream) out).println(name + " value must be greater than " + (greaterThan == Double.MIN_VALUE ? "(4.9E-324)-1" : greaterThan) + ", less than " + (lessThan == Double.MAX_VALUE ? "(1.7976931348623157E308)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Double.MIN_VALUE ? "(4.9E-324)-1" : greaterThan) + ", less than " + (lessThan == Double.MAX_VALUE ? "(1.7976931348623157E308)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
 				}
 			}
 		}while(true);
 		
 		return d;
+	}
+	
+	public static String parseEnum(OutputStream err, Scanner in, Class<? extends Enum> enu, boolean canBeNull)
+	{
+		String par = "";
+		do
+		{
+			par = in.nextLine();
+			if(canBeNull && par.isEmpty())
+			{
+				return null;
+			}
+			else
+			{
+				try
+				{
+					par = Enum.valueOf(enu, par).toString();
+					break;
+				}
+				catch(IllegalArgumentException e)
+				{
+					((PrintStream) err).println("Incorrect value!");
+				}
+			}
+			
+		}while(true);
+		
+		return par;
+	}
+	
+	public static String parseString(OutputStream err, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean canBeEmpty)
+	{
+		String ret;
+		do
+		{
+			try
+			{
+				ret = in.nextLine();
+				
+				if(canBeNull && ret.isEmpty())
+				{
+					return null;
+				}
+				
+				if(canBeEmpty && ret.isEmpty())
+				{
+					return "";
+				}
+				
+				if((!canBeNull || !canBeEmpty) && ret.isEmpty())
+				{
+					((PrintStream) err).println(name +  " can't be null or empty");
+				}
+				else
+				{
+					if(greaterThan == Integer.MIN_VALUE && lessThan == Integer.MAX_VALUE)
+					{
+						break;
+					}
+					else if(lessThan == Integer.MAX_VALUE)
+					{
+						if(ret.length() > greaterThan)
+						{
+							break;
+						}
+						else
+						{
+							((PrintStream) err).println(name + " length must be greater than " + greaterThan);
+						}
+					}
+					else if(greaterThan == Integer.MIN_VALUE)
+					{
+						if(ret.length() < lessThan)
+						{
+							break;
+						}
+						else
+						{
+							((PrintStream) err).println(name + " length must be less than " + lessThan);
+						}
+					}
+					else
+					{
+						if(ret.length() > greaterThan && ret.length() < lessThan)
+						{
+							break;
+						}
+						else
+						{
+							((PrintStream) err).println(name + " length must be greater than " + greaterThan + ", less than " + lessThan);
+						}
+					}
+				}
+			}
+			catch(NoSuchElementException e)
+			{
+				((PrintStream) err).println("It isn't a string");
+			}
+			
+		}while(true);
+			
+		return ret;
 	}
 }

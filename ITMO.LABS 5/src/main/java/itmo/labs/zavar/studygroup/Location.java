@@ -1,7 +1,5 @@
 package itmo.labs.zavar.studygroup;
 
-import itmo.labs.zavar.exception.IllegalParameterException;
-
 public class Location 
 {
     private float x;
@@ -9,12 +7,12 @@ public class Location
     private Long z; //Поле не может быть null
     private String name; //Длина строки не должна быть больше 348, Поле может быть null
     
-	public Location(float x, Float y, Long z, String name) throws IllegalParameterException 
+	public Location(float x, Float y, Long z, String name) throws IllegalArgumentException 
 	{
 		this.x = x;
 		if(y == null)
 		{
-			throw new IllegalParameterException("Y can't be null");
+			throw new IllegalArgumentException("Y can't be null");
 		}
 		else
 		{
@@ -23,7 +21,7 @@ public class Location
 		
 		if(z == null)
 		{
-			throw new IllegalParameterException("Z can't be null");
+			throw new IllegalArgumentException("Z can't be null");
 		}
 		else
 		{
@@ -32,7 +30,7 @@ public class Location
 		
 		if(name != null && name.length() > 348)
 		{
-			throw new IllegalParameterException("Name length can't be greater than 348");
+			throw new IllegalArgumentException("Name length can't be greater than 348");
 		}
 		else
 		{
@@ -63,6 +61,6 @@ public class Location
 	@Override
 	public String toString() 
 	{
-		return "Location [x=" + x + ", y=" + y + ", z=" + z + ", name=" + name + "]";
+		return "x=" + x + ", y=" + y + ", z=" + z + ", name=" + name;
 	}
 }
