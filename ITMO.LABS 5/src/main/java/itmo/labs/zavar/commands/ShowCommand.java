@@ -57,6 +57,10 @@ public class ShowCommand extends Command
 					pr.println("Admin's location name: " + sg.getGroupAdmin().getLocation().getName());
 					pr.println();
 				}
+				else
+				{
+					pr.println();
+				}
 			}
 		}
 		return 0;

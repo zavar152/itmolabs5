@@ -67,12 +67,20 @@ public class CSVManager
 			StudyGroup temp;
 			while ((temp = beanReader.read(StudyGroup.class, nameMapping)) != null) 
 			{
-				stack.push(temp);
+				long id = temp.getId();
+				if(stack.stream().noneMatch(sg -> sg.getId() == id))
+				{
+					stack.push(temp);
+				}
+				else
+				{
+					((PrintStream) out).println("Error while parsing .csv file! Every ID must be unique (group name = "+ temp.getName() +")!");
+				}
 			}
 			beanReader.close();
 			return true;
 		}
-		catch(SuperCsvException e)
+		catch(SuperCsvException | IllegalArgumentException e)
 		{
 			((PrintStream) out).println("Error while parsing .csv file! Check if your data is correct!");
 			return false;
