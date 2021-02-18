@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class StudyGroup 
+public class StudyGroup implements Comparable<StudyGroup>
 {
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -368,5 +368,11 @@ public class StudyGroup
 				+ creationDate + ", studentsCount=" + studentsCount + ", expelledStudents=" + expelledStudents
 				+ ", transferredStudents=" + transferredStudents + ", formOfEducation=" + formOfEducation
 				+ ", groupAdmin=[" + groupAdmin + "]]";
+	}
+
+	@Override
+	public int compareTo(StudyGroup o) 
+	{
+		return o.getCreationLocalDate().compareTo(this.creationDate);
 	}
 }

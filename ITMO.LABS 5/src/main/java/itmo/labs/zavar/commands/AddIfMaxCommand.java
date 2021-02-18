@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -22,15 +23,15 @@ import itmo.labs.zavar.studygroup.Location;
 import itmo.labs.zavar.studygroup.Person;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
-public class AddCommand extends Command
+public class AddIfMaxCommand extends Command
 {
-	private static AddCommand command;
+	private static AddIfMaxCommand command;
 	
-	public AddCommand() 
+	public AddIfMaxCommand() 
 	{
-		super("add", "{ELEMENT}");
+		super("add_if_max", "{ELEMENT}");
 	}
-
+	
 	@Override
 	public boolean isNeedInput() 
 	{
@@ -95,8 +96,8 @@ public class AddCommand extends Command
 			formOfEducation = FormOfEducation.valueOf(InputParser.parseEnum(outStream, in, FormOfEducation.class, false));
 			parCount++;
 			
-			((PrintStream) outStream).println("Does the group have an admin? Enter [YES] if it has");
-			String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, true);
+			((PrintStream) outStream).println("Does the group have an admin? [YES]");
+			String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
 			parCount++;
 			
 			if(answ.equals("YES"))
@@ -146,21 +147,30 @@ public class AddCommand extends Command
 				location = new Location(x1, y1, z, nameStr);
 				groupAdmin = new Person(admName, passportID, eyeColor, hairColor, nationality, location);
 			}
-			env.getCollection().push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin));
-			((PrintStream) outStream).println("Element added!");
+			StudyGroup temp1 = new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin);
+			StudyGroup temp2 = Collections.max(env.getCollection());
+			if(temp1.compareTo(temp2) == 1)
+			{
+				env.getCollection().push(temp1);
+				((PrintStream) outStream).println("Element added!");
+			}
+			else
+			{
+				((PrintStream) outStream).println("Element less than max element in collection!");
+			}
 		}
 		return parCount;
 	}
-
+	
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new AddCommand();
+		command = new AddIfMaxCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
 	public String getHelp() 
 	{
-		return "This command adds one element to collection!";
+		return "This command shows ";
 	}
 }

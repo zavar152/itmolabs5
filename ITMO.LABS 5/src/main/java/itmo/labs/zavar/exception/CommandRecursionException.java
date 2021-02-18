@@ -1,8 +1,8 @@
 package itmo.labs.zavar.exception;
 
-public class RecursionException extends CommandException
+public class CommandRecursionException extends CommandException
 {
-	public RecursionException() 
+	public CommandRecursionException() 
 	{
 		super("Recursion detected! Execution will be aborted!");
 	}

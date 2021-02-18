@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,7 +20,8 @@ import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.exception.RecursionException;
+import itmo.labs.zavar.exception.CommandRecursionException;
+import itmo.labs.zavar.exception.CommandRunningException;
 
 public class ExecuteScriptCommand extends Command
 {
@@ -41,12 +43,12 @@ public class ExecuteScriptCommand extends Command
 		{
 			if(!new File((String) args[0]).exists())
 			{
-				throw new CommandException("File not found!");
+				throw new CommandRunningException("File not found!");
 			}
 			
 			if((env.getHistory().getTempHistory().size() > 1) && (env.getHistory().getTempHistory().contains(getName() + " " + Arrays.toString(args).replace("[", "").replace("]", ""))))
 			{
-				throw new RecursionException();
+				throw new CommandRecursionException();
 			}
 			env.getHistory().addToTemp((getName() + " " + Arrays.toString(args).replace("[", "").replace("]", "")));
 			
@@ -58,7 +60,7 @@ public class ExecuteScriptCommand extends Command
 			} 
 			catch (IOException e) 
 			{
-				throw new CommandException("IOException!");
+				throw new CommandRunningException("IOException!");
 			}
 			
 			for(int i = 0; i < lines.size(); i++)
@@ -92,15 +94,16 @@ public class ExecuteScriptCommand extends Command
 					} 
 					catch(CommandException e) 
 					{
-						System.err.println(e.getMessage());
+						((PrintStream) outStream).println(e.getMessage());
 					}
 				}
 				else
 				{
-					System.err.println("Unknown command #" + (i + 1) + " ! Please, check your script!");
+					((PrintStream) outStream).println("Unknown command #" + (i + 1) + " ! Please, check your script!");
 				}
 			}
 		}
+		((PrintStream) outStream).println("Script completed!");
 		return 0;
 	}
 

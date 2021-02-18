@@ -7,12 +7,17 @@ import java.util.Scanner;
 import java.util.Stack;
 
 import itmo.labs.zavar.commands.AddCommand;
+import itmo.labs.zavar.commands.AddIfMaxCommand;
+import itmo.labs.zavar.commands.AddIfMinCommand;
+import itmo.labs.zavar.commands.AverageOfTSCommand;
 import itmo.labs.zavar.commands.ClearCommand;
+import itmo.labs.zavar.commands.CountGreaterThanTSCommand;
 import itmo.labs.zavar.commands.ExecuteScriptCommand;
 import itmo.labs.zavar.commands.ExitCommand;
 import itmo.labs.zavar.commands.HelpCommand;
 import itmo.labs.zavar.commands.HistoryCommand;
 import itmo.labs.zavar.commands.InfoCommand;
+import itmo.labs.zavar.commands.RemoveAnyBySCCommand;
 import itmo.labs.zavar.commands.RemoveByIDCommand;
 import itmo.labs.zavar.commands.SaveCommand;
 import itmo.labs.zavar.commands.ShowCommand;
@@ -57,6 +62,11 @@ public class Launcher
 		ShuffleCommand.register(commandsMap);
 		HistoryCommand.register(commandsMap);
 		SaveCommand.register(commandsMap);
+		RemoveAnyBySCCommand.register(commandsMap);
+		AverageOfTSCommand.register(commandsMap);
+		CountGreaterThanTSCommand.register(commandsMap);
+		AddIfMaxCommand.register(commandsMap);
+		AddIfMinCommand.register(commandsMap);
 		
 		Scanner in = new Scanner(System.in);
 		Environment env = new Environment(commandsMap, stack);
