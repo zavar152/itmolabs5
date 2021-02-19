@@ -1,5 +1,6 @@
 package itmo.labs.zavar.commands.base;
 
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -10,12 +11,14 @@ public class Environment
 	private HashMap<String, Command> map;
 	private Stack<StudyGroup> stack;
 	private History history;
+	private BasicFileAttributes fileAttr;
 	
-	public Environment(HashMap<String, Command> map, Stack<StudyGroup> stack)
+	public Environment(BasicFileAttributes fileAttr, HashMap<String, Command> map, Stack<StudyGroup> stack)
 	{
 		this.map = map;
 		this.stack = stack;
 		history = new History();
+		this.fileAttr = fileAttr;
 	}
 
 	public HashMap<String, Command> getCommandMap() 
@@ -31,6 +34,11 @@ public class Environment
 	public History getHistory() 
 	{
 		return history;
+	}
+	
+	public BasicFileAttributes getFileAttr() 
+	{
+		return fileAttr;
 	}
 	
 	public class History 

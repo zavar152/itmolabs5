@@ -1,6 +1,9 @@
 package itmo.labs.zavar;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -23,6 +26,7 @@ import itmo.labs.zavar.commands.SaveCommand;
 import itmo.labs.zavar.commands.ShowCommand;
 import itmo.labs.zavar.commands.ShuffleCommand;
 import itmo.labs.zavar.commands.TestCommand;
+import itmo.labs.zavar.commands.UpdateCommand;
 import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.csv.CSVManager;
@@ -67,15 +71,18 @@ public class Launcher
 		CountGreaterThanTSCommand.register(commandsMap);
 		AddIfMaxCommand.register(commandsMap);
 		AddIfMinCommand.register(commandsMap);
+		UpdateCommand.register(commandsMap);
 		
 		Scanner in = new Scanner(System.in);
-		Environment env = new Environment(commandsMap, stack);
+		Environment env = new Environment(Files.readAttributes(new File(args[0]).toPath(), BasicFileAttributes.class), commandsMap, stack);
+		
 		
 		while(true)
 		{
 			String input = in.nextLine();
+			input = input.replaceAll(" +", " "); 
 			String command[] = input.split(" ");
-				
+			
 			if(env.getCommandMap().containsKey(command[0]))
 			{
 				try 

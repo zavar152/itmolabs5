@@ -30,7 +30,7 @@ public class ClearCommand extends Command
 		{
 			env.getCollection().clear();
 			((PrintStream) outStream).println("Collection cleared");
-		}
+		} 
 		return 0;
 	}
 

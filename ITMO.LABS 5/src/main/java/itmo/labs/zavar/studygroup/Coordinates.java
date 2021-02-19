@@ -7,7 +7,7 @@ public class Coordinates
     private Float y; //Поле не может быть null
     
     public Coordinates(Double x, Float y) throws IllegalArgumentException 
-    {
+    { 
 		if(x == null || x <= -573)
 		{
 			throw new IllegalArgumentException("X should be greater than -573 and can't be null");

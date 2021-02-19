@@ -66,6 +66,7 @@ public class ExecuteScriptCommand extends Command
 			for(int i = 0; i < lines.size(); i++)
 			{
 				String line = lines.get(i);
+				line = line.replaceAll(" +", " "); 
 				String command[] = line.split(" ");
 				executed.add(line);
 				

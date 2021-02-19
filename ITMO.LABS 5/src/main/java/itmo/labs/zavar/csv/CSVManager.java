@@ -11,11 +11,11 @@ import java.util.Stack;
 
 import org.supercsv.cellprocessor.FmtDate;
 import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.ParseEnum;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.constraint.NotNull;
-import org.supercsv.cellprocessor.constraint.UniqueHashCode;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.io.CsvBeanReader;
@@ -41,7 +41,7 @@ public class CSVManager
 			writer.writeHeader(nameMapping);
 			for(StudyGroup sg : stack)
 			{
-				writer.write(sg, nameMapping, getProcessors());
+				writer.write(sg, nameMapping, getProcessors0());
 			}
 			writer.close();
 			return true;
@@ -55,17 +55,17 @@ public class CSVManager
 		{
 			((PrintStream) out).println(e.getMessage());
 			return false;
-		}
-	}
+		} 
+	} 
 	
 	public static boolean read(String path, Stack<StudyGroup> stack, OutputStream out)
-	{
+	{ 
 		try 
 		{
 			beanReader = new CsvBeanReader(new InputStreamReader(new FileInputStream(path)), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
 			beanReader.getHeader(true);
-			StudyGroup temp;
-			while ((temp = beanReader.read(StudyGroup.class, nameMapping)) != null) 
+			StudyGroup temp; 
+			while ((temp = beanReader.read(StudyGroup.class, nameMapping, getProcessors1())) != null) 
 			{
 				long id = temp.getId();
 				if(stack.stream().noneMatch(sg -> sg.getId() == id))
@@ -82,6 +82,7 @@ public class CSVManager
 		}
 		catch(SuperCsvException | IllegalArgumentException e)
 		{
+			e.printStackTrace();
 			((PrintStream) out).println("Error while parsing .csv file! Check if your data is correct!");
 			return false;
 		}
@@ -92,18 +93,34 @@ public class CSVManager
 		}
 	}
 	
-	private static CellProcessor[] getProcessors() 
-	{
+	private static CellProcessor[] getProcessors0() 
+	{ 
 		CellProcessor[] processors = new CellProcessor[] { 
-				new UniqueHashCode(),
+				new NotNull(new ParseLong()),
 				new NotNull(), 
 				new NotNull(), 
-				new FmtDate("yyyy-MM-dd"),
-				new ParseLong(),
-				new ParseInt(),
-				new ParseLong(),
-				new ParseEnum(FormOfEducation.class),
+				new NotNull(new FmtDate("yyyy-MM-dd")),
+				new NotNull(new ParseLong()),
+				new NotNull(new ParseInt()),
+				new NotNull(new ParseLong()),
+				new NotNull(new ParseEnum(FormOfEducation.class)),
 				new Optional()
+		};
+		return processors;
+	}
+	
+	private static CellProcessor[] getProcessors1() 
+	{ 
+		CellProcessor[] processors = new CellProcessor[] { 
+				new NotNull(new ParseLong()),
+				new NotNull(), 
+				new NotNull(new ParseCoordinates()), 
+				new NotNull(new ParseDate("yyyy-MM-dd")),
+				new NotNull(new ParseLong()),
+				new NotNull(new ParseInt()),
+				new NotNull(new ParseLong()),
+				new NotNull(new ParseEnum(FormOfEducation.class)),
+				new Optional(new ParsePerson())
 		};
 		return processors;
 	}

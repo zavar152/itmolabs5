@@ -75,7 +75,7 @@ public class InputParser
 			}
 		}while(true);
 		
-		return i;
+		return i; 
 	}
 	
 	public static Long parseLong(OutputStream err, Scanner in, String name, long greaterThan, long lessThan, boolean canBeNull, boolean primitive)

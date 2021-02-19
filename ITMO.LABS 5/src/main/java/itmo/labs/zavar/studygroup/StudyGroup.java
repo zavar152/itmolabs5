@@ -3,6 +3,7 @@ package itmo.labs.zavar.studygroup;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class StudyGroup implements Comparable<StudyGroup>
@@ -125,21 +126,6 @@ public class StudyGroup implements Comparable<StudyGroup>
     		this.coordinates = coordinates;
     	}
 	}
-	
-	public void setCoordinates(String coordinates) throws NumberFormatException, IllegalArgumentException 
-	{
-		if(coordinates == null || coordinates.isEmpty())
-    	{
-    		throw new IllegalArgumentException("Coordinates can't be null");
-    	}
-    	else
-    	{
-    		String[] str = coordinates.split(",");
-    		str[0] = str[0].substring(2);
-    		str[1] = str[1].substring(3);	
-			this.coordinates = new Coordinates(Double.parseDouble(str[0]), Float.parseFloat(str[1]));
-    	}
-	}
 
 	public Long getStudentsCount() 
 	{
@@ -155,28 +141,6 @@ public class StudyGroup implements Comparable<StudyGroup>
     	else
     	{
     		this.studentsCount = studentsCount;
-    	}
-	}
-	
-	public void setStudentsCount(String studentsCount) 
-	{
-		Long temp = null;
-		try
-		{
-			temp = Long.parseLong(studentsCount);
-		}
-		catch(NumberFormatException e)
-		{
-			throw new IllegalArgumentException("Students count should be a long type");
-		}
-		
-    	if(temp == null || temp <= 0)
-    	{
-    		throw new IllegalArgumentException("Students count should be greater than 0 and can't be null");
-    	}
-    	else
-    	{
-    		this.studentsCount = temp;
     	}
 	}
 
@@ -196,28 +160,6 @@ public class StudyGroup implements Comparable<StudyGroup>
     		this.expelledStudents = expelledStudents;
     	}
 	}
-	
-	public void setExpelledStudents(String expelledStudents) 
-	{
-		int temp;
-		try
-		{
-			temp = Integer.parseInt(expelledStudents);
-		}
-		catch(NumberFormatException e)
-		{
-			throw new IllegalArgumentException("Expelled students count should be an int type");
-		}
-		
-		if(temp <= 0)
-    	{
-    		throw new IllegalArgumentException("Expelled students count should be greater than 0");
-    	}
-    	else
-    	{
-    		this.expelledStudents = temp;
-    	}
-	}
 
 	public long getTransferredStudents() 
 	{
@@ -233,27 +175,6 @@ public class StudyGroup implements Comparable<StudyGroup>
     	else
     	{
     		this.transferredStudents = transferredStudents;
-    	}
-	}
-	
-	public void setTransferredStudents(String transferredStudents) 
-	{
-		Long temp = null;
-		try
-		{
-			temp = Long.parseLong(transferredStudents);
-		}
-		catch(NumberFormatException e)
-		{
-			throw new IllegalArgumentException("Transferred students count should be an long type");
-		}
-    	if(temp <= 0)
-    	{
-    		throw new IllegalArgumentException("Transferred students count should be greater than 0");
-    	}
-    	else
-    	{
-    		this.transferredStudents = temp;
     	}
 	}
 
@@ -274,18 +195,6 @@ public class StudyGroup implements Comparable<StudyGroup>
     	}
 	}
 	
-	public void setFormOfEducation(String formOfEducation) 
-	{
-		if(formOfEducation == null || formOfEducation.isEmpty())
-    	{
-    		throw new IllegalArgumentException("Form of education can't be null");
-    	}
-    	else
-    	{
-    		this.formOfEducation = FormOfEducation.valueOf(formOfEducation);
-    	}
-	}
-
 	public Person getGroupAdmin() 
 	{
 		return groupAdmin;
@@ -296,11 +205,11 @@ public class StudyGroup implements Comparable<StudyGroup>
 		this.groupAdmin = groupAdmin;
 	}
 
-	public void setGroupAdmin(String groupAdmin) throws NumberFormatException, IllegalArgumentException 
+	/*public void setGroupAdmin(String groupAdmin) throws NumberFormatException, IllegalArgumentException 
 	{
 		String[] str = groupAdmin.split(",");
 		this.groupAdmin = new Person(str[0].substring(5), str[1].substring(12), Color.valueOf(str[2].substring(10)), Color.valueOf(str[3].substring(11)), Country.valueOf(str[4].substring(13)), new Location(Float.parseFloat(str[5].substring(11)), Float.parseFloat(str[6].substring(11)), Long.parseLong(str[7].substring(11)), str[8].substring(14)));
-	}
+	}*/
 	
 	public long getId() 
 	{
@@ -319,7 +228,7 @@ public class StudyGroup implements Comparable<StudyGroup>
     	}
 	}
 	
-	public void setId(String id) 
+	/*public void setId(String id) 
 	{
 		long temp;
 		try
@@ -339,7 +248,7 @@ public class StudyGroup implements Comparable<StudyGroup>
     	{
     		this.id = temp;
     	}
-	}
+	}*/
 
 	public LocalDate getCreationLocalDate() 
 	{
@@ -351,14 +260,9 @@ public class StudyGroup implements Comparable<StudyGroup>
 		return new SimpleDateFormat("yyyy-MM-dd").parse(creationDate.toString());
 	}
 
-	public void setCreationDate(LocalDate creationDate) 
+	public void setCreationDate(Date date) 
 	{
-		this.creationDate = creationDate;
-	}
-	
-	public void setCreationDate(String creationDate) 
-	{
-		this.creationDate = LocalDate.parse(creationDate);
+		this.creationDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	@Override

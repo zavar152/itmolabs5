@@ -40,7 +40,7 @@ public class AddCommand extends Command
 	@Override
 	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
-		int parCount = 0;
+		int parCount = 0; 
 		if(args.length > 0)
 		{
 			throw new CommandArgumentException("This command doesn't require any arguments!\n" + getUsage());

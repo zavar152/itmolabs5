@@ -25,7 +25,7 @@ public class HistoryCommand extends Command
 	{
 		String out = "";
 		if(args.length > 2 || args.length < 0 )
-		{
+		{ 
 			throw new CommandArgumentException("This command requires one or zero arguments!\n" + getUsage());
 		}
 		else if(args.length == 0)

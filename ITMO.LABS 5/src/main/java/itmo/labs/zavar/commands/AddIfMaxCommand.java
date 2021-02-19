@@ -96,7 +96,7 @@ public class AddIfMaxCommand extends Command
 			formOfEducation = FormOfEducation.valueOf(InputParser.parseEnum(outStream, in, FormOfEducation.class, false));
 			parCount++;
 			
-			((PrintStream) outStream).println("Does the group have an admin? [YES]");
+			((PrintStream) outStream).println("Does the group have an admin? [YES]"); 
 			String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
 			parCount++;
 			
