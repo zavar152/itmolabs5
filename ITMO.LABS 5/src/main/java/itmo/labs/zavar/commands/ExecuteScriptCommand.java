@@ -70,11 +70,11 @@ public class ExecuteScriptCommand extends Command
 				String command[] = line.split(" ");
 				executed.add(line);
 				
-				if(env.getCommandMap().containsKey(command[0]))
+				if(env.getCommandsMap().containsKey(command[0]))
 				{
 					try 
 					{
-						if(env.getCommandMap().get(command[0]).isNeedInput())
+						if(env.getCommandsMap().get(command[0]).isNeedInput())
 						{
 							List<String> subList = lines;
 							subList.removeAll(executed);
@@ -84,13 +84,13 @@ public class ExecuteScriptCommand extends Command
 					        	to = to + l + "\n" ;
 					        }
 					        env.getHistory().addToGlobal(line);
-							int r = env.getCommandMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), new ReaderInputStream(new StringReader(to), StandardCharsets.UTF_8), outStream);
+							int r = env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), new ReaderInputStream(new StringReader(to), StandardCharsets.UTF_8), outStream);
 							i = i + r + 1;
 						}
 						else
 						{
 							env.getHistory().addToGlobal(line);
-							env.getCommandMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), inStream, outStream);
+							env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), inStream, outStream);
 						}
 					} 
 					catch(CommandException e) 

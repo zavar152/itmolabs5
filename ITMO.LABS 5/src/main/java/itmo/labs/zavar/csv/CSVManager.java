@@ -1,5 +1,6 @@
 package itmo.labs.zavar.csv;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -37,11 +38,16 @@ public class CSVManager
 	{
 		try 
 		{
-			writer = new CsvBeanWriter(new FileWriter(path), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
+			File csv = new File(path);
+			if(!csv.getParentFile().exists()) 
+			{
+				csv.getParentFile().mkdirs();
+			}
+			writer = new CsvBeanWriter(new FileWriter(csv), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
 			writer.writeHeader(nameMapping);
 			for(StudyGroup sg : stack)
 			{
-				writer.write(sg, nameMapping, getProcessors0());
+				writer.write(sg, nameMapping, getWriterProcessors());
 			}
 			writer.close();
 			return true;
@@ -53,6 +59,7 @@ public class CSVManager
 		}
 		catch (IOException e) 
 		{
+			((PrintStream) out).print("Error while writing .csv file! >>> ");
 			((PrintStream) out).println(e.getMessage());
 			return false;
 		} 
@@ -65,7 +72,7 @@ public class CSVManager
 			beanReader = new CsvBeanReader(new InputStreamReader(new FileInputStream(path)), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
 			beanReader.getHeader(true);
 			StudyGroup temp; 
-			while ((temp = beanReader.read(StudyGroup.class, nameMapping, getProcessors1())) != null) 
+			while ((temp = beanReader.read(StudyGroup.class, nameMapping, getReaderProcessors())) != null) 
 			{
 				long id = temp.getId();
 				if(stack.stream().noneMatch(sg -> sg.getId() == id))
@@ -94,7 +101,7 @@ public class CSVManager
 		}
 	}
 	
-	private static CellProcessor[] getProcessors0() 
+	private static CellProcessor[] getWriterProcessors() 
 	{ 
 		CellProcessor[] processors = new CellProcessor[] { 
 				new NotNull(new ParseLong()),
@@ -110,7 +117,7 @@ public class CSVManager
 		return processors;
 	}
 	
-	private static CellProcessor[] getProcessors1() 
+	private static CellProcessor[] getReaderProcessors() 
 	{ 
 		CellProcessor[] processors = new CellProcessor[] { 
 				new NotNull(new ParseLong()),

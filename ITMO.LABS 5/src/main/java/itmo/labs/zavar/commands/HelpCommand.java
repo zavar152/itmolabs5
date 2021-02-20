@@ -28,8 +28,8 @@ public class HelpCommand extends Command
 		}
 		else
 		{
-			env.getCommandMap().forEach((k, v) -> {
-				((PrintStream) outStream).println("<"+ env.getCommandMap().get(k).getName() +">\n" + env.getCommandMap().get(k).getHelp() + "\n" + env.getCommandMap().get(k).getUsage() + "\n");
+			env.getCommandsMap().forEach((k, v) -> {
+				((PrintStream) outStream).println("<"+ env.getCommandsMap().get(k).getName() +">\n" + env.getCommandsMap().get(k).getHelp() + "\n" + env.getCommandsMap().get(k).getUsage() + "\n");
 			});
 		}
 		return 0;

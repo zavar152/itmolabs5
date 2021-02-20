@@ -30,8 +30,15 @@ public class ParseCoordinates extends CellProcessorAdaptor implements StringCell
 		if(value instanceof String)
 		{
 			String[] str = ((String) value).split(",");
-    		str[0] = str[0].substring(2);
-    		str[1] = str[1].substring(3);
+			if(str[0].contains("x=") && str[1].contains("y="))
+			{
+	    		str[0] = str[0].split("=")[1].trim();
+	    		str[1] = str[1].split("=")[1].trim();
+			}
+			else
+			{
+				throw new IllegalArgumentException();
+			}
     		try
     		{
     			coordinates = new Coordinates(Double.parseDouble(str[0]), Float.parseFloat(str[1]));

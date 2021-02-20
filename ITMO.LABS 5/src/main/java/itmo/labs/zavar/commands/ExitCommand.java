@@ -2,6 +2,7 @@ package itmo.labs.zavar.commands;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 
 import itmo.labs.zavar.commands.base.Command;
@@ -27,6 +28,7 @@ public class ExitCommand extends Command
 		}
 		else
 		{
+			((PrintStream) outStream).println("Program is closing...");
 			System.exit(0);
 		}
 		return 0;

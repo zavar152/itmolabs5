@@ -47,6 +47,7 @@ public class AddCommand extends Command
 		}
 		else
 		{
+			PrintStream pr = new PrintStream(outStream);
 			Scanner in = new Scanner(inStream);
 			long id;
 			
@@ -61,7 +62,7 @@ public class AddCommand extends Command
 				id = 1;
 			}
 			
-			((PrintStream) outStream).println("Enter name:");
+			pr.println("Enter name:");
 			String name = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
 			parCount++;
 			
@@ -72,52 +73,52 @@ public class AddCommand extends Command
 			FormOfEducation formOfEducation = null;
 			Person groupAdmin = null;
 			
-			((PrintStream) outStream).println("Enter X coordinate:");
+			pr.println("Enter X coordinate:");
 			Double x = InputParser.parseDouble(outStream, in, "X", -573.0d, Double.MAX_VALUE, false, false);
-			((PrintStream) outStream).println("Enter Y coordinate:");
+			pr.println("Enter Y coordinate:");
 			Float y = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
 			coordinates = new Coordinates(x, y);
 			parCount++;
 			
-			((PrintStream) outStream).println("Enter students count:");
+			pr.println("Enter students count:");
 			studentsCount = InputParser.parseLong(outStream, in, "Students count", 0l, Long.MAX_VALUE, false, false);
 			parCount++;
 			
-			((PrintStream) outStream).println("Enter expelled students count:");
+			pr.println("Enter expelled students count:");
 			expelledStudents = InputParser.parseInteger(outStream, in, "Expelled students", 0, Integer.MAX_VALUE, false, true);
 			parCount++;
 			
-			((PrintStream) outStream).println("Enter transferred students count:");
+			pr.println("Enter transferred students count:");
 			transferredStudents = InputParser.parseLong(outStream, in, "Transferred students", 0l, Long.MAX_VALUE, false, true);
 			parCount++;
 			
-			((PrintStream) outStream).println("Enter form of education, values - " + Arrays.toString(FormOfEducation.values()));
+			pr.println("Enter form of education, values - " + Arrays.toString(FormOfEducation.values()));
 			formOfEducation = FormOfEducation.valueOf(InputParser.parseEnum(outStream, in, FormOfEducation.class, false));
 			parCount++;
 			
-			((PrintStream) outStream).println("Does the group have an admin? Enter [YES] if it has");
+			pr.println("Does the group have an admin? Enter [YES] if it has");
 			String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, true);
 			parCount++;
 			
 			if(answ.equals("YES"))
 			{
-				((PrintStream) outStream).println("Enter name:");
+				pr.println("Enter name:");
 				String admName = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
 				parCount++;
 				
-				((PrintStream) outStream).println("Enter passport ID:");
+				pr.println("Enter passport ID:");
 				String passportID = InputParser.parseString(outStream, in, "Passport ID", Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
 				parCount++;
 
-				((PrintStream) outStream).println("Enter eye color, values - " + Arrays.toString(Color.values()));
+				pr.println("Enter eye color, values - " + Arrays.toString(Color.values()));
 				Color eyeColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
 				parCount++;
 				
-				((PrintStream) outStream).println("Enter hair color, values - " + Arrays.toString(Color.values()));
+				pr.println("Enter hair color, values - " + Arrays.toString(Color.values()));
 				Color hairColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
 				parCount++;
 				
-				((PrintStream) outStream).println("Enter country, values - " + Arrays.toString(Country.values()));
+				pr.println("Enter country, values - " + Arrays.toString(Country.values()));
 				String an = InputParser.parseEnum(outStream, in, Country.class, true);
 				Country nationality = null;
 				if(an != null)
@@ -127,19 +128,19 @@ public class AddCommand extends Command
 				parCount++;
 				
 				Location location;
-				((PrintStream) outStream).println("Enter name location:");
+				pr.println("Enter name location:");
 				String nameStr = InputParser.parseString(outStream, in, "Location name", Integer.MIN_VALUE, 348, true, false);
 				parCount++;
 				
-				((PrintStream) outStream).println("Enter X:");
+				pr.println("Enter X:");
 				float x1 = InputParser.parseFloat(outStream, in, "X", Float.MIN_VALUE, Float.MAX_VALUE, false, true);
 				parCount++;
 				
-				((PrintStream) outStream).println("Enter Y:");
+				pr.println("Enter Y:");
 				Float y1 = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
 				parCount++;
 				
-				((PrintStream) outStream).println("Enter Z:");
+				pr.println("Enter Z:");
 				Long z = InputParser.parseLong(outStream, in, "Z", Long.MIN_VALUE, Long.MAX_VALUE, false, false);
 				parCount++;
 				
@@ -147,7 +148,7 @@ public class AddCommand extends Command
 				groupAdmin = new Person(admName, passportID, eyeColor, hairColor, nationality, location);
 			}
 			env.getCollection().push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin));
-			((PrintStream) outStream).println("Element added!");
+			pr.println("Element added!");
 		}
 		return parCount;
 	}

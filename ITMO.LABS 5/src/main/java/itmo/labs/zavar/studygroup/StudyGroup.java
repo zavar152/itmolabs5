@@ -204,12 +204,6 @@ public class StudyGroup implements Comparable<StudyGroup>
 	{
 		this.groupAdmin = groupAdmin;
 	}
-
-	/*public void setGroupAdmin(String groupAdmin) throws NumberFormatException, IllegalArgumentException 
-	{
-		String[] str = groupAdmin.split(",");
-		this.groupAdmin = new Person(str[0].substring(5), str[1].substring(12), Color.valueOf(str[2].substring(10)), Color.valueOf(str[3].substring(11)), Country.valueOf(str[4].substring(13)), new Location(Float.parseFloat(str[5].substring(11)), Float.parseFloat(str[6].substring(11)), Long.parseLong(str[7].substring(11)), str[8].substring(14)));
-	}*/
 	
 	public long getId() 
 	{
@@ -227,28 +221,6 @@ public class StudyGroup implements Comparable<StudyGroup>
     		this.id = id;
     	}
 	}
-	
-	/*public void setId(String id) 
-	{
-		long temp;
-		try
-		{
-			temp = Long.parseLong(id);
-		}
-		catch(NumberFormatException e)
-		{
-			throw new IllegalArgumentException("Id should be an long type");
-		}
-		
-    	if(temp <= 0)
-    	{
-    		throw new IllegalArgumentException("Id should be greater than 0");
-    	}
-    	else
-    	{
-    		this.id = temp;
-    	}
-	}*/
 
 	public LocalDate getCreationLocalDate() 
 	{
@@ -278,5 +250,65 @@ public class StudyGroup implements Comparable<StudyGroup>
 	public int compareTo(StudyGroup o) 
 	{
 		return o.getCreationLocalDate().compareTo(this.creationDate);
+	}
+
+	@Override
+	public int hashCode() 
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((coordinates == null) ? 0 : coordinates.hashCode());
+		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
+		result = prime * result + expelledStudents;
+		result = prime * result + ((formOfEducation == null) ? 0 : formOfEducation.hashCode());
+		result = prime * result + ((groupAdmin == null) ? 0 : groupAdmin.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((studentsCount == null) ? 0 : studentsCount.hashCode());
+		result = prime * result + (int) (transferredStudents ^ (transferredStudents >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StudyGroup other = (StudyGroup) obj;
+		if (coordinates == null) {
+			if (other.coordinates != null)
+				return false;
+		} else if (!coordinates.equals(other.coordinates))
+			return false;
+		if (creationDate == null) {
+			if (other.creationDate != null)
+				return false;
+		} else if (!creationDate.equals(other.creationDate))
+			return false;
+		if (expelledStudents != other.expelledStudents)
+			return false;
+		if (formOfEducation != other.formOfEducation)
+			return false;
+		if (groupAdmin == null) {
+			if (other.groupAdmin != null)
+				return false;
+		} else if (!groupAdmin.equals(other.groupAdmin))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (studentsCount == null) {
+			if (other.studentsCount != null)
+				return false;
+		} else if (!studentsCount.equals(other.studentsCount))
+			return false;
+		if (transferredStudents != other.transferredStudents)
+			return false;
+		return true;
 	}
 }

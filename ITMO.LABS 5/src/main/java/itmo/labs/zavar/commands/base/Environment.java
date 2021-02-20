@@ -35,7 +35,7 @@ public class Environment
 		}
 	}
 
-	public HashMap<String, Command> getCommandMap() 
+	public HashMap<String, Command> getCommandsMap() 
 	{
 		return map;
 	}

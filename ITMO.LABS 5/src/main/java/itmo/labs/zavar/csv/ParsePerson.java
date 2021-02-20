@@ -35,9 +35,16 @@ public class ParsePerson extends CellProcessorAdaptor implements StringCellProce
 			try
 			{
 				String[] str = ((String) value).split(",");
-				person = new Person(str[0].substring(5), str[1].substring(12), Color.valueOf(str[2].substring(10)), Color.valueOf(str[3].substring(11)), Country.valueOf(str[4].substring(13)), new Location(Float.parseFloat(str[5].substring(11)), Float.parseFloat(str[6].substring(11)), Long.parseLong(str[7].substring(11)), str[8].substring(14)));
+				if(str[0].contains("name=") && str[1].contains("passportID=") && str[2].contains("eyeColor=") && str[3].contains("hairColor=") && str[4].contains("nationality=") && str[5].contains("locationX=") && str[6].contains("locationY=") && str[7].contains("locationZ=") && str[8].contains("locationName="))
+				{
+					person = new Person(str[0].split("=")[1].trim(), str[1].split("=")[1].trim(), Color.valueOf(str[2].split("=")[1].trim()), Color.valueOf(str[3].split("=")[1].trim()), Country.valueOf(str[4].split("=")[1].trim()), new Location(Float.parseFloat(str[5].split("=")[1].trim()), Float.parseFloat(str[6].split("=")[1].trim()), Long.parseLong(str[7].split("=")[1].trim()), str[8].split("=")[1].trim()));
+				}
+				else
+				{
+					throw new IllegalArgumentException();
+				}
 			}
-    		catch(IllegalArgumentException e)
+    		catch(ArrayIndexOutOfBoundsException | IllegalArgumentException e)
     		{
 				throw new SuperCsvCellProcessorException(String.format("'%s' could not be parsed as an Person", value),
 						context, this, e);

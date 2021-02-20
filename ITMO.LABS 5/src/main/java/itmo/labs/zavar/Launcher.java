@@ -83,12 +83,12 @@ public class Launcher
 			input = input.replaceAll(" +", " "); 
 			String command[] = input.split(" ");
 			
-			if(env.getCommandMap().containsKey(command[0]))
+			if(env.getCommandsMap().containsKey(command[0]))
 			{
 				try 
 				{
 					env.getHistory().addToGlobal(input);
-					env.getCommandMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
+					env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
 					env.getHistory().clearTempHistory();
 				} 
 				catch(CommandException e) 
