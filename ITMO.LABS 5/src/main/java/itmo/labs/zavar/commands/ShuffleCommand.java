@@ -10,6 +10,7 @@ import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
+import itmo.labs.zavar.exception.CommandRunningException;
 
 public class ShuffleCommand extends Command
 {
@@ -35,6 +36,11 @@ public class ShuffleCommand extends Command
 		}
 		else
 		{
+			if(env.getCollection().isEmpty())
+			{
+				throw new CommandRunningException("Collection is empty!");
+			}
+			
 			Collections.shuffle(env.getCollection());
 			((PrintStream) outStream).println("Collection mixed up!");
 		}

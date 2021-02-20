@@ -13,6 +13,7 @@ import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.commands.base.InputParser;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
+import itmo.labs.zavar.exception.CommandRunningException;
 import itmo.labs.zavar.studygroup.Color;
 import itmo.labs.zavar.studygroup.Coordinates;
 import itmo.labs.zavar.studygroup.Country;
@@ -46,6 +47,10 @@ public class UpdateCommand extends Command
 		}
 		else
 		{
+			if(env.getCollection().isEmpty())
+			{
+				throw new CommandRunningException("Collection is empty!");
+			}
 			PrintStream pr = new PrintStream(outStream);
 			StudyGroup sg;
 			try

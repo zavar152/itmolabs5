@@ -9,7 +9,7 @@ import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.studygroup.StudyGroup;
+import itmo.labs.zavar.exception.CommandRunningException;
 
 public class CountGreaterThanTSCommand extends Command 
 {
@@ -29,23 +29,22 @@ public class CountGreaterThanTSCommand extends Command
 		}
 		else
 		{
-			long tr = 0;
+			long tr;
 			try
 			{
-				tr = Long.parseLong((String) args[0]);
+				tr = Long.parseLong((String) args[0]); 
 			}
 			catch(NumberFormatException e)
 			{
 				throw new CommandArgumentException("transferredStudents shold be a long type!");
 			}
-			long count = 0;
-			for(StudyGroup sg : env.getCollection())
+			
+			if(env.getCollection().isEmpty())
 			{
-				if(sg.getTransferredStudents() == tr)
-				{
-					count++;
-				}
+				throw new CommandRunningException("Collection is empty!");
 			}
+			
+			long count = env.getCollection().stream().filter((p) -> p.getTransferredStudents() > tr).count();
 			((PrintStream) outStream).println("Count of elements: " + count);
 		}
 		return 0;

@@ -15,6 +15,7 @@ import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.commands.base.InputParser;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
+import itmo.labs.zavar.exception.CommandRunningException;
 import itmo.labs.zavar.studygroup.Color;
 import itmo.labs.zavar.studygroup.Coordinates;
 import itmo.labs.zavar.studygroup.Country;
@@ -48,6 +49,10 @@ public class AddIfMinCommand extends Command
 		}
 		else
 		{
+			if(env.getCollection().isEmpty())
+			{
+				throw new CommandRunningException("Collection is empty!");
+			}
 			PrintStream pr = new PrintStream(outStream);
 			Scanner in = new Scanner(inStream);
 			long id;
@@ -98,7 +103,7 @@ public class AddIfMinCommand extends Command
 			parCount++;
 			
 			pr.println("Does the group have an admin? [YES]");
-			String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
+			String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, true);
 			parCount++;
 			
 			if(answ.equals("YES"))

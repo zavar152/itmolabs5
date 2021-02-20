@@ -9,7 +9,7 @@ import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.studygroup.StudyGroup;
+import itmo.labs.zavar.exception.CommandRunningException;
 
 public class AverageOfTSCommand extends Command
 {	
@@ -29,13 +29,12 @@ public class AverageOfTSCommand extends Command
 		}
 		else
 		{
-			long sum = 0;
-			for(StudyGroup sg : env.getCollection())
+			if(env.getCollection().isEmpty())
 			{
-				sum = sum + sg.getTransferredStudents();
+				throw new CommandRunningException("Collection is empty!");
 			}
-			long av = sum/env.getCollection().size();
-			((PrintStream) outStream).println("The average value of transferred students is " + av);
+			double a = env.getCollection().stream().mapToLong((l) -> l.getTransferredStudents()).average().orElse(0);
+			((PrintStream) outStream).println("The average value of transferred students is " + a);
 		}
 		return 0;
 	}

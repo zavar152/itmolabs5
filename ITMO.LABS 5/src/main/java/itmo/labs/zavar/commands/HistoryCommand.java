@@ -10,6 +10,7 @@ import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
+import itmo.labs.zavar.exception.CommandRunningException;
 
 public class HistoryCommand extends Command 
 {
@@ -23,35 +24,30 @@ public class HistoryCommand extends Command
 	@Override
 	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
-		String out = "";
 		if(args.length > 2 || args.length < 0 )
 		{ 
 			throw new CommandArgumentException("This command requires one or zero arguments!\n" + getUsage());
 		}
 		else if(args.length == 0)
 		{
-			for(String com : env.getHistory().getGlobalHistory())
-			{
-				out = out + com + "\n";
-			}
 			((PrintStream) outStream).println("-------");
-			((PrintStream) outStream).println(out);
+			env.getHistory().getGlobalHistory().stream().forEachOrdered(((PrintStream) outStream)::println);
 		}
 		else 
 		{
+			if(Integer.parseInt((String) args[0]) <= 0)
+			{
+				throw new CommandArgumentException("Argument should be greater than 0!");
+			}
 			if(env.getHistory().getGlobalHistory().size() - Integer.parseInt((String) args[0]) < 0)
 			{
-				throw new CommandArgumentException("There are only " + env.getHistory().getGlobalHistory().size() + " commands in history!");
+				throw new CommandRunningException("There are only " + env.getHistory().getGlobalHistory().size() + " commands in history!");
 			}
 			else
 			{
 				ListIterator<String> iterator = env.getHistory().getGlobalHistory().listIterator(env.getHistory().getGlobalHistory().size() - Integer.parseInt((String) args[0]));
-				while(iterator.hasNext())
-				{
-					out = out + iterator.next() + "\n";
-				}
 				((PrintStream) outStream).println("-------");
-				((PrintStream) outStream).println(out);
+				iterator.forEachRemaining(((PrintStream) outStream)::println);
 			}
 		}
 		return 0;

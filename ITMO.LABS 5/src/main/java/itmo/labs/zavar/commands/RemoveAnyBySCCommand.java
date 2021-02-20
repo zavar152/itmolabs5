@@ -4,13 +4,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
-import itmo.labs.zavar.studygroup.StudyGroup;
+import itmo.labs.zavar.exception.CommandRunningException;
 
 public class RemoveAnyBySCCommand extends Command
 {
@@ -30,24 +30,29 @@ public class RemoveAnyBySCCommand extends Command
 		}
 		else
 		{
-			ListIterator<StudyGroup> iterator = env.getCollection().listIterator();
-			long sc = 0;
+			long sc;
 			try
 			{
 				sc = Long.parseLong((String) args[0]);
 			}
 			catch(NumberFormatException e)
 			{
-				throw new CommandArgumentException("students_count shold be a long type!");
+				throw new CommandArgumentException("Students count shold be a long type!");
 			}
-			while(iterator.hasNext())
+			
+			if(env.getCollection().isEmpty())
 			{
-				if(iterator.next().getStudentsCount() == sc)
-				{
-					iterator.remove();
-					((PrintStream) outStream).println("Element deleted!");
-					break;
-				}
+				throw new CommandRunningException("Collection is empty!");
+			}
+			
+			try
+			{
+				env.getCollection().remove(env.getCollection().stream().filter((p) -> p.getStudentsCount().equals(sc)).findFirst().orElseThrow(NoSuchElementException::new));  
+				((PrintStream) outStream).println("Element deleted!");
+			}
+			catch(NoSuchElementException e)
+			{
+				((PrintStream) outStream).println("No such element!");
 			}
 		}
 		return 0;

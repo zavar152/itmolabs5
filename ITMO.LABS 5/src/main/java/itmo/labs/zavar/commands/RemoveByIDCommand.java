@@ -9,6 +9,7 @@ import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
+import itmo.labs.zavar.exception.CommandRunningException;
 
 public class RemoveByIDCommand extends Command 
 {
@@ -17,12 +18,6 @@ public class RemoveByIDCommand extends Command
 	private RemoveByIDCommand() 
 	{
 		super("remove_by_id", "id");
-	}
-
-	public static void register(HashMap<String, Command> commandsMap)
-	{
-		command = new RemoveByIDCommand();
-		commandsMap.put(command.getName(), command);
 	}
 	
 	@Override
@@ -43,19 +38,24 @@ public class RemoveByIDCommand extends Command
 			{
 				throw new CommandArgumentException("ID must be a number!\n" + getUsage());
 			}
-			if(env.getCollection().size() > 0)
+			
+			if(env.getCollection().isEmpty())
 			{
-				env.getCollection().removeIf(e -> id == e.getId());
-				((PrintStream) outStream).println("Element deleted!");
+				throw new CommandRunningException("Collection is empty!");
 			}
-			else
-			{
-				((PrintStream) outStream).println("Collection is empty!");
-			}
+			
+			env.getCollection().removeIf(e -> id == e.getId());
+			((PrintStream) outStream).println("Element deleted!");
 		}
 		return 0;
 	}
 
+	public static void register(HashMap<String, Command> commandsMap)
+	{
+		command = new RemoveByIDCommand();
+		commandsMap.put(command.getName(), command);
+	}
+	
 	@Override
 	public String getHelp() 
 	{
