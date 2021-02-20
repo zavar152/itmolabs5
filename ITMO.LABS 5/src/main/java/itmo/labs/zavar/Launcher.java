@@ -74,7 +74,7 @@ public class Launcher
 		UpdateCommand.register(commandsMap);
 		
 		Scanner in = new Scanner(System.in);
-		Environment env = new Environment(Files.readAttributes(new File(args[0]).toPath(), BasicFileAttributes.class), commandsMap, stack);
+		Environment env = new Environment(new File(args[0]), commandsMap, stack);
 		
 		
 		while(true)

@@ -43,6 +43,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be greater than " + greaterThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else if(greaterThan == Integer.MIN_VALUE)
@@ -54,6 +55,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else
@@ -65,12 +67,14 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 				}
 				catch(NumberFormatException e)
 				{
 					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Integer.MIN_VALUE ? "-2147483649" : greaterThan) + ", less than " + (lessThan == Integer.MAX_VALUE ? "2147483648" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+					((PrintStream) err).println("Enter again:");
 				}
 			}
 		}while(true);
@@ -114,6 +118,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be greater than " + greaterThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else if(greaterThan == Long.MIN_VALUE)
@@ -125,6 +130,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else
@@ -136,12 +142,14 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 				}
 				catch(NumberFormatException e)
 				{
 					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Long.MIN_VALUE ? "-9223372036854775809" : greaterThan) + ", less than " + (lessThan == Long.MAX_VALUE ? "9223372036854775808" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+					((PrintStream) err).println("Enter again:");
 				}
 			}
 		}while(true);
@@ -185,6 +193,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be greater than " + greaterThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else if(greaterThan == Float.MIN_VALUE)
@@ -196,6 +205,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else
@@ -207,12 +217,14 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 				}
 				catch(NumberFormatException e)
 				{
 					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Float.MIN_VALUE ? "(1.4E-45)-1" : greaterThan) + ", less than " + (lessThan == Float.MAX_VALUE ? "(3.4028235E38)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+					((PrintStream) err).println("Enter again:");
 				}
 			}
 		}while(true);
@@ -256,6 +268,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be greater than " + greaterThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else if(greaterThan == Double.MIN_VALUE)
@@ -267,6 +280,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else
@@ -278,12 +292,14 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 				}
 				catch(NumberFormatException e)
 				{
 					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Double.MIN_VALUE ? "(4.9E-324)-1" : greaterThan) + ", less than " + (lessThan == Double.MAX_VALUE ? "(1.7976931348623157E308)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+					((PrintStream) err).println("Enter again:");
 				}
 			}
 		}while(true);
@@ -311,6 +327,7 @@ public class InputParser
 				catch(IllegalArgumentException e)
 				{
 					((PrintStream) err).println("Incorrect value!");
+					((PrintStream) err).println("Enter again:");
 				}
 			}
 			
@@ -341,6 +358,7 @@ public class InputParser
 				if((!canBeNull || !canBeEmpty) && ret.isEmpty())
 				{
 					((PrintStream) err).println(name +  " can't be null or empty");
+					((PrintStream) err).println("Enter again:");
 				}
 				else
 				{
@@ -357,6 +375,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " length must be greater than " + greaterThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else if(greaterThan == Integer.MIN_VALUE)
@@ -368,6 +387,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " length must be less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 					else
@@ -379,6 +399,7 @@ public class InputParser
 						else
 						{
 							((PrintStream) err).println(name + " length must be greater than " + greaterThan + ", less than " + lessThan);
+							((PrintStream) err).println("Enter again:");
 						}
 					}
 				}
@@ -386,6 +407,7 @@ public class InputParser
 			catch(NoSuchElementException e)
 			{
 				((PrintStream) err).println("It isn't a string");
+				((PrintStream) err).println("Enter again:");
 			}
 			
 		}while(true);

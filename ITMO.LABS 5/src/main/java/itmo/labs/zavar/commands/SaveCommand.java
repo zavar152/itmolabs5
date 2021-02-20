@@ -29,8 +29,14 @@ public class SaveCommand extends Command
 		}
 		else
 		{
-			CSVManager.write((String) args[0], env.getCollection(), outStream);
-			((PrintStream) outStream).println("Collection saved!");
+			if(CSVManager.write((String) args[0], env.getCollection(), outStream))
+			{
+				((PrintStream) outStream).println("Collection saved!");
+			}
+			else
+			{
+				((PrintStream) outStream).println("Collection didn't save!");
+			}
 		}
 		return 0;
 	}

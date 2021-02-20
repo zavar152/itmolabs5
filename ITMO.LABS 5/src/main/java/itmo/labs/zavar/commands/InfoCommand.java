@@ -3,7 +3,6 @@ package itmo.labs.zavar.commands;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import itmo.labs.zavar.commands.base.Command;
@@ -31,7 +30,7 @@ public class InfoCommand extends Command
 		{
 			PrintStream pr = ((PrintStream) outStream);
 			pr.println("Type: " + env.getCollection().getClass().getName());
-			pr.println("Creation date: " + new SimpleDateFormat("yyyy-MM-dd").format(env.getFileAttr().creationTime().toMillis()));
+			pr.println("Creation date: " + env.getFileCreationTime());
 			pr.println("Count of elements: " + env.getCollection().size());
 		}
 		return 0;

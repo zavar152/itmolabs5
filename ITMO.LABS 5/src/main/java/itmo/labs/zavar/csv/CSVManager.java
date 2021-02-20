@@ -82,13 +82,14 @@ public class CSVManager
 		}
 		catch(SuperCsvException | IllegalArgumentException e)
 		{
-			e.printStackTrace();
-			((PrintStream) out).println("Error while parsing .csv file! Check if your data is correct!");
+			((PrintStream) out).print("Error while parsing .csv file! Check if your data is correct! >>> ");
+			((PrintStream) out).println(e.getMessage());
 			return false;
 		}
 		catch (IOException e) 
 		{
-			((PrintStream) out).println("Error while reading .csv file!!");
+			((PrintStream) out).print("Error while reading .csv file! >>> ");
+			((PrintStream) out).println(e.getMessage());
 			return false;
 		}
 	}
