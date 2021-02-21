@@ -1,7 +1,6 @@
 package itmo.labs.zavar;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -27,7 +26,6 @@ import itmo.labs.zavar.commands.TestCommand;
 import itmo.labs.zavar.commands.UpdateCommand;
 import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
-import itmo.labs.zavar.csv.CSVManager;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
@@ -36,20 +34,13 @@ public class Launcher
 	private static Stack<StudyGroup> stack = new Stack<StudyGroup>();
 	private static HashMap<String, Command> commandsMap = new HashMap<String, Command>();
 	
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args)
 	{	
 		if(args.length < 1 || args.length > 1)
 		{
 			System.out.println("You should enter only a path to .csv file!");
 			System.exit(0);
 		}
-		
-		System.out.println("Reading file...");
-		if(CSVManager.read(args[0], stack, System.out))
-		{
-			System.out.println("Collection loaded!");
-		}
-		System.out.println("Welcome to ITMO.LAB 5, enter a command or use help");
 		
 		System.setErr(System.out);
 		TestCommand.register(commandsMap);
@@ -74,6 +65,7 @@ public class Launcher
 		Scanner in = new Scanner(System.in);
 		Environment env = new Environment(new File(args[0]), commandsMap, stack);
 		
+		System.out.println("Welcome to ITMO.LAB 5, enter a command or use help");
 		
 		while(true)
 		{

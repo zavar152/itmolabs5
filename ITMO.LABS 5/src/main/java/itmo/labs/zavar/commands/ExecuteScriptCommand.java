@@ -95,16 +95,18 @@ public class ExecuteScriptCommand extends Command
 					} 
 					catch(CommandException e) 
 					{
-						((PrintStream) outStream).println(e.getMessage());
+						((PrintStream) outStream).println("Script is interrupted!");
+						throw new CommandException(e.getMessage());
 					}
 				}
 				else
 				{
-					((PrintStream) outStream).println("Unknown command #" + (i + 1) + " ! Please, check your script!");
+					((PrintStream) outStream).println("Script is interrupted!");
+					throw new CommandException("Unknown command #" + (i + 1) + "! Please, check your script!");
 				}
 			}
 		}
-		((PrintStream) outStream).println("Script completed!");
+		((PrintStream) outStream).println("Script is completed!");
 		return 0;
 	}
 

@@ -30,7 +30,7 @@ public class InfoCommand extends Command
 		{
 			PrintStream pr = ((PrintStream) outStream);
 			pr.println("Type: " + env.getCollection().getClass().getName());
-			pr.println("Creation date: " + env.getFileCreationTime());
+			pr.println("Creation date: " + env.getCreationTime());
 			pr.println("Count of elements: " + env.getCollection().size());
 		}
 		return 0;

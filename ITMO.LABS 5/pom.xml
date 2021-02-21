@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>itmo.zavar</groupId>
   <artifactId>lab5</artifactId>
-  <version>0.0.8</version>
+  <version>0.0.9</version>
   <name>Lab5</name>
   <build>
   <plugins>
@@ -12,6 +12,15 @@
         <configuration>
           <source>8</source>
           <target>8</target>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          
         </configuration>
       </plugin>
       

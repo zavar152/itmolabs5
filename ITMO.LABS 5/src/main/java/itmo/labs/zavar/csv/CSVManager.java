@@ -27,6 +27,12 @@ import org.supercsv.prefs.CsvPreference;
 import itmo.labs.zavar.studygroup.FormOfEducation;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
+/**
+ * Class uses to read and to write collection from/to .csv file.
+ * 
+ * @author Zavar
+ * @version 1.5
+ */
 public class CSVManager 
 {
 	private static final String[] nameMapping = new String[] {"id", "name", "coordinates", "creationDate", "studentsCount", "expelledStudents",
@@ -34,6 +40,14 @@ public class CSVManager
 	private static CsvBeanWriter writer;
 	private static ICsvBeanReader beanReader;
 	
+	/**
+	 * Writes collection to .csv file.
+	 * 
+	 * @param path Path to file.
+	 * @param stack Collection to write in.
+	 * @param out Output stream to write in.
+	 * @return Returns false if writing causes an error.
+	 */
 	public static boolean write(String path, Stack<StudyGroup> stack, OutputStream out)
 	{
 		try 
@@ -65,6 +79,14 @@ public class CSVManager
 		} 
 	} 
 	
+	/**
+	 * Reads colletion from file.
+	 * 
+	 * @param path Path to file.
+	 * @param stack Collection to put in.
+	 * @param out Output stream to write in.
+	 * @return Returns false if reading causes an error.
+	 */
 	public static boolean read(String path, Stack<StudyGroup> stack, OutputStream out)
 	{ 
 		try 
@@ -101,6 +123,11 @@ public class CSVManager
 		}
 	}
 	
+	/**
+	 * Returns processors for writing.
+	 * 
+	 * @return {@link CellProcessor}
+	 */
 	private static CellProcessor[] getWriterProcessors() 
 	{ 
 		CellProcessor[] processors = new CellProcessor[] { 
@@ -117,6 +144,11 @@ public class CSVManager
 		return processors;
 	}
 	
+	/**
+	 * Returns processors for reading.
+	 * 
+	 * @return {@link CellProcessor}
+	 */
 	private static CellProcessor[] getReaderProcessors() 
 	{ 
 		CellProcessor[] processors = new CellProcessor[] { 
