@@ -1,11 +1,24 @@
 package itmo.labs.zavar.studygroup;
 
+
+/**
+ * Class for creation of coordinates. Contains getters and setters for important fields.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class Coordinates 
 {
 
-	private Double x; //Значение поля должно быть больше -573, Поле не может быть null
-    private Float y; //Поле не может быть null
+	private Double x;
+    private Float y;
     
+    /**
+     * 
+     * @param x X coordinate. X should be greater than -573 and can't be <tt>null</tt>.
+     * @param y Y coordinate. Y should be a number and can't be <tt>null</tt>.
+     * @throws IllegalArgumentException If any parameter is wrong.
+     */
     public Coordinates(Double x, Float y) throws IllegalArgumentException 
     { 
 		if(x == null || x <= -573)

@@ -5,8 +5,27 @@ import java.io.PrintStream;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+
+/**
+ * Class provides static methods to parse values from {@link Scanner} with additional conditions and protection from incorrect input.
+ * 
+ * @author Zavar
+ * @version 1.2
+ */
 public class InputParser 
 {
+	/**
+	 * Parse {@link Integer} from {@link Scanner} with additional conditions and protection from incorrect input.
+	 * 
+	 * @param err Stream for output and errors.
+	 * @param in {@link Scanner}
+	 * @param name Name of input parameter.
+	 * @param greaterThan The lower limit of the number. Type in {@link Integer#MIN_VALUE} if there is no any limit.
+	 * @param lessThan The upper limit of the number. Type in {@link Integer#MAX_VALUE} if there is no any limit.
+	 * @param canBeNull If the value can be <tt>null</tt>.
+	 * @param primitive If the value is primitive type.
+	 * @return {@link Integer} from input.
+	 */
 	public static Integer parseInteger(OutputStream err, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean primitive)
 	{
 		String intStr = "";
@@ -82,6 +101,18 @@ public class InputParser
 		return i; 
 	}
 	
+	/**
+	 * Parse {@link Long} from {@link Scanner} with additional conditions and protection from incorrect input.
+	 * 
+	 * @param err Stream for output and errors.
+	 * @param in {@link Scanner}
+	 * @param name Name of input parameter.
+	 * @param greaterThan The lower limit of the number. Type in {@link Long#MIN_VALUE} if there is no any limit.
+	 * @param lessThan The upper limit of the number. Type in {@link Long#MAX_VALUE} if there is no any limit.
+	 * @param canBeNull If the value can be <tt>null</tt>.
+	 * @param primitive If the value is primitive type.
+	 * @return {@link Long} from input.
+	 */
 	public static Long parseLong(OutputStream err, Scanner in, String name, long greaterThan, long lessThan, boolean canBeNull, boolean primitive)
 	{
 		String longStr = "";
@@ -157,6 +188,18 @@ public class InputParser
 		return l;
 	}
 	
+	/**
+	 * Parse {@link Float} from {@link Scanner} with additional conditions and protection from incorrect input.
+	 * 
+	 * @param err Stream for output and errors.
+	 * @param in {@link Scanner}
+	 * @param name Name of input parameter.
+	 * @param greaterThan The lower limit of the number. Type in {@link Float#MIN_VALUE} if there is no any limit.
+	 * @param lessThan The upper limit of the number. Type in {@link Float#MAX_VALUE} if there is no any limit.
+	 * @param canBeNull If the value can be <tt>null</tt>.
+	 * @param primitive If the value is primitive type.
+	 * @return {@link Float} from input.
+	 */
 	public static Float parseFloat(OutputStream err, Scanner in, String name, float greaterThan, float lessThan, boolean canBeNull, boolean primitive)
 	{
 		String floatStr = "";
@@ -232,6 +275,18 @@ public class InputParser
 		return f;
 	}
 	
+	/**
+	 * Parse {@link Double} from {@link Scanner} with additional conditions and protection from incorrect input.
+	 * 
+	 * @param err Stream for output and errors.
+	 * @param in {@link Scanner}
+	 * @param name Name of input parameter.
+	 * @param greaterThan The lower limit of the number. Type in {@link Double#MIN_VALUE} if there is no any limit.
+	 * @param lessThan The upper limit of the number. Type in {@link Double#MAX_VALUE} if there is no any limit.
+	 * @param canBeNull If the value can be <tt>null</tt>.
+	 * @param primitive If the value is primitive type.
+	 * @return {@link Double} from input.
+	 */
 	public static Double parseDouble(OutputStream err, Scanner in, String name, double greaterThan, double lessThan, boolean canBeNull, boolean primitive)
 	{
 		String floatStr = "";
@@ -307,6 +362,15 @@ public class InputParser
 		return d;
 	}
 	
+	/**
+	 * Parse {@link Enum} from {@link Scanner} with additional conditions and protection from incorrect input.
+	 * 
+	 * @param err Stream for output and errors.
+	 * @param in {@link Scanner}
+	 * @param enu {@link Enum} class.
+	 * @param canBeNull If the value can be <tt>null</tt>.
+	 * @return {@link String} from input.
+	 */
 	public static String parseEnum(OutputStream err, Scanner in, Class<? extends Enum> enu, boolean canBeNull)
 	{
 		String par = "";
@@ -336,6 +400,18 @@ public class InputParser
 		return par;
 	}
 	
+	/**
+	 * Parse {@link String} from {@link Scanner} with additional conditions and protection from incorrect input.
+	 * 
+	 * @param err Stream for output and errors.
+	 * @param in {@link Scanner}
+	 * @param name Name of input parameter.
+	 * @param greaterThan The lower limit of the string length. Type in {@link Integer#MIN_VALUE} if there is no any limit.
+	 * @param lessThan The upper limit of the string length. Type in {@link Integer#MAX_VALUE} if there is no any limit.
+	 * @param canBeNull If the value can be <tt>null</tt>.
+	 * @param canBeEmpty If the string can be empty.
+	 * @return {@link String} from input.
+	 */
 	public static String parseString(OutputStream err, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean canBeEmpty)
 	{
 		String ret;

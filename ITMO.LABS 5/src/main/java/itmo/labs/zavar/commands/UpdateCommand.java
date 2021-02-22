@@ -65,17 +65,16 @@ public class UpdateCommand extends Command
 			
 			int f = -1;
 			
-			pr.println("Select a field to update: (enter '0' to show fields)");
+			pr.println("Select a field to update:\n");
+			
+			for(Fields field : Fields.values())
+			{
+				pr.println(field.getId() + ": " + field.toString());
+			}
 			f = InputParser.parseInteger(outStream, in, "Field", -2, 8, false, true);
 			parCount++;
 			switch (f)  
 			{	
-			case 0:
-				for(Fields field : Fields.values())
-				{
-					pr.println(field.getId() + ": " + field.toString());
-				}
-				break;
 			case 1:
 				parCount = parCount + updateAll(sg, in, inStream, outStream);
 				pr.println("Element updated");
@@ -174,7 +173,7 @@ public class UpdateCommand extends Command
 				pr.println("Group's admin updated");
 				break;
 			}
-		pr.println("Updating completed!");
+		pr.println("Updating is completed!");
 		}
 	return parCount;
 	}

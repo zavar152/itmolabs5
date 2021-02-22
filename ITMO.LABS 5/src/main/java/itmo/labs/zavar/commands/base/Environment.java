@@ -136,7 +136,7 @@ public class Environment
 		
 		/**
 		 * Adds command to global history.
-		 * @param to
+		 * @param to Command to add.
 		 */
 		public void addToGlobal(String to)
 		{
@@ -145,7 +145,7 @@ public class Environment
 		
 		/**
 		 * Adds command to temp history.
-		 * @param to
+		 * @param to Command to add.
 		 */
 		public void addToTemp(String to)
 		{

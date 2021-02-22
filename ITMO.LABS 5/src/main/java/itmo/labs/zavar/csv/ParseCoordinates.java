@@ -8,6 +8,12 @@ import org.supercsv.util.CsvContext;
 
 import itmo.labs.zavar.studygroup.Coordinates;
 
+/**
+ * Class to parse coordinates object for {@link CellProcessor}.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class ParseCoordinates extends CellProcessorAdaptor implements StringCellProcessor
 {
 	public ParseCoordinates()

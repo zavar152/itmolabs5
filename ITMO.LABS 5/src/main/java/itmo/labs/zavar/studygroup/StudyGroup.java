@@ -6,23 +6,48 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * Class for creation of study groups. Contains getters and setters for important fields.
+ * 
+ * @author Zavar
+ * @version 1.6
+ */
 public class StudyGroup implements Comparable<StudyGroup>
 {
-    private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private Long studentsCount; //Значение поля должно быть больше 0, Поле не может быть null
-    private int expelledStudents; //Значение поля должно быть больше 0
-    private long transferredStudents; //Значение поля должно быть больше 0
-    private FormOfEducation formOfEducation; //Поле не может быть null
-    private Person groupAdmin; //Поле может быть null
+    private long id;
+    private String name;
+    private Coordinates coordinates;
+    private LocalDate creationDate;
+    private Long studentsCount;
+    private int expelledStudents;
+    private long transferredStudents;
+    private FormOfEducation formOfEducation;
+    private Person groupAdmin;
     
-    public StudyGroup() throws IllegalArgumentException
+    /**
+     * Default constructor uses for csv parser. Don't use it to create objects.
+     * 
+     */
+    public StudyGroup()
     {
     	
     }
     
+    /**
+     * Constructor with parameters. Use it to create objects.
+     * 
+     * @param id Group's id. Must be unique and greater than 0.
+     * @param name Group's name. Name can't be <tt>null</tt> or empty.
+     * @param coordinates Group's coordinates. Can't be <tt>null</tt>.
+     * @param studentsCount Count of students in group. Count be greater than 0 and can't be <tt>null</tt>.
+     * @param expelledStudents Count of expelled students in group. Count should be greater than 0.
+     * @param transferredStudents Count of transferred students in group. Count should be greater than 0.
+     * @param formOfEducation Group's form of education. Form of education can't be <tt>null</tt>.
+     * @param groupAdmin Group's admin. Can be <tt>null</tt>.
+     * @throws IllegalArgumentException If any parameter is wrong.
+     * 
+     * @see {@link Coordinates}, {@link FormOfEducation}, {@link Person}
+     */
     public StudyGroup(long id, String name, Coordinates coordinates, Long studentsCount, int expelledStudents, long transferredStudents, FormOfEducation formOfEducation, Person groupAdmin) throws IllegalArgumentException
     {
     	if(id <= 0)

@@ -29,11 +29,22 @@ import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
+/**
+ * Main class of application.
+ * 
+ * @author Zavar
+ * @version 1.7
+ */
 public class Launcher 
 {
 	private static Stack<StudyGroup> stack = new Stack<StudyGroup>();
 	private static HashMap<String, Command> commandsMap = new HashMap<String, Command>();
 	
+	/**
+	 * Registering all commands and creating environment. Contains interpretator of commands.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{	
 		if(args.length < 1 || args.length > 1)

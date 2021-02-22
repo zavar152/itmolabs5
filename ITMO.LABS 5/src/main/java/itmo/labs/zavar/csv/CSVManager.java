@@ -80,7 +80,7 @@ public class CSVManager
 	} 
 	
 	/**
-	 * Reads colletion from file.
+	 * Reads collection from file.
 	 * 
 	 * @param path Path to file.
 	 * @param stack Collection to put in.

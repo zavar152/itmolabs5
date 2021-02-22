@@ -66,7 +66,7 @@ public abstract class Command
 	 * @param args command's arguments.
 	 * @param inStream input stream to read from it.
 	 * @param outStream output stream to write in it.
-	 * @return Return a number of lines which use to read component arguments (like {ELEMENT}).
+	 * @return Return a number of lines which is requried to read component arguments (like {ELEMENT}).
 	 * If {@link #isNeedInput()} returns false, then this method should always return 0.
 	 * @throws CommandException if something goes wrong while command is executing.
 	 * 
@@ -75,16 +75,17 @@ public abstract class Command
 	public abstract int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException;
 	
 	/**
-	 * This method uses to show 'help' about command.
+	 * Returns string with helpful information about command.
 	 * 
-	 * @return Returns string with helpful information about command.
+	 * @return {@link String}
 	 */
 	public abstract String getHelp();
 	
 	/**
-	 * This method uses to show usage and syntax of command.
 	 * 
-	 * @return Returns string with usage in format: "Usage: " + name + " " + {@link #getArgsAsString()}.
+	 * Returns string with usage in format: "Usage: " + name + " " + {@link #getArgsAsString()}.
+	 * 
+	 * @return {@link String}
 	 * 
 	 * @see #getArgsAsString()
 	 */
@@ -94,9 +95,9 @@ public abstract class Command
 	}
 	
 	/**
-	 * This method returns array of command's arguments.
+	 * Returns array of command's arguments.
 	 * 
-	 * @return Array of arguments
+	 * @return {@link String}
 	 */
 	public final String[] getArgs() 
 	{
@@ -104,9 +105,9 @@ public abstract class Command
 	}
 	
 	/**
-	 * This method returns arguments as string.
+	 * Returns string of arguments in format: "[arg1] [arg2] ..."
 	 * 
-	 * @return String of arguments in format: "[arg1] [arg2] ..."
+	 * @return {@link String}
 	 */
 	public final String getArgsAsString() 
 	{
@@ -121,8 +122,9 @@ public abstract class Command
 	}
 	
 	/**
+	 * Returns name of command.
 	 * 
-	 * @return Name of command.
+	 * @return {@link String}
 	 */
 	public final String getName() 
 	{

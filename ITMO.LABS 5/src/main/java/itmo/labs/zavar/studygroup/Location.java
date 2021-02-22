@@ -1,12 +1,26 @@
 package itmo.labs.zavar.studygroup;
 
+/**
+ * Class for creation of locations. Contains getters and setters for important fields.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class Location 
 {
     private float x;
-    private Float y; //Поле не может быть null
-    private Long z; //Поле не может быть null
-    private String name; //Длина строки не должна быть больше 348, Поле может быть null
+    private Float y; 
+    private Long z; 
+    private String name; 
     
+    /**
+     * 
+     * @param x X coordinate.
+     * @param y Y coordinate. Y can't be <tt>null</tt>.
+     * @param z Z coordinate. Z can't be <tt>null</tt>.
+     * @param name Location's name. Name length can't be greater than 348.
+     * @throws IllegalArgumentException If any parameter is wrong.
+     */
 	public Location(float x, Float y, Long z, String name) throws IllegalArgumentException 
 	{
 		this.x = x;

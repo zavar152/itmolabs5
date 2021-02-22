@@ -1,8 +1,13 @@
 package itmo.labs.zavar.studygroup;
 
+/**
+ * Class for creation of persons. Contains getters and setters for important fields.
+ * 
+ * @author Zavar
+ * @version 1.2
+ */
 public class Person 
 {
-	
 	private String name; //Поле не может быть null, Строка не может быть пустой
     private String passportID; //Строка не может быть пустой, Поле может быть null
     private Color eyeColor; //Поле не может быть null
@@ -10,6 +15,18 @@ public class Person
     private Country nationality; //Поле может быть null
     private Location location; //Поле не может быть null
     
+    /**
+     * 
+     * @param name Person's name. Name can't be <tt>null</tt> or empty.
+     * @param passportID Person's passport ID. Passport ID can't be empty.
+     * @param eyeColor Person's eye color. Eye color can't be <tt>null</tt>.
+     * @param hairColor Person's hair color. Hair color can't be <tt>null</tt>.
+     * @param nationality Person's nationality. Can be <tt>null</tt>
+     * @param location Person's location. Location can't be <tt>null</tt>.
+     * @throws IllegalArgumentException If any parameter is wrong.
+     * 
+     * @see {@link Color}, {@link Country}, {@link Location}
+     */
 	public Person(String name, String passportID, Color eyeColor, Color hairColor, Country nationality, Location location) throws IllegalArgumentException 
 	{
 		if(name == null || name.isEmpty())

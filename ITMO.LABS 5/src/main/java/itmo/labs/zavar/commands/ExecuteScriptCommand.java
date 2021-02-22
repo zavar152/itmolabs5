@@ -93,7 +93,7 @@ public class ExecuteScriptCommand extends Command
 							env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), inStream, outStream);
 						}
 					} 
-					catch(CommandException e) 
+					catch(Exception e) 
 					{
 						((PrintStream) outStream).println("Script is interrupted!");
 						throw new CommandException(e.getMessage());

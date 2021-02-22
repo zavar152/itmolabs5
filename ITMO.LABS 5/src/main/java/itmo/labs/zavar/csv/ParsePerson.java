@@ -11,6 +11,12 @@ import itmo.labs.zavar.studygroup.Country;
 import itmo.labs.zavar.studygroup.Location;
 import itmo.labs.zavar.studygroup.Person;
 
+/**
+ * Class to parse person object for {@link CellProcessor}.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class ParsePerson extends CellProcessorAdaptor implements StringCellProcessor 
 {
 	public ParsePerson() 
