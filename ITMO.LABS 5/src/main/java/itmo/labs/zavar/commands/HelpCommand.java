@@ -27,7 +27,7 @@ public class HelpCommand extends Command
 	}
 
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 0)
 		{
@@ -39,7 +39,6 @@ public class HelpCommand extends Command
 				((PrintStream) outStream).println("<"+ env.getCommandsMap().get(k).getName() +">\n" + env.getCommandsMap().get(k).getHelp() + "\n" + env.getCommandsMap().get(k).getUsage() + "\n");
 			});
 		}
-		return 0;
 	}
 
 	/**

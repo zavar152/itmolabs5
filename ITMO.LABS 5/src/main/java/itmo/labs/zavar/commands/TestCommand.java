@@ -18,10 +18,9 @@ public class TestCommand extends Command
 	}
 	
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) 
 	{
 		((PrintStream) outStream).println("test command");	
-		return 0;
 	}
 	
 	public static void register(HashMap<String, Command> commandsMap)
@@ -31,7 +30,7 @@ public class TestCommand extends Command
 	}
 
 	@Override
-	public String getHelp() 
+	public String getHelp()
 	{
 		return "This is a test command without args!";
 	}

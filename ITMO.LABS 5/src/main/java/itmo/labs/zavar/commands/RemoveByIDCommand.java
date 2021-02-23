@@ -28,7 +28,7 @@ public class RemoveByIDCommand extends Command
 	}
 	
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length != 1)
 		{
@@ -54,7 +54,6 @@ public class RemoveByIDCommand extends Command
 			env.getCollection().removeIf(e -> id == e.getId());
 			((PrintStream) outStream).println("Element deleted!");
 		}
-		return 0;
 	}
 
 	/**

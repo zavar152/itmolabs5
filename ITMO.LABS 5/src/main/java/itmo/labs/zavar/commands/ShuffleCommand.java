@@ -29,7 +29,7 @@ public class ShuffleCommand extends Command
 	}
 	
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 0)
 		{
@@ -45,8 +45,6 @@ public class ShuffleCommand extends Command
 			Collections.shuffle(env.getCollection());
 			((PrintStream) outStream).println("Collection mixed up!");
 		}
-		
-		return 0;
 	}
 
 	/**

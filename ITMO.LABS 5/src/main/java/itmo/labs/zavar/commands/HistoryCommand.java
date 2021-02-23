@@ -28,7 +28,7 @@ public class HistoryCommand extends Command
 	}
 	
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 2 || args.length < 0 )
 		{ 
@@ -56,7 +56,6 @@ public class HistoryCommand extends Command
 				iterator.forEachRemaining(((PrintStream) outStream)::println);
 			}
 		}
-		return 0;
 	}
 	
 	/**

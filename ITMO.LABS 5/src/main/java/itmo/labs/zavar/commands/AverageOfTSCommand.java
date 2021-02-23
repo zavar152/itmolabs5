@@ -28,7 +28,7 @@ public class AverageOfTSCommand extends Command
 	}
 
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 0)
 		{
@@ -43,7 +43,6 @@ public class AverageOfTSCommand extends Command
 			double a = env.getCollection().stream().mapToLong((l) -> l.getTransferredStudents()).average().orElse(0);
 			((PrintStream) outStream).println("The average value of transferred students is " + a);
 		}
-		return 0;
 	}
 
 	

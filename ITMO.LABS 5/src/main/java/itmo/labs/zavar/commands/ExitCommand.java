@@ -27,7 +27,7 @@ public class ExitCommand extends Command
 	}
 
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 0)
 		{
@@ -38,7 +38,6 @@ public class ExitCommand extends Command
 			((PrintStream) outStream).println("Program is closing...");
 			System.exit(0);
 		}
-		return 0;
 	}
 
 	/**

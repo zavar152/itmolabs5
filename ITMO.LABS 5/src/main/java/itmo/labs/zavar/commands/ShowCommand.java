@@ -29,7 +29,7 @@ public class ShowCommand extends Command
 	}
 
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		PrintStream pr = ((PrintStream) outStream);
 		if(args.length > 0)
@@ -76,7 +76,6 @@ public class ShowCommand extends Command
 				}
 			}
 		}
-		return 0;
 	}
 
 	/**

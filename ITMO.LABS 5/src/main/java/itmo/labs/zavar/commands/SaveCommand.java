@@ -28,7 +28,7 @@ public class SaveCommand extends Command
 	}
 	
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 2 || args.length < 1)
 		{
@@ -45,7 +45,6 @@ public class SaveCommand extends Command
 				((PrintStream) outStream).println("Collection didn't save!");
 			}
 		}
-		return 0;
 	}
 	
 	/**

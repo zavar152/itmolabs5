@@ -68,9 +68,8 @@ public class UpdateCommand extends Command
 	}
 	
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
-		int parCount = 0;
 		if(args.length != 1)
 		{
 			throw new CommandArgumentException("This command requires one argument!\n" + getUsage());
@@ -94,7 +93,6 @@ public class UpdateCommand extends Command
 			Scanner in = new Scanner(inStream);
 			
 			int f = -1;
-			
 			pr.println("Select a field to update:\n");
 			
 			for(Fields field : Fields.values())
@@ -104,18 +102,16 @@ public class UpdateCommand extends Command
 			try
 			{
 				f = InputParser.parseInteger(outStream, in, "Field", -2, 8, false, true);
-				parCount++;
 				switch (f)  
 				{	
 				case 1:
-					parCount = parCount + updateAll(sg, in, inStream, outStream);
+					updateAll(sg, in, inStream, outStream);
 					pr.println("Element updated");
 					break;
 				case 2:
 					pr.println("Enter name:");
 					String name = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
 					sg.setName(name);
-					parCount++;
 					pr.println("Name updated");
 					break;
 				case 3:
@@ -125,54 +121,45 @@ public class UpdateCommand extends Command
 					Float y = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
 					Coordinates coordinates = new Coordinates(x, y);
 					sg.setCoordinates(coordinates);
-					parCount++;
 					pr.println("Coordinates updated");
 					break;
 				case 4:
 					pr.println("Enter students count:");
 					Long studentsCount = InputParser.parseLong(outStream, in, "Students count", 0l, Long.MAX_VALUE, false, false);
 					sg.setStudentsCount(studentsCount);
-					parCount++;
 					pr.println("Students count updated");
 					break;
 				case 5:
 					pr.println("Enter expelled students count:");
 					int expelledStudents = InputParser.parseInteger(outStream, in, "Expelled students", 0, Integer.MAX_VALUE, false, true);
 					sg.setExpelledStudents(expelledStudents);
-					parCount++;
 					pr.println("Expelled students updated");
 					break;
 				case 6:
 					pr.println("Enter transferred students count:");
 					long transferredStudents = InputParser.parseLong(outStream, in, "Transferred students", 0l, Long.MAX_VALUE, false, true);
 					sg.setTransferredStudents(transferredStudents);
-					parCount++;
 					pr.println("Transferred students updated");
 					break;
 				case 7:
 					pr.println("Enter form of education, values - " + Arrays.toString(FormOfEducation.values()));
 					FormOfEducation formOfEducation = FormOfEducation.valueOf(InputParser.parseEnum(outStream, in, FormOfEducation.class, false));
 					sg.setFormOfEducation(formOfEducation);
-					parCount++;
 					pr.println("Form of education updated");
 					break;
 				case 8:
 					pr.println("Enter name:");
 					String admName = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
-					parCount++;
-						
+	
 					pr.println("Enter passport ID:");
 					String passportID = InputParser.parseString(outStream, in, "Passport ID", Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
-					parCount++;
-		
+	
 					pr.println("Enter eye color, values - " + Arrays.toString(Color.values()));
 					Color eyeColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
-					parCount++;
-						
+		
 					pr.println("Enter hair color, values - " + Arrays.toString(Color.values()));
 					Color hairColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
-					parCount++;
-						
+	
 					pr.println("Enter country, values - " + Arrays.toString(Country.values()));
 					String an = InputParser.parseEnum(outStream, in, Country.class, true);
 					Country nationality = null;
@@ -180,25 +167,20 @@ public class UpdateCommand extends Command
 					{
 						nationality = Country.valueOf(an);
 					}
-					parCount++;
-						
+	
 					Location location;
 					pr.println("Enter name location:");
 					String nameStr = InputParser.parseString(outStream, in, "Location name", Integer.MIN_VALUE, 348, true, false);
-					parCount++;
-						
+	
 					pr.println("Enter X:");
 					float x1 = InputParser.parseFloat(outStream, in, "X", Float.MIN_VALUE, Float.MAX_VALUE, false, true);
-					parCount++;
-						
+	
 					pr.println("Enter Y:");
 					Float y1 = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
-					parCount++;
-						
+		
 					pr.println("Enter Z:");
 					Long z = InputParser.parseLong(outStream, in, "Z", Long.MIN_VALUE, Long.MAX_VALUE, false, false);
-					parCount++;
-					
+	
 					location = new Location(x1, y1, z, nameStr);
 					Person groupAdmin = new Person(admName, passportID, eyeColor, hairColor, nationality, location);
 					sg.setGroupAdmin(groupAdmin);
@@ -212,7 +194,6 @@ public class UpdateCommand extends Command
 			}
 		pr.println("Updating is completed!");
 		}
-	return parCount;
 	}
 	
 	/**
@@ -241,15 +222,13 @@ public class UpdateCommand extends Command
 	 * @param outStream Any output stream.
 	 * @return Number of input parameters.
 	 */
-	private int updateAll(StudyGroup sg, Scanner in, InputStream inStream, OutputStream outStream)
+	private void updateAll(StudyGroup sg, Scanner in, InputStream inStream, OutputStream outStream)
 	{
 		PrintStream pr = new PrintStream(outStream);
-		int parCount = 0;
 		pr.println("Enter name:");
 		String name = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
 		sg.setName(name);
-		parCount++;
-		
+
 		Coordinates coordinates = null;
 		Long studentsCount = null;
 		int expelledStudents = 0;
@@ -263,49 +242,39 @@ public class UpdateCommand extends Command
 		Float y = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
 		coordinates = new Coordinates(x, y);
 		sg.setCoordinates(coordinates);
-		parCount++;
-		
+
 		pr.println("Enter students count:");
 		studentsCount = InputParser.parseLong(outStream, in, "Students count", 0l, Long.MAX_VALUE, false, false);
 		sg.setStudentsCount(studentsCount);
-		parCount++;
-		
+
 		pr.println("Enter expelled students count:");
 		expelledStudents = InputParser.parseInteger(outStream, in, "Expelled students", 0, Integer.MAX_VALUE, false, true);
 		sg.setExpelledStudents(expelledStudents);
-		parCount++;
-		
+
 		pr.println("Enter transferred students count:");
 		transferredStudents = InputParser.parseLong(outStream, in, "Transferred students", 0l, Long.MAX_VALUE, false, true);
 		sg.setTransferredStudents(transferredStudents);
-		parCount++;
-		
+
 		pr.println("Enter form of education, values - " + Arrays.toString(FormOfEducation.values()));
 		formOfEducation = FormOfEducation.valueOf(InputParser.parseEnum(outStream, in, FormOfEducation.class, false));
 		sg.setFormOfEducation(formOfEducation);
-		parCount++;
-		
+
 		pr.println("Do you want to update group's admin? Enter [YES] if you want");
 		String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, true);
-		parCount++;
-		
+
 		if(answ.equals("YES"))
 		{
 			pr.println("Enter name:");
 			String admName = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
-			parCount++;
 			
 			pr.println("Enter passport ID:");
 			String passportID = InputParser.parseString(outStream, in, "Passport ID", Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
-			parCount++;
 
 			pr.println("Enter eye color, values - " + Arrays.toString(Color.values()));
 			Color eyeColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
-			parCount++;
 			
 			pr.println("Enter hair color, values - " + Arrays.toString(Color.values()));
 			Color hairColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
-			parCount++;
 			
 			pr.println("Enter country, values - " + Arrays.toString(Country.values()));
 			String an = InputParser.parseEnum(outStream, in, Country.class, true);
@@ -314,31 +283,24 @@ public class UpdateCommand extends Command
 			{
 				nationality = Country.valueOf(an);
 			}
-			parCount++;
 			
 			Location location;
 			pr.println("Enter name location:");
 			String nameStr = InputParser.parseString(outStream, in, "Location name", Integer.MIN_VALUE, 348, true, false);
-			parCount++;
 			
 			pr.println("Enter X:");
 			float x1 = InputParser.parseFloat(outStream, in, "X", Float.MIN_VALUE, Float.MAX_VALUE, false, true);
-			parCount++;
 			
 			pr.println("Enter Y:");
 			Float y1 = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
-			parCount++;
 			
 			pr.println("Enter Z:");
 			Long z = InputParser.parseLong(outStream, in, "Z", Long.MIN_VALUE, Long.MAX_VALUE, false, false);
-			parCount++;
 			
 			location = new Location(x1, y1, z, nameStr);
 			groupAdmin = new Person(admName, passportID, eyeColor, hairColor, nationality, location);
 			sg.setGroupAdmin(groupAdmin);
 		}
-		
-		return parCount;
 	}
 	
 	/**

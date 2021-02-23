@@ -29,7 +29,7 @@ public class RemoveAnyBySCCommand extends Command
 	}
 	
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length != 1)
 		{
@@ -62,7 +62,6 @@ public class RemoveAnyBySCCommand extends Command
 				((PrintStream) outStream).println("No such element!");
 			}
 		}
-		return 0;
 	}
 	
 	/**

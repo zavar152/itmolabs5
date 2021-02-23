@@ -28,7 +28,7 @@ public class InfoCommand extends Command
 	}
 
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length > 0)
 		{
@@ -41,7 +41,6 @@ public class InfoCommand extends Command
 			pr.println("Creation date: " + env.getCreationTime());
 			pr.println("Count of elements: " + env.getCollection().size());
 		}
-		return 0;
 	}
 
 	/**

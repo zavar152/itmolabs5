@@ -66,13 +66,11 @@ public abstract class Command
 	 * @param args command's arguments.
 	 * @param inStream input stream to read from it.
 	 * @param outStream output stream to write in it.
-	 * @return Return a number of lines which is requried to read component arguments (like {ELEMENT}).
-	 * If {@link #isNeedInput()} returns false, then this method should always return 0.
 	 * @throws CommandException if something goes wrong while command is executing.
 	 * 
 	 * @see Environment
 	 */
-	public abstract int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException;
+	public abstract void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException;
 	
 	/**
 	 * Returns string with helpful information about command.

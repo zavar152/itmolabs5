@@ -28,7 +28,7 @@ public class CountGreaterThanTSCommand extends Command
 	}
 
 	@Override
-	public int execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
 	{
 		if(args.length != 1)
 		{
@@ -54,7 +54,6 @@ public class CountGreaterThanTSCommand extends Command
 			long count = env.getCollection().stream().filter((p) -> p.getTransferredStudents() > tr).count();
 			((PrintStream) outStream).println("Count of elements: " + count);
 		}
-		return 0;
 	}
 
 	/**
