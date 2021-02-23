@@ -112,9 +112,9 @@ public class Person
     @Override
 	public String toString() 
     {
-		return "name=" + name + ", passportID=" + passportID + ", eyeColor=" + eyeColor + ", hairColor="
+		return "Person [name=" + name + ", passportID=" + passportID + ", eyeColor=" + eyeColor + ", hairColor="
 				+ hairColor + ", nationality=" + nationality + ", locationX=" + location.getX() + ", locationY=" + location.getY() + 
-				", locationZ=" + location.getZ() + ", locationName=" + location.getName();
+				", locationZ=" + location.getZ() + ", locationName=" + location.getName() + "]";
 	}
 
 	@Override

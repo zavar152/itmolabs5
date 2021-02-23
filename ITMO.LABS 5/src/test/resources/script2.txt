@@ -1,0 +1,2 @@
+test
+execute_script C:\test\script0.txt

@@ -30,10 +30,10 @@ public class ParsePerson extends CellProcessorAdaptor implements StringCellProce
 	}
 
 	@Override
-	public Object execute(Object value, CsvContext context) 
+	public <T> T execute(final Object value, final CsvContext context) 
 	{
 		validateInputNotNull(value, context);
-		
+	    
 		final Person person;
 		
 		if(value instanceof String)

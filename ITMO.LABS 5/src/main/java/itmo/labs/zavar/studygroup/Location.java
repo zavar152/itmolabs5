@@ -75,7 +75,7 @@ public class Location
 	@Override
 	public String toString() 
 	{
-		return "x=" + x + ", y=" + y + ", z=" + z + ", name=" + name;
+		return "Location [x=" + x + ", y=" + y + ", z=" + z + ", name=" + name + "]";
 	}
 
 	@Override

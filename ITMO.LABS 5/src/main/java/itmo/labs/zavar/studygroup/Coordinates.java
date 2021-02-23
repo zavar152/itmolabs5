@@ -53,7 +53,7 @@ public class Coordinates
 	@Override
 	public String toString() 
 	{
-		return "x=" + x + ", y=" + y;
+		return "Coordinates [x=" + x + ", y=" + y + "]";
 	}
 
 	@Override

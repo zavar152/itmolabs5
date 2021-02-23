@@ -50,7 +50,7 @@ public class CSVManager
 	 */
 	public static boolean write(String path, Stack<StudyGroup> stack, OutputStream out)
 	{
-		try 
+		try
 		{
 			File csv = new File(path);
 			if(!csv.getParentFile().exists()) 
@@ -113,12 +113,14 @@ public class CSVManager
 		{
 			((PrintStream) out).print("Error while parsing .csv file! Check if your data is correct! >>> ");
 			((PrintStream) out).println(e.getMessage());
+			stack.clear();
 			return false;
 		}
 		catch (IOException e) 
 		{
 			((PrintStream) out).print("Error while reading .csv file! >>> ");
 			((PrintStream) out).println(e.getMessage());
+			stack.clear();
 			return false;
 		}
 	}
@@ -133,13 +135,13 @@ public class CSVManager
 		CellProcessor[] processors = new CellProcessor[] { 
 				new NotNull(new ParseLong()),
 				new NotNull(), 
-				new NotNull(), 
+				new NotNull(new FmtCoordinates()),  
 				new NotNull(new FmtDate("yyyy-MM-dd")),
 				new NotNull(new ParseLong()),
 				new NotNull(new ParseInt()),
 				new NotNull(new ParseLong()),
 				new NotNull(new ParseEnum(FormOfEducation.class)),
-				new Optional()
+				new Optional(new FmtPerson())
 		};
 		return processors;
 	}
