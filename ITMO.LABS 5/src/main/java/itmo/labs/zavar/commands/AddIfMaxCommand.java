@@ -177,7 +177,7 @@ public class AddIfMaxCommand extends Command
 				}
 				StudyGroup temp1 = new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin);
 				StudyGroup temp2 = Collections.max(env.getCollection());
-				if(temp1.compareTo(temp2) == 1)
+				if(temp1.compareTo(temp2) > 0)
 				{
 					env.getCollection().push(temp1);
 					pr.println("Element added!");

@@ -1,4 +1,4 @@
 id;name;coordinates;creationDate;studentsCount;expelledStudents;transferredStudents;formOfEducation;groupAdmin
-1;3114;x=9.0, y=8.0;2021-02-18;6;4;1;DISTANCE_EDUCATION;name=Chel, passportID=1243, eyeColor=BLACK, hairColor=BLACK, nationality=GERMANY, locationX=0.0, locationY=0.0, locationZ=0, locationName=data
+1;3114;x=9.0, y=8.0;2021-02-21;6;4;1;DISTANCE_EDUCATION;name=Chel, passportID=1243, eyeColor=BLACK, hairColor=BLACK, nationality=GERMANY, locationX=0.0, locationY=0.0, locationZ=0, locationName=data
 3;3132;x=2.0, y=4.0;2021-02-16;7;1;3;FULL_TIME_EDUCATION;
 4;P3133;x=1.0, y=2.0;2021-02-17;3;4;5;EVENING_CLASSES;

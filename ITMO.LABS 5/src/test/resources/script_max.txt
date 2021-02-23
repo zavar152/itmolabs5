@@ -1,0 +1,1 @@
+add_if_min {"name":"T3132","x":4,"y":5,"studentsCount":2,"expelledStudents":3,"transferredStudents":4,"formOfEducation":"DISTANCE_EDUCATION","answer":"YES","adminName":"Chelik","adminPassportID":1234,"adminEyeColor":"GREEN","adminHairColor":"BLACK","adminCountry":"USA","adminLocation":"ITMO","adminX":1,"adminY":2,"adminZ":3}

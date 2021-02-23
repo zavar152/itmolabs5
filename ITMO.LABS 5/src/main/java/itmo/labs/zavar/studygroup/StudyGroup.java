@@ -276,7 +276,7 @@ public class StudyGroup implements Comparable<StudyGroup>
 	@Override
 	public int compareTo(StudyGroup o) 
 	{
-		return o.getCreationLocalDate().compareTo(this.creationDate);
+		return this.creationDate.compareTo(o.getCreationLocalDate());
 	}
 
 	@Override
