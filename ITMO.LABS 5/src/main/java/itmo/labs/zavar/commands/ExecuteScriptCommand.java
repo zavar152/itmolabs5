@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.input.ReaderInputStream;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
@@ -83,16 +85,25 @@ public class ExecuteScriptCommand extends Command
 					{
 						if(env.getCommandsMap().get(command[0]).isNeedInput())
 						{
-							List<String> subList = lines;
-							subList.removeAll(executed);
-					        String to = "";
-					        for(String l : subList)
-					        {
-					        	to = to + l + "\n" ;
-					        }
+							String to = "";
+							int jsonPos = command.length;
+							for(int k = 0; k < command.length; k++)
+							{
+								if(command[k].contains("{") || command[k].contains("}"))
+								{
+									jsonPos = k;
+									break;
+								}
+							}
+							
+							JSONObject obj = (JSONObject) new JSONParser().parse(command[jsonPos]);
+							String[] order = env.getCommandsMap().get(command[0]).getInputOrder(obj.size());
+							for(int j = 0; j < order.length; j++)
+							{
+								to = to + obj.get(order[j]) + "\n";
+							}
 					        env.getHistory().addToGlobal(line);
-							int r = env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), new ReaderInputStream(new StringReader(to), StandardCharsets.UTF_8), outStream);
-							i = i + r + 1;
+							env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, jsonPos), new ReaderInputStream(new StringReader(to), StandardCharsets.UTF_8), outStream);
 						}
 						else
 						{

@@ -141,4 +141,15 @@ public abstract class Command
 	{
 		return false;
 	}
+	
+	/**
+	 * This method returns name mappings for input. Must be overrided if command has additional input.
+	 * 
+	 * @param type Type od order.
+	 * @return Array with order.
+	 */
+	public String[] getInputOrder(int type)
+	{
+		return new String[] {};
+	}
 }

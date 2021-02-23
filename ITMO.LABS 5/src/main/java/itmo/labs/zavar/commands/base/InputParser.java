@@ -482,6 +482,7 @@ public class InputParser
 			}
 			catch(NoSuchElementException e)
 			{
+				e.printStackTrace();
 				((PrintStream) err).println("It isn't a string");
 				((PrintStream) err).println("Enter again:");
 			}

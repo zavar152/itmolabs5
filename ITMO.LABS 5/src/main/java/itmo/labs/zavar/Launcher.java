@@ -80,27 +80,34 @@ public class Launcher
 		
 		while(true)
 		{
-			String input = in.nextLine();
-			input = input.replaceAll(" +", " "); 
-			String command[] = input.split(" ");
-			
-			if(env.getCommandsMap().containsKey(command[0]))
+			try
 			{
-				try 
+				String input = in.nextLine();
+				input = input.replaceAll(" +", " "); 
+				String command[] = input.split(" ");
+				
+				if(env.getCommandsMap().containsKey(command[0]))
 				{
-					env.getHistory().addToGlobal(input);
-					env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
-					env.getHistory().clearTempHistory();
-				} 
-				catch(CommandException e) 
+					try 
+					{
+						env.getHistory().addToGlobal(input);
+						env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
+						env.getHistory().clearTempHistory();
+					} 
+					catch(CommandException e) 
+					{
+						System.err.println(e.getMessage());
+						env.getHistory().clearTempHistory();
+					}
+				}
+				else
 				{
-					System.err.println(e.getMessage());
-					env.getHistory().clearTempHistory();
+					System.err.println("Unknown command! Use help.");
 				}
 			}
-			else
+			catch(Exception e)
 			{
-				System.err.println("Unknown command! Use help.");
+				
 			}
 		}
 	}
