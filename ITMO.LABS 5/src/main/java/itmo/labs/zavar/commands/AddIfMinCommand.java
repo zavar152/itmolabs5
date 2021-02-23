@@ -24,11 +24,18 @@ import itmo.labs.zavar.studygroup.Location;
 import itmo.labs.zavar.studygroup.Person;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
+/**
+ * Adds a new element to the collection if its value is less than that of the smallest element in this collection.
+ * Requires {ELEMENT}.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class AddIfMinCommand extends Command
 {
 	private static AddIfMinCommand command;
 	
-	public AddIfMinCommand() 
+	private AddIfMinCommand() 
 	{
 		super("add_if_min", "{ELEMENT}");
 	}
@@ -168,6 +175,11 @@ public class AddIfMinCommand extends Command
 		return parCount;
 	}
 	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new AddIfMinCommand();

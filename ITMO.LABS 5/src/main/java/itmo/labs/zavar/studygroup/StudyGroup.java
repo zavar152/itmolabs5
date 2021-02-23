@@ -46,7 +46,9 @@ public class StudyGroup implements Comparable<StudyGroup>
      * @param groupAdmin Group's admin. Can be <tt>null</tt>.
      * @throws IllegalArgumentException If any parameter is wrong.
      * 
-     * @see {@link Coordinates}, {@link FormOfEducation}, {@link Person}
+     * @see Coordinates 
+     * @see FormOfEducation
+     * @see Person
      */
     public StudyGroup(long id, String name, Coordinates coordinates, Long studentsCount, int expelledStudents, long transferredStudents, FormOfEducation formOfEducation, Person groupAdmin) throws IllegalArgumentException
     {

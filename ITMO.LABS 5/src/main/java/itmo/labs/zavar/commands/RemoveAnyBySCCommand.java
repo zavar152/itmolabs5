@@ -12,6 +12,13 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
+/**
+ * Removes one element from the collection whose studentsCount field value is equivalent to the specified one.
+ * Requires student count.
+ * 
+ * @author Zavar
+ * @version 1.2
+ */
 public class RemoveAnyBySCCommand extends Command
 {
 	private static RemoveAnyBySCCommand command;
@@ -58,6 +65,11 @@ public class RemoveAnyBySCCommand extends Command
 		return 0;
 	}
 	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new RemoveAnyBySCCommand();

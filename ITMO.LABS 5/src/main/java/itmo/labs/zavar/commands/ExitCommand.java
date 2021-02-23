@@ -10,6 +10,13 @@ import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 
+/**
+ * Terminates the program (without saving it to a file).
+ * Doesn't require any arguments.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class ExitCommand extends Command 
 {
 	private static ExitCommand command;
@@ -34,6 +41,11 @@ public class ExitCommand extends Command
 		return 0;
 	}
 
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new ExitCommand();

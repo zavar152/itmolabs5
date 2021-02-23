@@ -22,11 +22,18 @@ import itmo.labs.zavar.studygroup.Location;
 import itmo.labs.zavar.studygroup.Person;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
+/**
+ * Adds a new item to the collection.
+ * Requires {ELEMENT}.
+ * 
+ * @author Zavar
+ * @version 1.5
+ */
 public class AddCommand extends Command
 {
 	private static AddCommand command;
 	
-	public AddCommand() 
+	private AddCommand() 
 	{
 		super("add", "{ELEMENT}");
 	}
@@ -153,6 +160,11 @@ public class AddCommand extends Command
 		return parCount;
 	}
 
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new AddCommand();

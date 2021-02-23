@@ -8,12 +8,12 @@ package itmo.labs.zavar.studygroup;
  */
 public class Person 
 {
-	private String name; //Поле не может быть null, Строка не может быть пустой
-    private String passportID; //Строка не может быть пустой, Поле может быть null
-    private Color eyeColor; //Поле не может быть null
-    private Color hairColor; //Поле не может быть null
-    private Country nationality; //Поле может быть null
-    private Location location; //Поле не может быть null
+	private String name;
+    private String passportID;
+    private Color eyeColor;
+    private Color hairColor;
+    private Country nationality;
+    private Location location;
     
     /**
      * 
@@ -25,7 +25,9 @@ public class Person
      * @param location Person's location. Location can't be <tt>null</tt>.
      * @throws IllegalArgumentException If any parameter is wrong.
      * 
-     * @see {@link Color}, {@link Country}, {@link Location}
+     * @see Color 
+     * @see Country 
+     * @see Location
      */
 	public Person(String name, String passportID, Color eyeColor, Color hairColor, Country nationality, Location location) throws IllegalArgumentException 
 	{

@@ -12,6 +12,12 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
+/**
+ * Ouputs history of commands.
+ * 
+ * @author Zavar
+ *
+ */
 public class HistoryCommand extends Command 
 {
 	private static HistoryCommand command;
@@ -53,6 +59,11 @@ public class HistoryCommand extends Command
 		return 0;
 	}
 	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new HistoryCommand();

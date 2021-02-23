@@ -12,6 +12,13 @@ import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
+/**
+ * Outputs all elements of the collection in a string representation to the standard output stream.
+ * Doesn't require any arguments.
+ * 
+ * @author Zavar
+ * @version 1.3
+ */
 public class ShowCommand extends Command
 {
 	private static ShowCommand command;
@@ -72,6 +79,11 @@ public class ShowCommand extends Command
 		return 0;
 	}
 
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new ShowCommand();

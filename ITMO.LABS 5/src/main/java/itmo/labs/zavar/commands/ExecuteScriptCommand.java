@@ -23,11 +23,18 @@ import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRecursionException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
+/**
+ * Reads and executes the script from the specified file. The script contains commands in the same form as the user enters them interactively.
+ * Requires a path to file.
+ * 
+ * @author Zavar
+ * @version 1.9
+ */
 public class ExecuteScriptCommand extends Command
 {
 	private static ExecuteScriptCommand command;
 
-	public ExecuteScriptCommand() 
+	private ExecuteScriptCommand() 
 	{
 		super("execute_script", "path_to_file");
 	}
@@ -109,7 +116,12 @@ public class ExecuteScriptCommand extends Command
 		((PrintStream) outStream).println("Script is completed!");
 		return 0;
 	}
-
+	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new ExecuteScriptCommand();

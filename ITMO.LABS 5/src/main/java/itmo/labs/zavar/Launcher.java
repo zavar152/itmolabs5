@@ -43,7 +43,7 @@ public class Launcher
 	/**
 	 * Registering all commands and creating environment. Contains interpretator of commands.
 	 * 
-	 * @param args
+	 * @param args path to csv file.
 	 */
 	public static void main(String[] args)
 	{	

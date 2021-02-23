@@ -11,6 +11,13 @@ import itmo.labs.zavar.csv.CSVManager;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 
+/**
+ * Saves the collection to a file.
+ * Requires a path to file.
+ * 
+ * @author Zavar
+ * @version 1.2
+ */
 public class SaveCommand extends Command
 {
 	private static SaveCommand command;
@@ -41,6 +48,11 @@ public class SaveCommand extends Command
 		return 0;
 	}
 	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new SaveCommand();

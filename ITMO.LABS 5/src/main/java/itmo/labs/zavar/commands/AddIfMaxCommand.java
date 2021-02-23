@@ -24,11 +24,18 @@ import itmo.labs.zavar.studygroup.Location;
 import itmo.labs.zavar.studygroup.Person;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
+/**
+ * Adds a new element to the collection if its value exceeds the value of the largest element in this collection.
+ * Requires {ELEMENT}.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class AddIfMaxCommand extends Command
 {
 	private static AddIfMaxCommand command;
 	
-	public AddIfMaxCommand() 
+	private AddIfMaxCommand() 
 	{
 		super("add_if_max", "{ELEMENT}");
 	}
@@ -168,6 +175,11 @@ public class AddIfMaxCommand extends Command
 		return parCount;
 	}
 	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new AddIfMaxCommand();

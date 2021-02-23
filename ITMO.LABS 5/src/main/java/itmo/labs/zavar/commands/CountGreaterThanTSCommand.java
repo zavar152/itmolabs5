@@ -11,6 +11,13 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
+/**
+ * Outputs the number of elements whose transferredStudents field value is greater than the specified value.
+ * Requires transferred students.
+ * 
+ * @author Zavar
+ * @version 1.2
+ */
 public class CountGreaterThanTSCommand extends Command 
 {
 	private static CountGreaterThanTSCommand command;
@@ -50,6 +57,11 @@ public class CountGreaterThanTSCommand extends Command
 		return 0;
 	}
 
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new CountGreaterThanTSCommand();

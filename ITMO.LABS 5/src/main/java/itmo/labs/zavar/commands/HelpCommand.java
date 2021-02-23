@@ -10,6 +10,13 @@ import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 
+/**
+ * Displays help for available commands.
+ * Doesn't require any arguments.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class HelpCommand extends Command
 {
 	private static HelpCommand command;
@@ -35,6 +42,11 @@ public class HelpCommand extends Command
 		return 0;
 	}
 
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new HelpCommand();

@@ -10,6 +10,13 @@ import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 
+/**
+ * Clears the collection.
+ * Doesn't require any arguments.
+ * 
+ * @author Zavar
+ * @version 1.0
+ */
 public class ClearCommand extends Command
 {
 	private static ClearCommand command;
@@ -33,7 +40,12 @@ public class ClearCommand extends Command
 		} 
 		return 0;
 	}
-
+	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new ClearCommand();

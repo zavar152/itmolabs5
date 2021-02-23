@@ -10,11 +10,19 @@ import itmo.labs.zavar.commands.base.Environment;
 import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 
+/**
+ * Outputs information about the collection to the standard output stream.
+ * Requires additional user input.
+ * 
+ * @author Zavar
+ * @version 1.9
+ * 
+ */
 public class InfoCommand extends Command
 {
 	private static InfoCommand command;
 	
-	public InfoCommand() 
+	private InfoCommand() 
 	{
 		super("info");
 	}
@@ -36,6 +44,11 @@ public class InfoCommand extends Command
 		return 0;
 	}
 
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new InfoCommand();

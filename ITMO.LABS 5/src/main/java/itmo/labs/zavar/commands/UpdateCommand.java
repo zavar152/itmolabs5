@@ -22,11 +22,18 @@ import itmo.labs.zavar.studygroup.Location;
 import itmo.labs.zavar.studygroup.Person;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
+/**
+ * Updates the value of a collection element whose id is equal to the specified one.
+ * Requires ID.
+ * 
+ * @author Zavar
+ * @version 1.5
+ */
 public class UpdateCommand extends Command 
 {
 	private static UpdateCommand command;
 	
-	public UpdateCommand() 
+	private UpdateCommand() 
 	{
 		super("update", "id");
 	}
@@ -178,6 +185,11 @@ public class UpdateCommand extends Command
 	return parCount;
 	}
 	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new UpdateCommand();
@@ -190,6 +202,15 @@ public class UpdateCommand extends Command
 		return "This command update the element from collection!";
 	}
 	
+	/**
+	 * Updates all elements.
+	 * 
+	 * @param sg {@link StudyGroup}
+	 * @param in {@link Scanner}
+	 * @param inStream Any input stream.
+	 * @param outStream Any output stream.
+	 * @return Number of input parameters.
+	 */
 	private int updateAll(StudyGroup sg, Scanner in, InputStream inStream, OutputStream outStream)
 	{
 		PrintStream pr = new PrintStream(outStream);
@@ -290,6 +311,12 @@ public class UpdateCommand extends Command
 		return parCount;
 	}
 	
+	/**
+	 * Contains fields for choosing.
+	 * 
+	 * @author Zavar
+	 *
+	 */
 	private enum Fields
 	{
 		ALL(1, "All fields"),

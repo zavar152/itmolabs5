@@ -11,6 +11,13 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
+/**
+ * Outputs the average value of the transferredStudents field for all items in the collection.
+ * Doesn't require any arguments.
+ * 
+ * @author Zavar
+ * @version 1.2
+ */
 public class AverageOfTSCommand extends Command
 {	
 	private static AverageOfTSCommand command;
@@ -39,6 +46,12 @@ public class AverageOfTSCommand extends Command
 		return 0;
 	}
 
+	
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new AverageOfTSCommand();

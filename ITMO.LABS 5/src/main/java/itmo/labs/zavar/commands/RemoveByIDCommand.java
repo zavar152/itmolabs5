@@ -11,6 +11,13 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
+/**
+ * Deletes an item from the collection by its id.
+ * Requires ID.
+ * 
+ * @author Zavar
+ * @version 1.3
+ */
 public class RemoveByIDCommand extends Command 
 {
 	private static RemoveByIDCommand command;
@@ -50,6 +57,11 @@ public class RemoveByIDCommand extends Command
 		return 0;
 	}
 
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
 		command = new RemoveByIDCommand();

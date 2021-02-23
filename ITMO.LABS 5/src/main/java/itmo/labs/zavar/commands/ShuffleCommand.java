@@ -12,6 +12,13 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
+/**
+ * Shuffles the elements of the collection in a random order.
+ * Doesn't require any arguments.
+ * 
+ * @author Zavar
+ * @version 1.1
+ */
 public class ShuffleCommand extends Command
 {
 	private static ShuffleCommand command;
@@ -19,12 +26,6 @@ public class ShuffleCommand extends Command
 	private ShuffleCommand() 
 	{
 		super("shuffle");
-	}
-
-	public static void register(HashMap<String, Command> commandsMap)
-	{
-		command = new ShuffleCommand();
-		commandsMap.put(command.getName(), command);
 	}
 	
 	@Override
@@ -48,6 +49,17 @@ public class ShuffleCommand extends Command
 		return 0;
 	}
 
+	/**
+	 * Uses for commands registration.
+	 * 
+	 * @param commandsMap Commands' map.
+	 */
+	public static void register(HashMap<String, Command> commandsMap)
+	{
+		command = new ShuffleCommand();
+		commandsMap.put(command.getName(), command);
+	}
+	
 	@Override
 	public String getHelp() 
 	{
