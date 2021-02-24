@@ -20,8 +20,7 @@ import itmo.labs.zavar.exception.CommandRunningException;
  */
 public class HistoryCommand extends Command 
 {
-	private static HistoryCommand command;
-	
+
 	private HistoryCommand() 
 	{
 		super("history", "count");
@@ -65,7 +64,7 @@ public class HistoryCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new HistoryCommand();
+		HistoryCommand command = new HistoryCommand();
 		commandsMap.put(command.getName(), command);
 	}
 

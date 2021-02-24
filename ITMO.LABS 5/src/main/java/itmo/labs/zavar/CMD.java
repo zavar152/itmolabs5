@@ -22,10 +22,10 @@ import itmo.labs.zavar.commands.RemoveByIDCommand;
 import itmo.labs.zavar.commands.SaveCommand;
 import itmo.labs.zavar.commands.ShowCommand;
 import itmo.labs.zavar.commands.ShuffleCommand;
-import itmo.labs.zavar.commands.TestCommand;
 import itmo.labs.zavar.commands.UpdateCommand;
 import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
+import itmo.labs.zavar.csv.CSVManager;
 import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
@@ -35,26 +35,42 @@ import itmo.labs.zavar.studygroup.StudyGroup;
  * @author Zavar
  * @version 1.7
  */
-public class Launcher 
+public class CMD 
 {
 	private static Stack<StudyGroup> stack = new Stack<StudyGroup>();
 	private static HashMap<String, Command> commandsMap = new HashMap<String, Command>();
 	
 	/**
-	 * Registering all commands and creating environment. Contains interpretator of commands.
+	 * Registering all commands and creating environment. Contains interpreter of commands.
 	 * 
 	 * @param args path to csv file.
 	 */
 	public static void main(String[] args)
 	{	
-		if(args.length < 1 || args.length > 1)
+		System.setErr(System.out);
+		
+		if(args.length != 1)
 		{
-			System.out.println("You should enter only a path to .csv file!");
-			System.exit(0);
+			args = new String[] {""};
+			System.out.println("You should enter a path to .csv file! Collection will be empty!");
 		}
 		
-		System.setErr(System.out);
-		TestCommand.register(commandsMap);
+		File file = new File(args[0]);
+		
+		try
+		{
+			System.out.println("Reading file...");
+			if(CSVManager.read(file.toPath().toString(), stack, System.out))
+			{
+				System.out.println("Collection loaded!");
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Unexcepted error during initialization. Program will be closed...");
+			System.exit(-1);
+		}
+		
 		HelpCommand.register(commandsMap);
 		ExitCommand.register(commandsMap);
 		ShowCommand.register(commandsMap);
@@ -74,7 +90,7 @@ public class Launcher
 		UpdateCommand.register(commandsMap);
 		
 		Scanner in = new Scanner(System.in);
-		Environment env = new Environment(new File(args[0]), commandsMap, stack);
+		Environment env = new Environment(file, commandsMap, stack);
 		
 		System.out.println("Welcome to ITMO.LAB 5, enter a command or use help");
 		
@@ -83,13 +99,13 @@ public class Launcher
 			try
 			{
 				String input = in.nextLine();
-				input = input.replaceAll(" +", " "); 
+				input = input.replaceAll(" +", " ").trim(); 
 				String command[] = input.split(" ");
 				
 				if(env.getCommandsMap().containsKey(command[0]))
 				{
 					try 
-					{
+					{ 
 						env.getHistory().addToGlobal(input);
 						env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), System.in, System.out);
 						env.getHistory().clearTempHistory();
@@ -107,7 +123,15 @@ public class Launcher
 			}
 			catch(Exception e)
 			{
-				
+				if(!in.hasNextLine())
+				{
+					System.out.println("Inputing is closed! Program is closing...");
+					System.exit(0);
+				}
+				else
+				{
+					System.out.println("Unexcepted error!");
+				}
 			}
 		}
 	}

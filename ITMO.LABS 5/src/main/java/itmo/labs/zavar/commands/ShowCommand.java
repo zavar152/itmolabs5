@@ -21,8 +21,7 @@ import itmo.labs.zavar.studygroup.StudyGroup;
  */
 public class ShowCommand extends Command
 {
-	private static ShowCommand command;
-	
+
 	private ShowCommand() 
 	{
 		super("show");
@@ -85,7 +84,7 @@ public class ShowCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new ShowCommand();
+		ShowCommand command = new ShowCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

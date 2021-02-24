@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Stack;
 
-import itmo.labs.zavar.csv.CSVManager;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
 /**
@@ -37,23 +36,22 @@ public class Environment
 	 */
 	public Environment(File file, HashMap<String, Command> map, Stack<StudyGroup> stack)
 	{
-		System.out.println("Reading file...");
-		if(CSVManager.read(file.toPath().toString(), stack, System.out))
-		{
-			System.out.println("Collection loaded!");
-		}
-		
-		this.map = map;
-		this.stack = stack;
-		history = new History();
 		try 
 		{
+			this.map = map;
+			this.stack = stack;
+			history = new History();
 			BasicFileAttributes attr = Files.readAttributes((file).toPath(), BasicFileAttributes.class);
 			time = new SimpleDateFormat("yyyy-MM-dd").format(attr.creationTime().toMillis());
 		} 
-		catch (IOException e) 
+		catch(IOException e) 
 		{
 			time = new SimpleDateFormat("yyyy-MM-dd").format(Date.valueOf(LocalDate.now()));
+		}
+		catch(Exception e)
+		{
+			System.out.println("Unexcepted error during initialization. Program will be closed...");
+			System.exit(-1);
 		}
 	}
 

@@ -20,8 +20,7 @@ import itmo.labs.zavar.exception.CommandRunningException;
  */
 public class CountGreaterThanTSCommand extends Command 
 {
-	private static CountGreaterThanTSCommand command;
-	
+
 	private CountGreaterThanTSCommand()
 	{
 		super("count_greater_than_transferred_students", "transferredStudents");
@@ -45,6 +44,10 @@ public class CountGreaterThanTSCommand extends Command
 			{
 				throw new CommandArgumentException("transferredStudents shold be a long type!");
 			}
+			catch(Exception e)
+			{
+				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
+			}
 			
 			if(env.getCollection().isEmpty())
 			{
@@ -63,7 +66,7 @@ public class CountGreaterThanTSCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new CountGreaterThanTSCommand();
+		CountGreaterThanTSCommand command = new CountGreaterThanTSCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

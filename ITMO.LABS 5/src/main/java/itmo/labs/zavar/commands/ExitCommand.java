@@ -19,8 +19,7 @@ import itmo.labs.zavar.exception.CommandException;
  */
 public class ExitCommand extends Command 
 {
-	private static ExitCommand command;
-	
+
 	private ExitCommand() 
 	{
 		super("exit");
@@ -47,7 +46,7 @@ public class ExitCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new ExitCommand();
+		ExitCommand command = new ExitCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

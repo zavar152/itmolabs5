@@ -21,8 +21,7 @@ import itmo.labs.zavar.exception.CommandRunningException;
  */
 public class RemoveAnyBySCCommand extends Command
 {
-	private static RemoveAnyBySCCommand command;
-	
+
 	private RemoveAnyBySCCommand()
 	{
 		super("remove_any_by_students_count", "students_count");
@@ -46,6 +45,10 @@ public class RemoveAnyBySCCommand extends Command
 			{
 				throw new CommandArgumentException("Students count shold be a long type!");
 			}
+			catch(Exception e)
+			{
+				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
+			}
 			
 			if(env.getCollection().isEmpty())
 			{
@@ -61,6 +64,10 @@ public class RemoveAnyBySCCommand extends Command
 			{
 				((PrintStream) outStream).println("No such element!");
 			}
+			catch(Exception e)
+			{
+				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
+			}
 		}
 	}
 	
@@ -71,7 +78,7 @@ public class RemoveAnyBySCCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new RemoveAnyBySCCommand();
+		RemoveAnyBySCCommand command = new RemoveAnyBySCCommand();
 		commandsMap.put(command.getName(), command);
 	}
 

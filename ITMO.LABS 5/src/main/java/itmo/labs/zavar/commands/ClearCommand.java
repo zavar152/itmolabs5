@@ -19,8 +19,7 @@ import itmo.labs.zavar.exception.CommandException;
  */
 public class ClearCommand extends Command
 {
-	private static ClearCommand command;
-	
+
 	private ClearCommand() 
 	{
 		super("clear");
@@ -47,7 +46,7 @@ public class ClearCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new ClearCommand();
+		ClearCommand command = new ClearCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

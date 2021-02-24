@@ -21,7 +21,6 @@ import itmo.labs.zavar.exception.CommandRunningException;
  */
 public class ShuffleCommand extends Command
 {
-	private static ShuffleCommand command;
 
 	private ShuffleCommand() 
 	{
@@ -54,7 +53,7 @@ public class ShuffleCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new ShuffleCommand();
+		ShuffleCommand command = new ShuffleCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

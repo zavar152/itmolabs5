@@ -20,8 +20,7 @@ import itmo.labs.zavar.exception.CommandException;
  */
 public class InfoCommand extends Command
 {
-	private static InfoCommand command;
-	
+
 	private InfoCommand() 
 	{
 		super("info");
@@ -50,7 +49,7 @@ public class InfoCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new InfoCommand();
+		InfoCommand command = new InfoCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

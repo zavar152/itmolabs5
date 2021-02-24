@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -31,11 +32,10 @@ import itmo.labs.zavar.studygroup.StudyGroup;
  */
 public class UpdateCommand extends Command 
 {
-	private static UpdateCommand command;
-	
+
 	private UpdateCommand() 
 	{
-		super("update", "id");
+		super("update", "id", "{ELEMENT}");
 	}
 	
 	@Override
@@ -90,6 +90,10 @@ public class UpdateCommand extends Command
 			{
 				throw new CommandArgumentException("No such id in the collection!");
 			}
+			catch(Exception e)
+			{
+				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
+			}
 			Scanner in = new Scanner(inStream);
 			
 			int f = -1;
@@ -101,7 +105,7 @@ public class UpdateCommand extends Command
 			}
 			try
 			{
-				f = InputParser.parseInteger(outStream, in, "Field", -2, 8, false, true);
+				f = InputParser.parseInteger(outStream, in, "Field", 1, 8, false, true);
 				switch (f)  
 				{	
 				case 1:
@@ -188,6 +192,10 @@ public class UpdateCommand extends Command
 					break;
 				}
 			}
+			catch(InputMismatchException e)
+			{
+				throw new CommandRunningException("Input closed!");
+			}
 			catch(Exception e)
 			{
 				throw new CommandRunningException("Parsing error!");
@@ -203,7 +211,7 @@ public class UpdateCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new UpdateCommand();
+		UpdateCommand command = new UpdateCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

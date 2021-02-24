@@ -2,6 +2,7 @@ package itmo.labs.zavar.commands.base;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -24,29 +25,30 @@ public class InputParser
 	 * @param lessThan The upper limit of the number. Type in {@link Integer#MAX_VALUE} if there is no any limit.
 	 * @param canBeNull If the value can be <tt>null</tt>.
 	 * @param primitive If the value is primitive type.
+	 * @throws InputMismatchException If input is closed.
 	 * @return {@link Integer} from input.
 	 */
-	public static Integer parseInteger(OutputStream err, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean primitive)
+	public static Integer parseInteger(OutputStream err, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean primitive) throws InputMismatchException
 	{
 		String intStr = "";
 		Integer i = null;
 		do
 		{
-			intStr = in.nextLine();
-			if(canBeNull && intStr.isEmpty())
+			try
 			{
-				if(primitive)
+				intStr = in.nextLine();
+				if(canBeNull && intStr.isEmpty())
 				{
-					return 0;
+					if(primitive)
+					{
+						return 0;
+					}
+					else
+					{
+						return null;
+					}
 				}
 				else
-				{
-					return null;
-				}
-			}
-			else
-			{
-				try
 				{
 					i = Integer.parseInt(intStr);
 					if(greaterThan == Integer.MIN_VALUE && lessThan == Integer.MAX_VALUE)
@@ -85,16 +87,28 @@ public class InputParser
 						}
 						else
 						{
-							((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
-							((PrintStream) err).println("Enter again:");
+								((PrintStream) err).println(name + " value must be greater than " + greaterThan + ", less than " + lessThan);
+								((PrintStream) err).println("Enter again:");
 						}
 					}
 				}
-				catch(NumberFormatException e)
+			}
+			catch(NoSuchElementException e)
+			{
+				if(!in.hasNextLine())
 				{
-					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Integer.MIN_VALUE ? "-2147483649" : greaterThan) + ", less than " + (lessThan == Integer.MAX_VALUE ? "2147483648" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
-					((PrintStream) err).println("Enter again:");
+					throw new InputMismatchException();
 				}
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(NumberFormatException e)
+			{
+				((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Integer.MIN_VALUE ? "-2147483649" : greaterThan) + ", less than " + (lessThan == Integer.MAX_VALUE ? "2147483648" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(Exception e)
+			{
+				((PrintStream) err).println("Unexcepted input error! " + e.getMessage());
 			}
 		}while(true);
 		
@@ -111,29 +125,30 @@ public class InputParser
 	 * @param lessThan The upper limit of the number. Type in {@link Long#MAX_VALUE} if there is no any limit.
 	 * @param canBeNull If the value can be <tt>null</tt>.
 	 * @param primitive If the value is primitive type.
+	 * @throws InputMismatchException If input is closed.
 	 * @return {@link Long} from input.
 	 */
-	public static Long parseLong(OutputStream err, Scanner in, String name, long greaterThan, long lessThan, boolean canBeNull, boolean primitive)
+	public static Long parseLong(OutputStream err, Scanner in, String name, long greaterThan, long lessThan, boolean canBeNull, boolean primitive) throws InputMismatchException
 	{
 		String longStr = "";
 		Long l = null;
 		do
 		{
-			longStr = in.nextLine();
-			if(canBeNull && longStr.isEmpty())
+			try
 			{
-				if(primitive)
+				longStr = in.nextLine();
+				if(canBeNull && longStr.isEmpty())
 				{
-					return 0l;
+					if(primitive)
+					{
+						return 0l;
+					}
+					else
+					{
+						return null;
+					}
 				}
 				else
-				{
-					return null;
-				}
-			}
-			else
-			{
-				try
 				{
 					l = Long.parseLong(longStr);
 					if(greaterThan == Long.MIN_VALUE && lessThan == Long.MAX_VALUE)
@@ -177,11 +192,23 @@ public class InputParser
 						}
 					}
 				}
-				catch(NumberFormatException e)
+			}
+			catch(NoSuchElementException e)
+			{
+				if(!in.hasNextLine())
 				{
-					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Long.MIN_VALUE ? "-9223372036854775809" : greaterThan) + ", less than " + (lessThan == Long.MAX_VALUE ? "9223372036854775808" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
-					((PrintStream) err).println("Enter again:");
+					throw new InputMismatchException();
 				}
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(NumberFormatException e)
+			{
+				((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Long.MIN_VALUE ? "-9223372036854775809" : greaterThan) + ", less than " + (lessThan == Long.MAX_VALUE ? "9223372036854775808" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(Exception e)
+			{
+				((PrintStream) err).println("Unexcepted input error! " + e.getMessage());
 			}
 		}while(true);
 		
@@ -198,29 +225,30 @@ public class InputParser
 	 * @param lessThan The upper limit of the number. Type in {@link Float#MAX_VALUE} if there is no any limit.
 	 * @param canBeNull If the value can be <tt>null</tt>.
 	 * @param primitive If the value is primitive type.
+	 * @throws InputMismatchException If input is closed.
 	 * @return {@link Float} from input.
 	 */
-	public static Float parseFloat(OutputStream err, Scanner in, String name, float greaterThan, float lessThan, boolean canBeNull, boolean primitive)
+	public static Float parseFloat(OutputStream err, Scanner in, String name, float greaterThan, float lessThan, boolean canBeNull, boolean primitive) throws InputMismatchException
 	{
 		String floatStr = "";
 		Float f = null;
 		do
 		{
-			floatStr = in.nextLine();
-			if(canBeNull && floatStr.isEmpty())
+			try
 			{
-				if(primitive)
+				floatStr = in.nextLine();
+				if(canBeNull && floatStr.isEmpty())
 				{
-					return 0f;
+					if(primitive)
+					{
+						return 0f;
+					}
+					else
+					{
+						return null;
+					}
 				}
 				else
-				{
-					return null;
-				}
-			}
-			else
-			{
-				try
 				{
 					f = Float.parseFloat(floatStr);
 					if(greaterThan == Float.MIN_VALUE && lessThan == Float.MAX_VALUE)
@@ -264,11 +292,23 @@ public class InputParser
 						}
 					}
 				}
-				catch(NumberFormatException e)
+			}
+			catch(NoSuchElementException e)
+			{
+				if(!in.hasNextLine())
 				{
-					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Float.MIN_VALUE ? "(1.4E-45)-1" : greaterThan) + ", less than " + (lessThan == Float.MAX_VALUE ? "(3.4028235E38)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
-					((PrintStream) err).println("Enter again:");
+					throw new InputMismatchException();
 				}
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(NumberFormatException e)
+			{
+				((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Float.MIN_VALUE ? "(1.4E-45)-1" : greaterThan) + ", less than " + (lessThan == Float.MAX_VALUE ? "(3.4028235E38)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(Exception e)
+			{
+				((PrintStream) err).println("Unexcepted input error! " + e.getMessage());
 			}
 		}while(true);
 		
@@ -285,31 +325,32 @@ public class InputParser
 	 * @param lessThan The upper limit of the number. Type in {@link Double#MAX_VALUE} if there is no any limit.
 	 * @param canBeNull If the value can be <tt>null</tt>.
 	 * @param primitive If the value is primitive type.
+	 * @throws InputMismatchException If input is closed.
 	 * @return {@link Double} from input.
 	 */
-	public static Double parseDouble(OutputStream err, Scanner in, String name, double greaterThan, double lessThan, boolean canBeNull, boolean primitive)
+	public static Double parseDouble(OutputStream err, Scanner in, String name, double greaterThan, double lessThan, boolean canBeNull, boolean primitive) throws InputMismatchException
 	{
-		String floatStr = "";
+		String doubleStr = "";
 		Double d = null;
 		do
 		{
-			floatStr = in.nextLine();
-			if(canBeNull && floatStr.isEmpty())
+			try
 			{
-				if(primitive)
+				doubleStr = in.nextLine();
+				if(canBeNull && doubleStr.isEmpty())
 				{
-					return 0d;
+					if(primitive)
+					{
+						return 0d;
+					}
+					else
+					{
+						return null;
+					}
 				}
 				else
 				{
-					return null;
-				}
-			}
-			else
-			{
-				try
-				{
-					d = Double.parseDouble(floatStr);
+					d = Double.parseDouble(doubleStr);
 					if(greaterThan == Double.MIN_VALUE && lessThan == Double.MAX_VALUE)
 					{
 						break;
@@ -351,11 +392,23 @@ public class InputParser
 						}
 					}
 				}
-				catch(NumberFormatException e)
+			}
+			catch(NoSuchElementException e)
+			{
+				if(!in.hasNextLine())
 				{
-					((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Double.MIN_VALUE ? "(4.9E-324)-1" : greaterThan) + ", less than " + (lessThan == Double.MAX_VALUE ? "(1.7976931348623157E308)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
-					((PrintStream) err).println("Enter again:");
+					throw new InputMismatchException();
 				}
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(NumberFormatException e)
+			{
+				((PrintStream) err).println(name + " value must be greater than " + (greaterThan == Double.MIN_VALUE ? "(4.9E-324)-1" : greaterThan) + ", less than " + (lessThan == Double.MAX_VALUE ? "(1.7976931348623157E308)+1" : lessThan) + (canBeNull ? "" : " and can't be null!"));	
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(Exception e)
+			{
+				((PrintStream) err).println("Unexcepted input error! " + e.getMessage());
 			}
 		}while(true);
 		
@@ -369,30 +422,43 @@ public class InputParser
 	 * @param in {@link Scanner}
 	 * @param enu {@link Enum} class.
 	 * @param canBeNull If the value can be <tt>null</tt>.
+	 * @throws InputMismatchException If input is closed.
 	 * @return {@link String} from input.
 	 */
-	public static String parseEnum(OutputStream err, Scanner in, Class<? extends Enum> enu, boolean canBeNull)
+	public static String parseEnum(OutputStream err, Scanner in, Class<? extends Enum> enu, boolean canBeNull) throws InputMismatchException
 	{
 		String par = "";
 		do
 		{
-			par = in.nextLine();
-			if(canBeNull && par.isEmpty())
+			try
 			{
-				return null;
-			}
-			else
-			{
-				try
+				par = in.nextLine();
+				if(canBeNull && par.isEmpty())
+				{
+					return null;
+				}
+				else
 				{
 					par = Enum.valueOf(enu, par).toString();
 					break;
 				}
-				catch(IllegalArgumentException e)
+			}
+			catch(NoSuchElementException e)
+			{
+				if(!in.hasNextLine())
 				{
-					((PrintStream) err).println("Incorrect value!");
-					((PrintStream) err).println("Enter again:");
+					throw new InputMismatchException();
 				}
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(IllegalArgumentException e)
+			{
+				((PrintStream) err).println("Incorrect value!");
+				((PrintStream) err).println("Enter again:");
+			}
+			catch(Exception e)
+			{
+				((PrintStream) err).println("Unexcepted input error! " + e.getMessage());
 			}
 			
 		}while(true);
@@ -410,9 +476,10 @@ public class InputParser
 	 * @param lessThan The upper limit of the string length. Type in {@link Integer#MAX_VALUE} if there is no any limit.
 	 * @param canBeNull If the value can be <tt>null</tt>.
 	 * @param canBeEmpty If the string can be empty.
+	 * @throws InputMismatchException If input is closed.
 	 * @return {@link String} from input.
 	 */
-	public static String parseString(OutputStream err, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean canBeEmpty)
+	public static String parseString(OutputStream err, Scanner in, String name, int greaterThan, int lessThan, boolean canBeNull, boolean canBeEmpty) throws InputMismatchException
 	{
 		String ret;
 		do
@@ -482,9 +549,16 @@ public class InputParser
 			}
 			catch(NoSuchElementException e)
 			{
-				e.printStackTrace();
+				if(!in.hasNextLine())
+				{
+					throw new InputMismatchException();
+				}
 				((PrintStream) err).println("It isn't a string");
 				((PrintStream) err).println("Enter again:");
+			}
+			catch(Exception e)
+			{
+				((PrintStream) err).println("Unexcepted input error! " + e.getMessage());
 			}
 			
 		}while(true);

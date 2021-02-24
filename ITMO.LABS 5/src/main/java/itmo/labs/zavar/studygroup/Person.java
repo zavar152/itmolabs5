@@ -40,7 +40,7 @@ public class Person
 			this.name = name;
 		}
 		
-		if(name != null && name.isEmpty())
+		if(passportID != null && passportID.isEmpty())
 		{
 			throw new IllegalArgumentException("Passport ID can't be empty");
 		}

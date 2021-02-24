@@ -9,7 +9,6 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +16,7 @@ import java.util.List;
 import org.apache.commons.io.input.ReaderInputStream;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import itmo.labs.zavar.commands.base.Command;
 import itmo.labs.zavar.commands.base.Environment;
@@ -34,7 +34,6 @@ import itmo.labs.zavar.exception.CommandRunningException;
  */
 public class ExecuteScriptCommand extends Command
 {
-	private static ExecuteScriptCommand command;
 
 	private ExecuteScriptCommand() 
 	{
@@ -62,22 +61,24 @@ public class ExecuteScriptCommand extends Command
 			env.getHistory().addToTemp((getName() + " " + Arrays.toString(args).replace("[", "").replace("]", "")));
 			
 			List<String> lines = null;
-			List<String> executed = new ArrayList<String>();
 			try 
 			{
 				lines = Files.readAllLines(Paths.get((String) args[0]), StandardCharsets.UTF_8);
 			} 
-			catch (IOException e) 
+			catch(IOException e) 
 			{
 				throw new CommandRunningException("IOException!");
+			}
+			catch(Exception e)
+			{
+				throw new CommandRunningException("Error while reading script file!");
 			}
 			
 			for(int i = 0; i < lines.size(); i++)
 			{
 				String line = lines.get(i);
-				line = line.replaceAll(" +", " "); 
+				line = line.replaceAll(" +", " ").trim(); 
 				String command[] = line.split(" ");
-				executed.add(line);
 				
 				if(env.getCommandsMap().containsKey(command[0]))
 				{
@@ -96,7 +97,16 @@ public class ExecuteScriptCommand extends Command
 								}
 							}
 							
-							JSONObject obj = (JSONObject) new JSONParser().parse(command[jsonPos]);
+							JSONObject obj;
+							try
+							{
+								obj = (JSONObject) new JSONParser().parse(command[jsonPos]);
+							}
+							catch(ParseException | ArrayIndexOutOfBoundsException e)
+							{
+								throw new CommandRunningException("JSON parsing failed!");
+							}
+							
 							String[] order = env.getCommandsMap().get(command[0]).getInputOrder(obj.size());
 							for(int j = 0; j < order.length; j++)
 							{
@@ -110,10 +120,14 @@ public class ExecuteScriptCommand extends Command
 							env.getHistory().addToGlobal(line);
 							env.getCommandsMap().get(command[0]).execute(env, Arrays.copyOfRange(command, 1, command.length), inStream, outStream);
 						}
-					} 
+					}
+					catch(CommandException e)
+					{
+						throw new CommandException(e.getMessage());
+					}
 					catch(Exception e) 
 					{
-						((PrintStream) outStream).println("Script is interrupted!");
+						((PrintStream) outStream).println("Script is interrupted! Check your commands and arguments!");
 						throw new CommandException(e.getMessage());
 					}
 				}
@@ -134,7 +148,7 @@ public class ExecuteScriptCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new ExecuteScriptCommand();
+		ExecuteScriptCommand command = new ExecuteScriptCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -32,7 +33,6 @@ import itmo.labs.zavar.studygroup.StudyGroup;
  */
 public class AddCommand extends Command
 {
-	private static AddCommand command;
 	
 	private AddCommand() 
 	{
@@ -81,6 +81,10 @@ public class AddCommand extends Command
 			catch(NoSuchElementException e)
 			{
 				id = 1;
+			}
+			catch(Exception e)
+			{
+				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
 			}
 			
 			try
@@ -158,6 +162,10 @@ public class AddCommand extends Command
 				env.getCollection().push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin));
 				pr.println("Element added!");
 			}
+			catch(InputMismatchException e)
+			{
+				throw new CommandRunningException("Input closed!");
+			}
 			catch(Exception e)
 			{
 				throw new CommandRunningException("Parsing error!");
@@ -172,7 +180,7 @@ public class AddCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new AddCommand();
+		AddCommand command = new AddCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

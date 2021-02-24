@@ -19,8 +19,7 @@ import itmo.labs.zavar.exception.CommandException;
  */
 public class HelpCommand extends Command
 {
-	private static HelpCommand command;
-	
+
 	private HelpCommand() 
 	{
 		super("help");
@@ -48,7 +47,7 @@ public class HelpCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new HelpCommand();
+		HelpCommand command = new HelpCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

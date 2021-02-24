@@ -1,4 +1,3 @@
-updatfe 3
-укеуке
+update 3
 test
 show

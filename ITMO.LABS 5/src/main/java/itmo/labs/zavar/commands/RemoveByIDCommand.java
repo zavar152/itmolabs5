@@ -20,8 +20,7 @@ import itmo.labs.zavar.exception.CommandRunningException;
  */
 public class RemoveByIDCommand extends Command 
 {
-	private static RemoveByIDCommand command;
-	
+
 	private RemoveByIDCommand() 
 	{
 		super("remove_by_id", "id");
@@ -45,6 +44,10 @@ public class RemoveByIDCommand extends Command
 			{
 				throw new CommandArgumentException("ID must be a number!\n" + getUsage());
 			}
+			catch(Exception e)
+			{
+				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
+			}
 			
 			if(env.getCollection().isEmpty())
 			{
@@ -63,7 +66,7 @@ public class RemoveByIDCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new RemoveByIDCommand();
+		RemoveByIDCommand command = new RemoveByIDCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

@@ -20,8 +20,7 @@ import itmo.labs.zavar.exception.CommandException;
  */
 public class SaveCommand extends Command
 {
-	private static SaveCommand command;
-	
+
 	private SaveCommand()
 	{
 		super("save", "path_to_file");
@@ -54,7 +53,7 @@ public class SaveCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new SaveCommand();
+		SaveCommand command = new SaveCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	

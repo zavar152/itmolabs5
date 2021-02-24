@@ -71,12 +71,18 @@ public class CSVManager
 			((PrintStream) out).println("Can't create file!");
 			return false;
 		}
-		catch (IOException e) 
+		catch(IOException e) 
 		{
 			((PrintStream) out).print("Error while writing .csv file! >>> ");
 			((PrintStream) out).println(e.getMessage());
 			return false;
-		} 
+		}
+		catch(Exception e)
+		{
+			((PrintStream) out).print("Unexcepted error while writing .csv file! >>> ");
+			((PrintStream) out).println(e.getMessage());
+			return false;
+		}
 	} 
 	
 	/**
@@ -116,9 +122,16 @@ public class CSVManager
 			stack.clear();
 			return false;
 		}
-		catch (IOException e) 
+		catch(IOException e) 
 		{
 			((PrintStream) out).print("Error while reading .csv file! >>> ");
+			((PrintStream) out).println(e.getMessage());
+			stack.clear();
+			return false;
+		}
+		catch(Exception e)
+		{
+			((PrintStream) out).print("Unexcepted error while reading .csv file! >>> ");
 			((PrintStream) out).println(e.getMessage());
 			stack.clear();
 			return false;

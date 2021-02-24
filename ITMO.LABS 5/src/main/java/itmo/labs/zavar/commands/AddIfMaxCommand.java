@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -33,8 +34,7 @@ import itmo.labs.zavar.studygroup.StudyGroup;
  */
 public class AddIfMaxCommand extends Command
 {
-	private static AddIfMaxCommand command;
-	
+
 	private AddIfMaxCommand() 
 	{
 		super("add_if_max", "{ELEMENT}");
@@ -87,6 +87,11 @@ public class AddIfMaxCommand extends Command
 			{
 				id = 1;
 			}
+			catch(Exception e)
+			{
+				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
+			}
+			
 			try
 			{
 				pr.println("Enter name:");
@@ -170,6 +175,10 @@ public class AddIfMaxCommand extends Command
 					pr.println("Element less than max element in collection!");
 				}
 			}
+			catch(InputMismatchException e)
+			{
+				throw new CommandRunningException("Input closed!");
+			}
 			catch(Exception e)
 			{
 				throw new CommandRunningException("Parsing error!");
@@ -184,7 +193,7 @@ public class AddIfMaxCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new AddIfMaxCommand();
+		AddIfMaxCommand command = new AddIfMaxCommand();
 		commandsMap.put(command.getName(), command);
 	}
 

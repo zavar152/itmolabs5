@@ -20,7 +20,6 @@ import itmo.labs.zavar.exception.CommandRunningException;
  */
 public class AverageOfTSCommand extends Command
 {	
-	private static AverageOfTSCommand command;
 	
 	private AverageOfTSCommand()
 	{
@@ -53,7 +52,7 @@ public class AverageOfTSCommand extends Command
 	 */
 	public static void register(HashMap<String, Command> commandsMap)
 	{
-		command = new AverageOfTSCommand();
+		AverageOfTSCommand command = new AverageOfTSCommand();
 		commandsMap.put(command.getName(), command);
 	}
 	
