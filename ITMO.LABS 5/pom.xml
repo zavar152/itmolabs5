@@ -30,7 +30,7 @@
                 <archive>
                     <manifest>
                         <addClasspath>true</addClasspath>
-                        <mainClass>itmo.labs.zavar.Launcher</mainClass>
+                        <mainClass>itmo.labs.zavar.CMD</mainClass>
                     </manifest>
                 </archive>
                 <descriptorRefs>
