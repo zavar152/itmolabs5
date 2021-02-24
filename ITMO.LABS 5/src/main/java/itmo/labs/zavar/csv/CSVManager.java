@@ -53,7 +53,7 @@ public class CSVManager
 		try
 		{
 			File csv = new File(path);
-			if(!csv.getParentFile().exists()) 
+			if(csv.getParentFile() != null && !csv.getParentFile().exists()) 
 			{
 				csv.getParentFile().mkdirs();
 			}
