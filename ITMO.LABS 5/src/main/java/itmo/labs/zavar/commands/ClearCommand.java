@@ -11,48 +11,40 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 
 /**
- * Clears the collection.
- * Doesn't require any arguments.
+ * Clears the collection. Doesn't require any arguments.
  * 
  * @author Zavar
  * @version 1.0
  */
-public class ClearCommand extends Command
-{
+public class ClearCommand extends Command {
 
-	private ClearCommand() 
-	{
+	private ClearCommand() {
 		super("clear");
 	}
 
 	@Override
-	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
-	{
-		if(args.length > 0)
-		{
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream)
+			throws CommandException {
+		if (args.length > 0) {
 			throw new CommandArgumentException("This command doesn't require any arguments!\n" + getUsage());
-		}
-		else
-		{
+		} else {
 			env.getCollection().clear();
 			((PrintStream) outStream).println("Collection cleared");
-		} 
+		}
 	}
-	
+
 	/**
 	 * Uses for commands registration.
 	 * 
 	 * @param commandsMap Commands' map.
 	 */
-	public static void register(HashMap<String, Command> commandsMap)
-	{
+	public static void register(HashMap<String, Command> commandsMap) {
 		ClearCommand command = new ClearCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
-	public String getHelp() 
-	{
+	public String getHelp() {
 		return "This command clears the collection!";
 	}
 }

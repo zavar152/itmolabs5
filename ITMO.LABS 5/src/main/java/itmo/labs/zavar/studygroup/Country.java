@@ -6,11 +6,6 @@ package itmo.labs.zavar.studygroup;
  * @author Zavar
  * @version 1.0
  */
-public enum Country 
-{
-    USA,
-    GERMANY,
-    INDIA,
-    VATICAN,
-    ITALY;
+public enum Country {
+	USA, GERMANY, INDIA, VATICAN, ITALY;
 }

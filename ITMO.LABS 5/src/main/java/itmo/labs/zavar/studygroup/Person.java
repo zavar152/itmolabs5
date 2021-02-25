@@ -1,125 +1,102 @@
 package itmo.labs.zavar.studygroup;
 
 /**
- * Class for creation of persons. Contains getters and setters for important fields.
+ * Class for creation of persons. Contains getters and setters for important
+ * fields.
  * 
  * @author Zavar
  * @version 1.2
  */
-public class Person 
-{
+public class Person {
 	private String name;
-    private String passportID;
-    private Color eyeColor;
-    private Color hairColor;
-    private Country nationality;
-    private Location location;
-    
-    /**
-     * 
-     * @param name Person's name. Name can't be <tt>null</tt> or empty.
-     * @param passportID Person's passport ID. Passport ID can't be empty.
-     * @param eyeColor Person's eye color. Eye color can't be <tt>null</tt>.
-     * @param hairColor Person's hair color. Hair color can't be <tt>null</tt>.
-     * @param nationality Person's nationality. Can be <tt>null</tt>
-     * @param location Person's location. Location can't be <tt>null</tt>.
-     * @throws IllegalArgumentException If any parameter is wrong.
-     * 
-     * @see Color 
-     * @see Country 
-     * @see Location
-     */
-	public Person(String name, String passportID, Color eyeColor, Color hairColor, Country nationality, Location location) throws IllegalArgumentException 
-	{
-		if(name == null || name.isEmpty())
-		{
+	private String passportID;
+	private Color eyeColor;
+	private Color hairColor;
+	private Country nationality;
+	private Location location;
+
+	/**
+	 * 
+	 * @param name        Person's name. Name can't be <tt>null</tt> or empty.
+	 * @param passportID  Person's passport ID. Passport ID can't be empty.
+	 * @param eyeColor    Person's eye color. Eye color can't be <tt>null</tt>.
+	 * @param hairColor   Person's hair color. Hair color can't be <tt>null</tt>.
+	 * @param nationality Person's nationality. Can be <tt>null</tt>
+	 * @param location    Person's location. Location can't be <tt>null</tt>.
+	 * @throws IllegalArgumentException If any parameter is wrong.
+	 * 
+	 * @see Color
+	 * @see Country
+	 * @see Location
+	 */
+	public Person(String name, String passportID, Color eyeColor, Color hairColor, Country nationality,
+			Location location) throws IllegalArgumentException {
+		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("Name can't be null or empty");
-		}
-		else
-		{
+		} else {
 			this.name = name;
 		}
-		
-		if(passportID != null && passportID.isEmpty())
-		{
+
+		if (passportID != null && passportID.isEmpty()) {
 			throw new IllegalArgumentException("Passport ID can't be empty");
-		}
-		else
-		{
+		} else {
 			this.passportID = passportID;
 		}
-		
-		if(eyeColor == null)
-		{
+
+		if (eyeColor == null) {
 			throw new IllegalArgumentException("Eye color can't be null");
-		}
-		else
-		{
+		} else {
 			this.eyeColor = eyeColor;
 		}
-		
-		if(hairColor == null)
-		{
+
+		if (hairColor == null) {
 			throw new IllegalArgumentException("Hair color can't be null");
-		}
-		else
-		{
+		} else {
 			this.hairColor = hairColor;
 		}
-		
+
 		this.nationality = nationality;
-		
-		if(location == null)
-		{
+
+		if (location == null) {
 			throw new IllegalArgumentException("Location can't be null");
-		}
-		else
-		{
+		} else {
 			this.location = location;
 		}
 	}
 
-	public String getName() 
-	{
+	public String getName() {
 		return name;
 	}
 
-	public String getPassportID() 
-	{
+	public String getPassportID() {
 		return passportID;
 	}
 
-	public Color getEyeColor() 
-	{
+	public Color getEyeColor() {
 		return eyeColor;
 	}
 
-	public Color getHairColor() 
-	{
+	public Color getHairColor() {
 		return hairColor;
 	}
 
-	public Country getNationality() 
-	{
+	public Country getNationality() {
 		return nationality;
 	}
 
-	public Location getLocation() 
-	{
+	public Location getLocation() {
 		return location;
-	}
-    
-    @Override
-	public String toString() 
-    {
-		return "Person [name=" + name + ", passportID=" + passportID + ", eyeColor=" + eyeColor + ", hairColor="
-				+ hairColor + ", nationality=" + nationality + ", locationX=" + location.getX() + ", locationY=" + location.getY() + 
-				", locationZ=" + location.getZ() + ", locationName=" + location.getName() + "]";
 	}
 
 	@Override
-	public int hashCode() 
-	{
+	public String toString() {
+		return "Person [name=" + name + ", passportID=" + passportID + ", eyeColor=" + eyeColor + ", hairColor="
+				+ hairColor + ", nationality=" + nationality + ", locationX=" + location.getX() + ", locationY="
+				+ location.getY() + ", locationZ=" + location.getZ() + ", locationName=" + location.getName() + "]";
+	}
+
+	@Override
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((eyeColor == null) ? 0 : eyeColor.hashCode());
@@ -132,8 +109,7 @@ public class Person
 	}
 
 	@Override
-	public boolean equals(Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)

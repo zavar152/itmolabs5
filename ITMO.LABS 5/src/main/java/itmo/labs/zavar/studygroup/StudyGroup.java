@@ -7,281 +7,222 @@ import java.time.ZoneId;
 import java.util.Date;
 
 /**
- * Class for creation of study groups. Contains getters and setters for important fields.
+ * Class for creation of study groups. Contains getters and setters for
+ * important fields.
  * 
  * @author Zavar
  * @version 1.6
  */
-public class StudyGroup implements Comparable<StudyGroup>
-{
-    private long id;
-    private String name;
-    private Coordinates coordinates;
-    private LocalDate creationDate;
-    private Long studentsCount;
-    private int expelledStudents;
-    private long transferredStudents;
-    private FormOfEducation formOfEducation;
-    private Person groupAdmin;
-    
-    /**
-     * Default constructor uses for csv parser. Don't use it to create objects.
-     * 
-     */
-    public StudyGroup()
-    {
-    	
-    }
-    
-    /**
-     * Constructor with parameters. Use it to create objects.
-     * 
-     * @param id Group's id. Must be unique and greater than 0.
-     * @param name Group's name. Name can't be <tt>null</tt> or empty.
-     * @param coordinates Group's coordinates. Can't be <tt>null</tt>.
-     * @param studentsCount Count of students in group. Count be greater than 0 and can't be <tt>null</tt>.
-     * @param expelledStudents Count of expelled students in group. Count should be greater than 0.
-     * @param transferredStudents Count of transferred students in group. Count should be greater than 0.
-     * @param formOfEducation Group's form of education. Form of education can't be <tt>null</tt>.
-     * @param groupAdmin Group's admin. Can be <tt>null</tt>.
-     * @throws IllegalArgumentException If any parameter is wrong.
-     * 
-     * @see Coordinates 
-     * @see FormOfEducation
-     * @see Person
-     */
-    public StudyGroup(long id, String name, Coordinates coordinates, Long studentsCount, int expelledStudents, long transferredStudents, FormOfEducation formOfEducation, Person groupAdmin) throws IllegalArgumentException
-    {
-    	if(id <= 0)
-    	{
-    		throw new IllegalArgumentException("Id should be greater than 0");
-    	}
-    	else
-    	{
-    		this.id = id;
-    	}
-    	
-    	if(name == null || name.isEmpty() )
-    	{
-    		throw new IllegalArgumentException("Name can't be null or empty");
-    	}
-    	else
-    	{
-    		this.name = name;
-    	}
-    	
-    	if(coordinates == null)
-    	{
-    		throw new IllegalArgumentException("Coordinates can't be null");
-    	}
-    	else
-    	{
-    		this.coordinates = coordinates;
-    	}
-    	 
-    	creationDate = LocalDate.now();
-    	
-    	if(studentsCount == null || studentsCount <= 0)
-    	{
-    		throw new IllegalArgumentException("Students count should be greater than 0 and can't be null");
-    	}
-    	else
-    	{
-    		this.studentsCount = studentsCount;
-    	}
-    	
-    	if(expelledStudents <= 0)
-    	{
-    		throw new IllegalArgumentException("Expelled students count should be greater than 0");
-    	}
-    	else
-    	{
-    		this.expelledStudents = expelledStudents;
-    	}
-    	
-    	if(transferredStudents <= 0)
-    	{
-    		throw new IllegalArgumentException("Transferred students count should be greater than 0");
-    	}
-    	else
-    	{
-    		this.transferredStudents = transferredStudents;
-    	}
-    	
-    	if(formOfEducation == null)
-    	{
-    		throw new IllegalArgumentException("Form of education can't be null");
-    	}
-    	else
-    	{
-    		this.formOfEducation = formOfEducation;
-    	}
-    	
-    	this.groupAdmin = groupAdmin;
-    }
+public class StudyGroup implements Comparable<StudyGroup> {
+	private long id;
+	private String name;
+	private Coordinates coordinates;
+	private LocalDate creationDate;
+	private Long studentsCount;
+	private int expelledStudents;
+	private long transferredStudents;
+	private FormOfEducation formOfEducation;
+	private Person groupAdmin;
 
-	public String getName() 
-	{
+	/**
+	 * Default constructor uses for csv parser. Don't use it to create objects.
+	 * 
+	 */
+	public StudyGroup() {
+
+	}
+
+	/**
+	 * Constructor with parameters. Use it to create objects.
+	 * 
+	 * @param id                  Group's id. Must be unique and greater than 0.
+	 * @param name                Group's name. Name can't be <tt>null</tt> or
+	 *                            empty.
+	 * @param coordinates         Group's coordinates. Can't be <tt>null</tt>.
+	 * @param studentsCount       Count of students in group. Count be greater than
+	 *                            0 and can't be <tt>null</tt>.
+	 * @param expelledStudents    Count of expelled students in group. Count should
+	 *                            be greater than 0.
+	 * @param transferredStudents Count of transferred students in group. Count
+	 *                            should be greater than 0.
+	 * @param formOfEducation     Group's form of education. Form of education can't
+	 *                            be <tt>null</tt>.
+	 * @param groupAdmin          Group's admin. Can be <tt>null</tt>.
+	 * @throws IllegalArgumentException If any parameter is wrong.
+	 * 
+	 * @see Coordinates
+	 * @see FormOfEducation
+	 * @see Person
+	 */
+	public StudyGroup(long id, String name, Coordinates coordinates, Long studentsCount, int expelledStudents,
+			long transferredStudents, FormOfEducation formOfEducation, Person groupAdmin)
+			throws IllegalArgumentException {
+		if (id <= 0) {
+			throw new IllegalArgumentException("Id should be greater than 0");
+		} else {
+			this.id = id;
+		}
+
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("Name can't be null or empty");
+		} else {
+			this.name = name;
+		}
+
+		if (coordinates == null) {
+			throw new IllegalArgumentException("Coordinates can't be null");
+		} else {
+			this.coordinates = coordinates;
+		}
+
+		creationDate = LocalDate.now();
+
+		if (studentsCount == null || studentsCount <= 0) {
+			throw new IllegalArgumentException("Students count should be greater than 0 and can't be null");
+		} else {
+			this.studentsCount = studentsCount;
+		}
+
+		if (expelledStudents <= 0) {
+			throw new IllegalArgumentException("Expelled students count should be greater than 0");
+		} else {
+			this.expelledStudents = expelledStudents;
+		}
+
+		if (transferredStudents <= 0) {
+			throw new IllegalArgumentException("Transferred students count should be greater than 0");
+		} else {
+			this.transferredStudents = transferredStudents;
+		}
+
+		if (formOfEducation == null) {
+			throw new IllegalArgumentException("Form of education can't be null");
+		} else {
+			this.formOfEducation = formOfEducation;
+		}
+
+		this.groupAdmin = groupAdmin;
+	}
+
+	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) 
-	{
-		if(name == null || name.isEmpty() )
-    	{
-    		throw new IllegalArgumentException("Name can't be null or empty");
-    	}
-    	else
-    	{
-    		this.name = name;
-    	}
+	public void setName(String name) {
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("Name can't be null or empty");
+		} else {
+			this.name = name;
+		}
 	}
 
-	public Coordinates getCoordinates() 
-	{
+	public Coordinates getCoordinates() {
 		return coordinates;
 	}
 
-	public void setCoordinates(Coordinates coordinates)
-	{
-		if(coordinates == null)
-    	{
-    		throw new IllegalArgumentException("Coordinates can't be null");
-    	}
-    	else
-    	{
-    		this.coordinates = coordinates;
-    	}
+	public void setCoordinates(Coordinates coordinates) {
+		if (coordinates == null) {
+			throw new IllegalArgumentException("Coordinates can't be null");
+		} else {
+			this.coordinates = coordinates;
+		}
 	}
 
-	public Long getStudentsCount() 
-	{
+	public Long getStudentsCount() {
 		return studentsCount;
 	}
 
-	public void setStudentsCount(Long studentsCount) 
-	{
-    	if(studentsCount == null || studentsCount <= 0)
-    	{
-    		throw new IllegalArgumentException("Students count should be greater than 0 and can't be null");
-    	}
-    	else
-    	{
-    		this.studentsCount = studentsCount;
-    	}
+	public void setStudentsCount(Long studentsCount) {
+		if (studentsCount == null || studentsCount <= 0) {
+			throw new IllegalArgumentException("Students count should be greater than 0 and can't be null");
+		} else {
+			this.studentsCount = studentsCount;
+		}
 	}
 
-	public int getExpelledStudents() 
-	{
+	public int getExpelledStudents() {
 		return expelledStudents;
 	}
 
-	public void setExpelledStudents(int expelledStudents) 
-	{
-		if(expelledStudents <= 0)
-    	{
-    		throw new IllegalArgumentException("Expelled students count should be greater than 0");
-    	}
-    	else
-    	{
-    		this.expelledStudents = expelledStudents;
-    	}
+	public void setExpelledStudents(int expelledStudents) {
+		if (expelledStudents <= 0) {
+			throw new IllegalArgumentException("Expelled students count should be greater than 0");
+		} else {
+			this.expelledStudents = expelledStudents;
+		}
 	}
 
-	public long getTransferredStudents() 
-	{
+	public long getTransferredStudents() {
 		return transferredStudents;
 	}
 
-	public void setTransferredStudents(Long transferredStudents) 
-	{
-    	if(transferredStudents <= 0)
-    	{
-    		throw new IllegalArgumentException("Transferred students count should be greater than 0");
-    	}
-    	else
-    	{
-    		this.transferredStudents = transferredStudents;
-    	}
+	public void setTransferredStudents(Long transferredStudents) {
+		if (transferredStudents <= 0) {
+			throw new IllegalArgumentException("Transferred students count should be greater than 0");
+		} else {
+			this.transferredStudents = transferredStudents;
+		}
 	}
 
-	public FormOfEducation getFormOfEducation() 
-	{
+	public FormOfEducation getFormOfEducation() {
 		return formOfEducation;
 	}
 
-	public void setFormOfEducation(FormOfEducation formOfEducation) 
-	{
-		if(formOfEducation == null)
-    	{
-    		throw new IllegalArgumentException("Form of education can't be null");
-    	}
-    	else
-    	{
-    		this.formOfEducation = formOfEducation;
-    	}
+	public void setFormOfEducation(FormOfEducation formOfEducation) {
+		if (formOfEducation == null) {
+			throw new IllegalArgumentException("Form of education can't be null");
+		} else {
+			this.formOfEducation = formOfEducation;
+		}
 	}
-	
-	public Person getGroupAdmin() 
-	{
+
+	public Person getGroupAdmin() {
 		return groupAdmin;
 	}
 
-	public void setGroupAdmin(Person groupAdmin) 
-	{
+	public void setGroupAdmin(Person groupAdmin) {
 		this.groupAdmin = groupAdmin;
 	}
-	
-	public long getId() 
-	{
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) 
-	{
-    	if(id <= 0)
-    	{
-    		throw new IllegalArgumentException("Id should be greater than 0");
-    	}
-    	else
-    	{
-    		this.id = id;
-    	}
+	public void setId(long id) {
+		if (id <= 0) {
+			throw new IllegalArgumentException("Id should be greater than 0");
+		} else {
+			this.id = id;
+		}
 	}
 
-	public LocalDate getCreationLocalDate() 
-	{
+	public LocalDate getCreationLocalDate() {
 		return creationDate;
 	}
-	
-	public Date getCreationDate() throws ParseException 
-	{
+
+	public Date getCreationDate() throws ParseException {
 		return new SimpleDateFormat("yyyy-MM-dd").parse(creationDate.toString());
 	}
 
-	public void setCreationDate(Date date) 
-	{
+	public void setCreationDate(Date date) {
 		this.creationDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	@Override
-	public String toString() 
-	{
-		return "StudyGroup [id=" + id + ", name=" + name + ", coordinateX=" + coordinates.getX() + ", coordinateY=" + coordinates.getY() + ", creationDate="
-				+ creationDate + ", studentsCount=" + studentsCount + ", expelledStudents=" + expelledStudents
-				+ ", transferredStudents=" + transferredStudents + ", formOfEducation=" + formOfEducation
-				+ ", groupAdmin=[" + groupAdmin + "]]";
+	public String toString() {
+		return "StudyGroup [id=" + id + ", name=" + name + ", coordinateX=" + coordinates.getX() + ", coordinateY="
+				+ coordinates.getY() + ", creationDate=" + creationDate + ", studentsCount=" + studentsCount
+				+ ", expelledStudents=" + expelledStudents + ", transferredStudents=" + transferredStudents
+				+ ", formOfEducation=" + formOfEducation + ", groupAdmin=[" + groupAdmin + "]]";
 	}
 
 	@Override
-	public int compareTo(StudyGroup o) 
-	{
+	public int compareTo(StudyGroup o) {
 		return this.creationDate.compareTo(o.getCreationLocalDate());
 	}
 
 	@Override
-	public int hashCode() 
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((coordinates == null) ? 0 : coordinates.hashCode());
@@ -296,8 +237,7 @@ public class StudyGroup implements Comparable<StudyGroup>
 	}
 
 	@Override
-	public boolean equals(Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)

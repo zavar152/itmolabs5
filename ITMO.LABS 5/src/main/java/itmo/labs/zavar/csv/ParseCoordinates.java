@@ -14,54 +14,42 @@ import itmo.labs.zavar.studygroup.Coordinates;
  * @author Zavar
  * @version 1.1
  */
-public class ParseCoordinates extends CellProcessorAdaptor implements StringCellProcessor
-{
-	public ParseCoordinates()
-	{
+public class ParseCoordinates extends CellProcessorAdaptor implements StringCellProcessor {
+	public ParseCoordinates() {
 		super();
 	}
-	
-	public ParseCoordinates(final CellProcessor next) 
-	{
+
+	public ParseCoordinates(final CellProcessor next) {
 		super(next);
 	}
-	
+
 	@Override
-	public <T> T execute(final Object value, final CsvContext context)
-	{
+	public <T> T execute(final Object value, final CsvContext context) {
 		validateInputNotNull(value, context);
-		
+
 		final Coordinates coordinates;
-		
-		if(value instanceof String)
-		{
+
+		if (value instanceof String) {
 			String[] str = ((String) value).split(",");
-			if(str[0].contains("x=") && str[1].contains("y="))
-			{
-	    		str[0] = str[0].split("=")[1].trim();
-	    		str[1] = str[1].split("=")[1].trim();
-			}
-			else
-			{
+			if (str[0].contains("x=") && str[1].contains("y=")) {
+				str[0] = str[0].split("=")[1].trim();
+				str[1] = str[1].split("=")[1].trim();
+			} else {
 				throw new IllegalArgumentException();
 			}
-    		try
-    		{
-    			coordinates = new Coordinates(Double.parseDouble(str[0]), Float.parseFloat(str[1]));
-    		}
-    		catch(IllegalArgumentException e)
-    		{
-				throw new SuperCsvCellProcessorException(String.format("'%s' could not be parsed as an Coordinates", value),
-						context, this, e);
-    		}
-		}
-		else
-		{
+			try {
+				coordinates = new Coordinates(Double.parseDouble(str[0]), Float.parseFloat(str[1]));
+			} catch (IllegalArgumentException e) {
+				throw new SuperCsvCellProcessorException(
+						String.format("'%s' could not be parsed as an Coordinates", value), context, this, e);
+			}
+		} else {
 			final String actualClassName = value.getClass().getName();
-			throw new SuperCsvCellProcessorException(String.format(
-				"the input value should be of type String but is of type %s", actualClassName), context, this);
+			throw new SuperCsvCellProcessorException(
+					String.format("the input value should be of type String but is of type %s", actualClassName),
+					context, this);
 		}
-		
+
 		return next.execute(coordinates, context);
 	}
 }

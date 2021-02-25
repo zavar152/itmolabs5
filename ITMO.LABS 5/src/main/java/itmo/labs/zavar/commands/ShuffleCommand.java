@@ -13,34 +13,28 @@ import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
 /**
- * Shuffles the elements of the collection in a random order.
- * Doesn't require any arguments.
+ * Shuffles the elements of the collection in a random order. Doesn't require
+ * any arguments.
  * 
  * @author Zavar
  * @version 1.1
  */
-public class ShuffleCommand extends Command
-{
+public class ShuffleCommand extends Command {
 
-	private ShuffleCommand() 
-	{
+	private ShuffleCommand() {
 		super("shuffle");
 	}
-	
+
 	@Override
-	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
-	{
-		if(args.length > 0)
-		{
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream)
+			throws CommandException {
+		if (args.length > 0) {
 			throw new CommandArgumentException("This command doesn't require any arguments!\n" + getUsage());
-		}
-		else
-		{
-			if(env.getCollection().isEmpty())
-			{
+		} else {
+			if (env.getCollection().isEmpty()) {
 				throw new CommandRunningException("Collection is empty!");
 			}
-			
+
 			Collections.shuffle(env.getCollection());
 			((PrintStream) outStream).println("Collection mixed up!");
 		}
@@ -51,15 +45,13 @@ public class ShuffleCommand extends Command
 	 * 
 	 * @param commandsMap Commands' map.
 	 */
-	public static void register(HashMap<String, Command> commandsMap)
-	{
+	public static void register(HashMap<String, Command> commandsMap) {
 		ShuffleCommand command = new ShuffleCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
-	public String getHelp() 
-	{
+	public String getHelp() {
 		return "This command shuffles the elements in collection!";
 	}
 

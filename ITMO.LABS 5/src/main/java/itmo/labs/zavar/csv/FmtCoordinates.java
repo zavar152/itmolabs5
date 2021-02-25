@@ -14,32 +14,27 @@ import itmo.labs.zavar.studygroup.Coordinates;
  * @author Zavar
  * @version 1.0
  */
-public class FmtCoordinates extends CellProcessorAdaptor implements StringCellProcessor 
-{
-	public FmtCoordinates()
-	{
+public class FmtCoordinates extends CellProcessorAdaptor implements StringCellProcessor {
+	public FmtCoordinates() {
 		super();
 	}
-	
-	public FmtCoordinates(final StringCellProcessor next)
-	{
+
+	public FmtCoordinates(final StringCellProcessor next) {
 		super(next);
 	}
-	
+
 	@Override
-	public <T> T execute(final Object value, final CsvContext context) 
-	{
+	public <T> T execute(final Object value, final CsvContext context) {
 		validateInputNotNull(value, context);
-		
-		if(!(value instanceof Coordinates)) 
-		{
+
+		if (!(value instanceof Coordinates)) {
 			throw new SuperCsvCellProcessorException(Coordinates.class, value, context, this);
 		}
-		
+
 		final Coordinates coord = (Coordinates) value;
-		
+
 		String result = "x=" + coord.getX() + ", y=" + coord.getY();
-		
+
 		return next.execute(result, context);
 	}
 

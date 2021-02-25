@@ -1,64 +1,53 @@
 package itmo.labs.zavar.studygroup;
 
-
 /**
- * Class for creation of coordinates. Contains getters and setters for important fields.
+ * Class for creation of coordinates. Contains getters and setters for important
+ * fields.
  * 
  * @author Zavar
  * @version 1.1
  */
-public class Coordinates 
-{
+public class Coordinates {
 
 	private Double x;
-    private Float y;
-    
-    /**
-     * 
-     * @param x X coordinate. X should be greater than -573 and can't be <tt>null</tt>.
-     * @param y Y coordinate. Y should be a number and can't be <tt>null</tt>.
-     * @throws IllegalArgumentException If any parameter is wrong.
-     */
-    public Coordinates(Double x, Float y) throws IllegalArgumentException 
-    { 
-		if(x == null || x <= -573)
-		{
+	private Float y;
+
+	/**
+	 * 
+	 * @param x X coordinate. X should be greater than -573 and can't be
+	 *          <tt>null</tt>.
+	 * @param y Y coordinate. Y should be a number and can't be <tt>null</tt>.
+	 * @throws IllegalArgumentException If any parameter is wrong.
+	 */
+	public Coordinates(Double x, Float y) throws IllegalArgumentException {
+		if (x == null || x <= -573) {
 			throw new IllegalArgumentException("X should be greater than -573 and can't be null");
-		}
-		else
-		{
+		} else {
 			this.x = x;
 		}
-		
-		if(y == null)
-		{
+
+		if (y == null) {
 			throw new IllegalArgumentException("Y should be a number and can't be null");
-		}
-		else
-		{
+		} else {
 			this.y = y;
 		}
 	}
 
-	public Double getX() 
-    {
+	public Double getX() {
 		return x;
 	}
 
-	public Float getY() 
-	{
+	public Float getY() {
 		return y;
 	}
-	
+
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		return "Coordinates [x=" + x + ", y=" + y + "]";
 	}
 
 	@Override
-	public int hashCode() 
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((x == null) ? 0 : x.hashCode());
@@ -67,8 +56,7 @@ public class Coordinates
 	}
 
 	@Override
-	public boolean equals(Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -88,7 +76,5 @@ public class Coordinates
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

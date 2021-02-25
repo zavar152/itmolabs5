@@ -1,86 +1,70 @@
 package itmo.labs.zavar.studygroup;
 
 /**
- * Class for creation of locations. Contains getters and setters for important fields.
+ * Class for creation of locations. Contains getters and setters for important
+ * fields.
  * 
  * @author Zavar
  * @version 1.1
  */
-public class Location 
-{
-    private float x;
-    private Float y; 
-    private Long z; 
-    private String name; 
-    
-    /**
-     * 
-     * @param x X coordinate.
-     * @param y Y coordinate. Y can't be <tt>null</tt>.
-     * @param z Z coordinate. Z can't be <tt>null</tt>.
-     * @param name Location's name. Name length can't be greater than 348.
-     * @throws IllegalArgumentException If any parameter is wrong.
-     */
-	public Location(float x, Float y, Long z, String name) throws IllegalArgumentException 
-	{
+public class Location {
+	private float x;
+	private Float y;
+	private Long z;
+	private String name;
+
+	/**
+	 * 
+	 * @param x    X coordinate.
+	 * @param y    Y coordinate. Y can't be <tt>null</tt>.
+	 * @param z    Z coordinate. Z can't be <tt>null</tt>.
+	 * @param name Location's name. Name length can't be greater than 348.
+	 * @throws IllegalArgumentException If any parameter is wrong.
+	 */
+	public Location(float x, Float y, Long z, String name) throws IllegalArgumentException {
 		this.x = x;
-		if(y == null)
-		{
+		if (y == null) {
 			throw new IllegalArgumentException("Y can't be null");
-		}
-		else
-		{
+		} else {
 			this.y = y;
 		}
-		
-		if(z == null)
-		{
+
+		if (z == null) {
 			throw new IllegalArgumentException("Z can't be null");
-		}
-		else
-		{
+		} else {
 			this.z = z;
 		}
-		
-		if(name != null && name.length() > 348)
-		{
+
+		if (name != null && name.length() > 348) {
 			throw new IllegalArgumentException("Name length can't be greater than 348");
-		}
-		else
-		{
+		} else {
 			this.name = name;
 		}
 	}
 
-	public float getX() 
-	{
+	public float getX() {
 		return x;
 	}
 
-	public Float getY() 
-	{
+	public Float getY() {
 		return y;
 	}
 
-	public Long getZ() 
-	{
+	public Long getZ() {
 		return z;
 	}
 
-	public String getName() 
-	{
+	public String getName() {
 		return name;
 	}
-	
+
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		return "Location [x=" + x + ", y=" + y + ", z=" + z + ", name=" + name + "]";
 	}
 
 	@Override
-	public int hashCode() 
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -91,8 +75,7 @@ public class Location
 	}
 
 	@Override
-	public boolean equals(Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -119,6 +102,5 @@ public class Location
 			return false;
 		return true;
 	}
-	
-	
+
 }

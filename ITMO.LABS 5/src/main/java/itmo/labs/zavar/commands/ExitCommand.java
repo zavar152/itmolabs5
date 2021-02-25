@@ -11,29 +11,24 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 
 /**
- * Terminates the program (without saving it to a file).
- * Doesn't require any arguments.
+ * Terminates the program (without saving it to a file). Doesn't require any
+ * arguments.
  * 
  * @author Zavar
  * @version 1.1
  */
-public class ExitCommand extends Command 
-{
+public class ExitCommand extends Command {
 
-	private ExitCommand() 
-	{
+	private ExitCommand() {
 		super("exit");
 	}
 
 	@Override
-	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
-	{
-		if(args.length > 0)
-		{
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream)
+			throws CommandException {
+		if (args.length > 0) {
 			throw new CommandArgumentException("This command doesn't require any arguments!\n" + getUsage());
-		}
-		else
-		{
+		} else {
 			((PrintStream) outStream).println("Program is closing...");
 			System.exit(0);
 		}
@@ -44,15 +39,13 @@ public class ExitCommand extends Command
 	 * 
 	 * @param commandsMap Commands' map.
 	 */
-	public static void register(HashMap<String, Command> commandsMap)
-	{
+	public static void register(HashMap<String, Command> commandsMap) {
 		ExitCommand command = new ExitCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
-	public String getHelp() 
-	{
+	public String getHelp() {
 		return "This command stops the application!";
 	}
 }

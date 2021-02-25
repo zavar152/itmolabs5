@@ -25,149 +25,140 @@ import itmo.labs.zavar.studygroup.Person;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
 /**
- * Adds a new item to the collection.
- * Requires {ELEMENT}.
+ * Adds a new item to the collection. Requires {ELEMENT}.
  * 
  * @author Zavar
  * @version 1.5
  */
-public class AddCommand extends Command
-{
-	
-	private AddCommand() 
-	{
+public class AddCommand extends Command {
+
+	private AddCommand() {
 		super("add", "{ELEMENT}");
 	}
 
 	@Override
-	public boolean isNeedInput() 
-	{
+	public boolean isNeedInput() {
 		return true;
-	} 
-	
+	}
+
 	@Override
-	public String[] getInputOrder(int type) 
-	{
-		if(type == 8)
-		{
-			return new String[] {"name", "x", "y", "studentsCount", "expelledStudents", "transferredStudents", "formOfEducation", "answer"};
-		}
-		else
-		{
-			return new String[] {"name", "x", "y", "studentsCount", "expelledStudents", "transferredStudents", "formOfEducation", "answer", "adminName",
-					"adminPassportID", "adminEyeColor", "adminHairColor", "adminCountry", "adminLocation", "adminX", "adminY", "adminZ"};
+	public String[] getInputOrder(int type) {
+		if (type == 8) {
+			return new String[] { "name", "x", "y", "studentsCount", "expelledStudents", "transferredStudents",
+					"formOfEducation", "answer" };
+		} else {
+			return new String[] { "name", "x", "y", "studentsCount", "expelledStudents", "transferredStudents",
+					"formOfEducation", "answer", "adminName", "adminPassportID", "adminEyeColor", "adminHairColor",
+					"adminCountry", "adminLocation", "adminX", "adminY", "adminZ" };
 		}
 	}
-	
+
 	@Override
-	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
-	{
-		if(args.length > 0)
-		{
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream)
+			throws CommandException {
+		if (args.length > 0) {
 			throw new CommandArgumentException("This command doesn't require any arguments!\n" + getUsage());
-		}
-		else
-		{
+		} else {
 			PrintStream pr = new PrintStream(outStream);
 			Scanner in = new Scanner(inStream);
 			long id;
-			
+
 			long maxId;
-			try
-			{
-				maxId = env.getCollection().stream().max(Comparator.comparingLong(StudyGroup::getId)).orElseThrow(NoSuchElementException::new).getId();
+			try {
+				maxId = env.getCollection().stream().max(Comparator.comparingLong(StudyGroup::getId))
+						.orElseThrow(NoSuchElementException::new).getId();
 				id = maxId + 1;
-			}
-			catch(NoSuchElementException e)
-			{
+			} catch (NoSuchElementException e) {
 				id = 1;
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
 			}
-			
-			try
-			{
+
+			try {
 				pr.println("Enter name:");
-				String name = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
-				
-				
+				String name = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE,
+						false, false);
+
 				Coordinates coordinates = null;
 				Long studentsCount = null;
 				int expelledStudents = 0;
 				long transferredStudents = 0;
 				FormOfEducation formOfEducation = null;
 				Person groupAdmin = null;
-				
+
 				pr.println("Enter X coordinate:");
 				Double x = InputParser.parseDouble(outStream, in, "X", -573.0d, Double.MAX_VALUE, false, false);
 				pr.println("Enter Y coordinate:");
 				Float y = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
 				coordinates = new Coordinates(x, y);
-				
+
 				pr.println("Enter students count:");
-				studentsCount = InputParser.parseLong(outStream, in, "Students count", 0l, Long.MAX_VALUE, false, false);
-				
+				studentsCount = InputParser.parseLong(outStream, in, "Students count", 0l, Long.MAX_VALUE, false,
+						false);
+
 				pr.println("Enter expelled students count:");
-				expelledStudents = InputParser.parseInteger(outStream, in, "Expelled students", 0, Integer.MAX_VALUE, false, true);
-				
+				expelledStudents = InputParser.parseInteger(outStream, in, "Expelled students", 0, Integer.MAX_VALUE,
+						false, true);
+
 				pr.println("Enter transferred students count:");
-				transferredStudents = InputParser.parseLong(outStream, in, "Transferred students", 0l, Long.MAX_VALUE, false, true);
-				
+				transferredStudents = InputParser.parseLong(outStream, in, "Transferred students", 0l, Long.MAX_VALUE,
+						false, true);
+
 				pr.println("Enter form of education, values - " + Arrays.toString(FormOfEducation.values()));
-				formOfEducation = FormOfEducation.valueOf(InputParser.parseEnum(outStream, in, FormOfEducation.class, false));
-				
+				formOfEducation = FormOfEducation
+						.valueOf(InputParser.parseEnum(outStream, in, FormOfEducation.class, false));
+
 				pr.println("Does the group have an admin? Enter [YES] if it has");
-				String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE, false, true);
-				
-				if(answ.equals("YES"))
-				{
+				String answ = InputParser.parseString(outStream, in, "Answer", Integer.MIN_VALUE, Integer.MAX_VALUE,
+						false, true);
+
+				if (answ.equals("YES")) {
 					pr.println("Enter name:");
-					String admName = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE, Integer.MAX_VALUE, false, false);
-					
+					String admName = InputParser.parseString(outStream, in, "Name", Integer.MIN_VALUE,
+							Integer.MAX_VALUE, false, false);
+
 					pr.println("Enter passport ID:");
-					String passportID = InputParser.parseString(outStream, in, "Passport ID", Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
-					
+					String passportID = InputParser.parseString(outStream, in, "Passport ID", Integer.MIN_VALUE,
+							Integer.MAX_VALUE, true, false);
+
 					pr.println("Enter eye color, values - " + Arrays.toString(Color.values()));
 					Color eyeColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
-					
+
 					pr.println("Enter hair color, values - " + Arrays.toString(Color.values()));
 					Color hairColor = Color.valueOf(InputParser.parseEnum(outStream, in, Color.class, false));
-					
+
 					pr.println("Enter country, values - " + Arrays.toString(Country.values()));
 					String an = InputParser.parseEnum(outStream, in, Country.class, true);
 					Country nationality = null;
-					if(an != null)
-					{
+					if (an != null) {
 						nationality = Country.valueOf(an);
 					}
-					
+
 					Location location;
 					pr.println("Enter name location:");
-					String nameStr = InputParser.parseString(outStream, in, "Location name", Integer.MIN_VALUE, 348, true, false);
-					
+					String nameStr = InputParser.parseString(outStream, in, "Location name", Integer.MIN_VALUE, 348,
+							true, false);
+
 					pr.println("Enter X:");
-					float x1 = InputParser.parseFloat(outStream, in, "X", Float.MIN_VALUE, Float.MAX_VALUE, false, true);
-					
+					float x1 = InputParser.parseFloat(outStream, in, "X", Float.MIN_VALUE, Float.MAX_VALUE, false,
+							true);
+
 					pr.println("Enter Y:");
-					Float y1 = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false, false);
-					
+					Float y1 = InputParser.parseFloat(outStream, in, "Y", Float.MIN_VALUE, Float.MAX_VALUE, false,
+							false);
+
 					pr.println("Enter Z:");
 					Long z = InputParser.parseLong(outStream, in, "Z", Long.MIN_VALUE, Long.MAX_VALUE, false, false);
-					
+
 					location = new Location(x1, y1, z, nameStr);
 					groupAdmin = new Person(admName, passportID, eyeColor, hairColor, nationality, location);
 				}
-				env.getCollection().push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents, transferredStudents, formOfEducation, groupAdmin));
+				env.getCollection().push(new StudyGroup(id, name, coordinates, studentsCount, expelledStudents,
+						transferredStudents, formOfEducation, groupAdmin));
 				pr.println("Element added!");
-			}
-			catch(InputMismatchException e)
-			{
+			} catch (InputMismatchException e) {
 				throw new CommandRunningException("Input closed!");
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				throw new CommandRunningException("Parsing error!");
 			}
 		}
@@ -178,15 +169,13 @@ public class AddCommand extends Command
 	 * 
 	 * @param commandsMap Commands' map.
 	 */
-	public static void register(HashMap<String, Command> commandsMap)
-	{
+	public static void register(HashMap<String, Command> commandsMap) {
 		AddCommand command = new AddCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
-	public String getHelp() 
-	{
+	public String getHelp() {
 		return "This command adds one element to collection!";
 	}
 }

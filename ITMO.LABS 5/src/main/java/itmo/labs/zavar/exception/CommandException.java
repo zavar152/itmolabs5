@@ -6,10 +6,11 @@ package itmo.labs.zavar.exception;
  * @author Zavar
  * @version 1.0
  */
-public class CommandException extends Exception
-{
-	public CommandException(String text) 
-	{
+public class CommandException extends Exception {
+
+	private static final long serialVersionUID = 2190189016910990672L;
+
+	public CommandException(String text) {
 		super(text);
 	}
 }

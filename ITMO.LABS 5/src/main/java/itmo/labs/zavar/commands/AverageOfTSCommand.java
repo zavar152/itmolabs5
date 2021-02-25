@@ -12,31 +12,25 @@ import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
 /**
- * Outputs the average value of the transferredStudents field for all items in the collection.
- * Doesn't require any arguments.
+ * Outputs the average value of the transferredStudents field for all items in
+ * the collection. Doesn't require any arguments.
  * 
  * @author Zavar
  * @version 1.2
  */
-public class AverageOfTSCommand extends Command
-{	
-	
-	private AverageOfTSCommand()
-	{
+public class AverageOfTSCommand extends Command {
+
+	private AverageOfTSCommand() {
 		super("average_of_transferred_students");
 	}
 
 	@Override
-	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
-	{
-		if(args.length > 0)
-		{
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream)
+			throws CommandException {
+		if (args.length > 0) {
 			throw new CommandArgumentException("This command doesn't require any arguments!\n" + getUsage());
-		}
-		else
-		{
-			if(env.getCollection().isEmpty())
-			{
+		} else {
+			if (env.getCollection().isEmpty()) {
 				throw new CommandRunningException("Collection is empty!");
 			}
 			double a = env.getCollection().stream().mapToLong((l) -> l.getTransferredStudents()).average().orElse(0);
@@ -44,23 +38,19 @@ public class AverageOfTSCommand extends Command
 		}
 	}
 
-	
 	/**
 	 * Uses for commands registration.
 	 * 
 	 * @param commandsMap Commands' map.
 	 */
-	public static void register(HashMap<String, Command> commandsMap)
-	{
+	public static void register(HashMap<String, Command> commandsMap) {
 		AverageOfTSCommand command = new AverageOfTSCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
-	public String getHelp() 
-	{
+	public String getHelp() {
 		return "This command counts the average value of transferred students!";
 	}
-	
-	
+
 }

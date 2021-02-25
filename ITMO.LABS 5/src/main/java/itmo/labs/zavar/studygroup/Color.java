@@ -6,10 +6,6 @@ package itmo.labs.zavar.studygroup;
  * @author Zavar
  * @version 1.0
  */
-public enum Color 
-{
-    GREEN,
-    BLACK,
-    BLUE,
-    WHITE;
+public enum Color {
+	GREEN, BLACK, BLUE, WHITE;
 }

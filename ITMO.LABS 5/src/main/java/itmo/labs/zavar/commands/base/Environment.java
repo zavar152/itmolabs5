@@ -13,43 +13,38 @@ import java.util.Stack;
 import itmo.labs.zavar.studygroup.StudyGroup;
 
 /**
- * This class contains main information: commands' map, collection, command's history, init time.
+ * This class contains main information: commands' map, collection, command's
+ * history, init time.
  * 
  * @author Zavar
  * @version 1.4
  */
 
-public class Environment 
-{
+public class Environment {
 	private HashMap<String, Command> map;
 	private Stack<StudyGroup> stack;
 	private History history;
 	private String time;
-	
+
 	/**
-	 * Creates new environment for commands. Collection's creation date will be equals to file's creation date.
-	 * If it won't be able to get file's attributes, collection's creation date will be set to the current. 
+	 * Creates new environment for commands. Collection's creation date will be
+	 * equals to file's creation date. If it won't be able to get file's attributes,
+	 * collection's creation date will be set to the current.
 	 * 
-	 * @param file File with collection.
-	 * @param map Commands' map.
+	 * @param file  File with collection.
+	 * @param map   Commands' map.
 	 * @param stack Main collection.
 	 */
-	public Environment(File file, HashMap<String, Command> map, Stack<StudyGroup> stack)
-	{
-		try 
-		{
+	public Environment(File file, HashMap<String, Command> map, Stack<StudyGroup> stack) {
+		try {
 			this.map = map;
 			this.stack = stack;
 			history = new History();
 			BasicFileAttributes attr = Files.readAttributes((file).toPath(), BasicFileAttributes.class);
 			time = new SimpleDateFormat("yyyy-MM-dd").format(attr.creationTime().toMillis());
-		} 
-		catch(IOException e) 
-		{
+		} catch (IOException e) {
 			time = new SimpleDateFormat("yyyy-MM-dd").format(Date.valueOf(LocalDate.now()));
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println("Unexcepted error during initialization. Program will be closed...");
 			System.exit(-1);
 		}
@@ -60,8 +55,7 @@ public class Environment
 	 * 
 	 * @return {@link HashMap}
 	 */
-	public HashMap<String, Command> getCommandsMap() 
-	{
+	public HashMap<String, Command> getCommandsMap() {
 		return map;
 	}
 
@@ -70,8 +64,7 @@ public class Environment
 	 * 
 	 * @return {@link Stack}
 	 */
-	public Stack<StudyGroup> getCollection() 
-	{
+	public Stack<StudyGroup> getCollection() {
 		return stack;
 	}
 
@@ -80,73 +73,70 @@ public class Environment
 	 * 
 	 * @return {@link History}
 	 */
-	public History getHistory() 
-	{
+	public History getHistory() {
 		return history;
 	}
-	
+
 	/**
 	 * Returns creation time.
 	 * 
 	 * @return {@link String}
 	 */
-	public String getCreationTime()
-	{
+	public String getCreationTime() {
 		return time;
 	}
-	
+
 	/**
-	 * Class uses to contain global history of commands and to contain temp history of "execute_script" command to prevent recursion.
+	 * Class uses to contain global history of commands and to contain temp history
+	 * of "execute_script" command to prevent recursion.
 	 * 
 	 * @author Zavar
 	 * @version 1.0
 	 */
-	public class History 
-	{
+	public class History {
 		private Stack<String> globalHistory = new Stack<String>();
 		private Stack<String> tempHistory = new Stack<String>();
-		
+
 		/**
 		 * Clears temp history.
 		 */
-		public void clearTempHistory()
-		{
+		public void clearTempHistory() {
 			tempHistory.clear();
 		}
-		
+
 		/**
-		 * Returns global command history. 
+		 * Returns global command history.
+		 * 
 		 * @return {@link Stack}
 		 */
-		public Stack<String> getGlobalHistory()
-		{
+		public Stack<String> getGlobalHistory() {
 			return globalHistory;
 		}
-		
+
 		/**
-		 * Returns temp command history. 
+		 * Returns temp command history.
+		 * 
 		 * @return {@link Stack}
 		 */
-		public Stack<String> getTempHistory()
-		{
+		public Stack<String> getTempHistory() {
 			return tempHistory;
 		}
-		
+
 		/**
 		 * Adds command to global history.
+		 * 
 		 * @param to Command to add.
 		 */
-		public void addToGlobal(String to)
-		{
+		public void addToGlobal(String to) {
 			globalHistory.push(to);
 		}
-		
+
 		/**
 		 * Adds command to temp history.
+		 * 
 		 * @param to Command to add.
 		 */
-		public void addToTemp(String to)
-		{
+		public void addToTemp(String to) {
 			tempHistory.push(to);
 		}
 	}

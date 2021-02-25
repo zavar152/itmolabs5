@@ -11,31 +11,26 @@ import itmo.labs.zavar.exception.CommandArgumentException;
 import itmo.labs.zavar.exception.CommandException;
 
 /**
- * Displays help for available commands.
- * Doesn't require any arguments.
+ * Displays help for available commands. Doesn't require any arguments.
  * 
  * @author Zavar
  * @version 1.1
  */
-public class HelpCommand extends Command
-{
+public class HelpCommand extends Command {
 
-	private HelpCommand() 
-	{
+	private HelpCommand() {
 		super("help");
 	}
 
 	@Override
-	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
-	{
-		if(args.length > 0)
-		{
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream)
+			throws CommandException {
+		if (args.length > 0) {
 			throw new CommandArgumentException("This command doesn't require any arguments!\n" + getUsage());
-		}
-		else
-		{
+		} else {
 			env.getCommandsMap().forEach((k, v) -> {
-				((PrintStream) outStream).println("<"+ env.getCommandsMap().get(k).getName() +">\n" + env.getCommandsMap().get(k).getHelp() + "\n" + env.getCommandsMap().get(k).getUsage() + "\n");
+				((PrintStream) outStream).println("<" + env.getCommandsMap().get(k).getName() + ">\n"
+						+ env.getCommandsMap().get(k).getHelp() + "\n" + env.getCommandsMap().get(k).getUsage() + "\n");
 			});
 		}
 	}
@@ -45,16 +40,14 @@ public class HelpCommand extends Command
 	 * 
 	 * @param commandsMap Commands' map.
 	 */
-	public static void register(HashMap<String, Command> commandsMap)
-	{
+	public static void register(HashMap<String, Command> commandsMap) {
 		HelpCommand command = new HelpCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
-	public String getHelp() 
-	{
+	public String getHelp() {
 		return "This command can give you information about other commands!";
 	}
-	
+
 }

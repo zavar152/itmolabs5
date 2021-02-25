@@ -18,23 +18,18 @@ import itmo.labs.zavar.exception.CommandException;
  * @version 1.9
  * 
  */
-public class InfoCommand extends Command
-{
+public class InfoCommand extends Command {
 
-	private InfoCommand() 
-	{
+	private InfoCommand() {
 		super("info");
 	}
 
 	@Override
-	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
-	{
-		if(args.length > 0)
-		{
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream)
+			throws CommandException {
+		if (args.length > 0) {
 			throw new CommandArgumentException("This command doesn't require any arguments!\n" + getUsage());
-		}
-		else
-		{
+		} else {
 			PrintStream pr = ((PrintStream) outStream);
 			pr.println("Type: " + env.getCollection().getClass().getName());
 			pr.println("Creation date: " + env.getCreationTime());
@@ -47,15 +42,13 @@ public class InfoCommand extends Command
 	 * 
 	 * @param commandsMap Commands' map.
 	 */
-	public static void register(HashMap<String, Command> commandsMap)
-	{
+	public static void register(HashMap<String, Command> commandsMap) {
 		InfoCommand command = new InfoCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
-	public String getHelp() 
-	{
+	public String getHelp() {
 		return "This command shows information about the collection!";
 	}
 }

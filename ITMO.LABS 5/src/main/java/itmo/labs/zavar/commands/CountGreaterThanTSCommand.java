@@ -12,48 +12,37 @@ import itmo.labs.zavar.exception.CommandException;
 import itmo.labs.zavar.exception.CommandRunningException;
 
 /**
- * Outputs the number of elements whose transferredStudents field value is greater than the specified value.
- * Requires transferred students.
+ * Outputs the number of elements whose transferredStudents field value is
+ * greater than the specified value. Requires transferred students.
  * 
  * @author Zavar
  * @version 1.2
  */
-public class CountGreaterThanTSCommand extends Command 
-{
+public class CountGreaterThanTSCommand extends Command {
 
-	private CountGreaterThanTSCommand()
-	{
+	private CountGreaterThanTSCommand() {
 		super("count_greater_than_transferred_students", "transferredStudents");
 	}
 
 	@Override
-	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream) throws CommandException 
-	{
-		if(args.length != 1)
-		{
+	public void execute(Environment env, Object[] args, InputStream inStream, OutputStream outStream)
+			throws CommandException {
+		if (args.length != 1) {
 			throw new CommandArgumentException("This command requires one argument!\n" + getUsage());
-		}
-		else
-		{
+		} else {
 			long tr;
-			try
-			{
-				tr = Long.parseLong((String) args[0]); 
-			}
-			catch(NumberFormatException e)
-			{
+			try {
+				tr = Long.parseLong((String) args[0]);
+			} catch (NumberFormatException e) {
 				throw new CommandArgumentException("transferredStudents shold be a long type!");
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				throw new CommandRunningException("Unexcepted error! " + e.getMessage());
 			}
-			
-			if(env.getCollection().isEmpty())
-			{
+
+			if (env.getCollection().isEmpty()) {
 				throw new CommandRunningException("Collection is empty!");
 			}
-			
+
 			long count = env.getCollection().stream().filter((p) -> p.getTransferredStudents() > tr).count();
 			((PrintStream) outStream).println("Count of elements: " + count);
 		}
@@ -64,17 +53,14 @@ public class CountGreaterThanTSCommand extends Command
 	 * 
 	 * @param commandsMap Commands' map.
 	 */
-	public static void register(HashMap<String, Command> commandsMap)
-	{
+	public static void register(HashMap<String, Command> commandsMap) {
 		CountGreaterThanTSCommand command = new CountGreaterThanTSCommand();
 		commandsMap.put(command.getName(), command);
 	}
-	
+
 	@Override
-	public String getHelp() 
-	{
+	public String getHelp() {
 		return "This command counts a number of elements which transferred students count is greater than argument!";
 	}
-	
-	
+
 }
